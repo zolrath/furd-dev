@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'Projects';
+const description = 'Projects';
+const permalink = `${Astro.site.href}projects`;
+---
+
+<BaseLayout title={title} description={description} permalink={permalink} current="projects">
+  <div class="container">
+    <h1>Projects</h1>
+    <figure class="broccoli-image">
+      <img src="/assets/broccoli-idle.gif" alt="Anthropomorphic broccoli standing idle." width="330">
+      <figcaption>
+      Broccoli from <a href="/projects/uprooted">Uprooted</a>
+      </figcaption>
+    </figure>
+    <p><a href="/projects/uprooted">Uprooted</a></p>
+    <p><a href="/projects/promptbox">Promptbox</a></p>
+    <p><a href="https://github.com/zolrath/obsidian-auto-link-title" target="_blank">Obsidian Auto Link Title</a></p>
+    <p><a href="https://github.com/zolrath/wemux" target="_blank">wemux</a></p>
+
+    <p>Active member instructing and helping users in the Elixir Newbies and Godot discords.</p>
+  </div>
+</BaseLayout>
+
+<style>
+  .broccoli-image {
+    float: right;
+    margin: -3em -7em 2em 2em;
+    max-width: 300px;
+  }
+  
+  .broccoli-image figcaption {
+    text-align: center;
+  }
+
+  .broccoli-image img {
+    /* IE, only works on <img> tags */
+    -ms-interpolation-mode: nearest-neighbor;
+    /* Firefox */
+    image-rendering: crisp-edges;
+    /* Chromium + Safari */
+    image-rendering: pixelated;
+    margin-bottom: 1.5em;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+  }
+
+  @media (max-width: 1020px) {
+    .broccoli-image {
+      float: none;
+      margin: 0 auto 2em;
+    }
+  }
+</style>

@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const allPosts = await Astro.glob("../../../data/blog-posts/*.md")
+  return [
+    { params: { tag: "godot" }, props: {posts: allPosts} },
+    { params: { tag: "steam" }, props: {posts: allPosts} },
+    { params: { tag: "uprooted" }, props: {posts: allPosts} },
+    { params: { tag: "software" }, props: {posts: allPosts} },
+    { params: { tag: "webdev" }, props: {posts: allPosts} },
+    { params: { tag: "css" }, props: {posts: allPosts} },
+    { params: { tag: "linux" }, props: {posts: allPosts} },
+    { params: { tag: "programming" }, props: {posts: allPosts} },
+    { params: { tag: "art" }, props: {posts: allPosts} },
+    { params: { tag: "setbacks" }, props: {posts: allPosts} },
+    { params: { tag: "personal" }, props: {posts: allPosts} },
+    { params: { tag: "learning in public" }, props: {posts: allPosts} },
+  ];
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+const filteredPosts = posts.filter(post => post.frontmatter.tags?.includes(tag));
+---
+
+<BaseLayout pageTitle={tag}>
+  <p><a href="/blog">⬅️ Back to all posts</a></p>
+  <p>Posts tagged with {tag}</p>
+  <ul>
+    {filteredPosts.map(post => {
+      const href = `/blog/${post.file.split('/').pop().split('.').shift()}`;
+      return <>
+        <li><a href={href}>{post.frontmatter.title}</a></li>
+        <p class="text-sm">{post.frontmatter.description}</p>
+      </>
+      })}
+  </ul>
+</BaseLayout>

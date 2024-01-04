@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'About';
+const description = 'About your Matt Furden.';
+const permalink = `${Astro.site.href}about`;
+---
+
+<BaseLayout title={title} description={description} permalink={permalink} current="about">
+  <div class="container">
+    <h1>About</h1>
+    <figure class="about-image">
+      <img src="/assets/profile-pic.jpg" alt="Headshot of Matt Furden" width="330">
+      <figcaption>
+        Matt Furden in his natural habitat.
+      </figcaption>
+    </figure>
+    <p>Hello!</p>
+
+    <p>Hi, I'm <strong>Matt</strong>. I'm a software engineer and artist based in the Central Coast of California.</p>
+    <p>You can chat with me on <a href="https://discordapp.com/users/54376664171294720" target="_blank">Discord</a>,
+    see some of my (public) work on <a href="https://www.github.com/zolrath" target="_blank">GitHub</a> or <a href="https://www.instagram.com/furd">Instagram</a>.</p>
+    <p>I've been making a game on weekends called <a href="/projects/uprooted">Uprooted</a> few the last few months.
+  </div>
+</BaseLayout>
+
+<style>
+  .about-image {
+    float: right;
+    margin: -3em -7em 2em 2em;
+    max-width: 300px;
+  }
+
+  .about-image img {
+    border-radius: 8px;
+    margin-bottom: 1.5em;
+  }
+
+  @media (max-width: 1020px) {
+    .about-image {
+      float: none;
+      margin: 0 auto 2em;
+    }
+  }
+</style>
