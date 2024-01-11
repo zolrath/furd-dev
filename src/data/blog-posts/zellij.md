@@ -1,9 +1,9 @@
 ---
-title: Zellij - use it.
+title: A love letter to Zellij.
 hidden: true
 publishDate: 03 Jan 2024
-description: A love letter to Zellij
+description: A user friendly terminal multiplexer.
 tags: [linux]
 ---
 
-Zellij, baby!
+No longer using tmux, using Zellij. It's a terminal multiplexer that's easy to use and has a great community.
