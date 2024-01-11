@@ -22,7 +22,7 @@ allPosts = allPosts.filter(p => p.frontmatter.hidden != true).sort((a, b) => new
             <h2>
               <a href={href}>{post.frontmatter.title}</a>
             </h2>
-            <em>tags:</em> { post.frontmatter.tags?.map(tag => <><a href={`/blog/tags/${tag}`}>{tag}</a> </> ) }
+            <em>tags:</em> { post.frontmatter.tags?.map((tag: string) => <><a href={`/blog/tag/${tag}`}>{tag}</a> </> ) }
             <p>{post.frontmatter.description}</p>
             <div class="post-item-footer">
               <span class="post-item-date">— {post.frontmatter.publishDate}</span>

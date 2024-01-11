@@ -2,24 +2,31 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
-  const allPosts = await Astro.glob("../../../data/blog-posts/*.md")
-  return [
-    { params: { tag: "godot" }, props: {posts: allPosts} },
-    { params: { tag: "steam" }, props: {posts: allPosts} },
-    { params: { tag: "uprooted" }, props: {posts: allPosts} },
-    { params: { tag: "software" }, props: {posts: allPosts} },
-    { params: { tag: "elixir" }, props: {posts: allPosts} },
-    { params: { tag: "odin" }, props: {posts: allPosts} },
-    { params: { tag: "advent-of-code" }, props: {posts: allPosts} },
-    { params: { tag: "webdev" }, props: {posts: allPosts} },
-    { params: { tag: "css" }, props: {posts: allPosts} },
-    { params: { tag: "linux" }, props: {posts: allPosts} },
-    { params: { tag: "programming" }, props: {posts: allPosts} },
-    { params: { tag: "art" }, props: {posts: allPosts} },
-    { params: { tag: "setbacks" }, props: {posts: allPosts} },
-    { params: { tag: "personal" }, props: {posts: allPosts} },
-    { params: { tag: "learning-in-public" }, props: {posts: allPosts} },
+  const tags = [
+    "godot",
+    "steam",
+    "uprooted",
+    "elixir",
+    "odin",
+    "webdev",
+    "css",
+    "software",
+    "linux",
+    "programming",
+    "advent-of-code",
+    "art",
+    "personal",
+    "learning-in-public"
   ];
+
+  const allPosts = await Astro.glob("../../../data/blog-posts/*.md");
+
+  return tags.map(tag => {
+    return {
+      params: { tag: tag },
+      props: { posts: allPosts }
+    }
+  });
 }
 
 const { tag } = Astro.params;
