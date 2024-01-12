@@ -1,3 +1,5 @@
+![Infrastructure](infrastructure.png)
+
 # Terraform Infrastructure
 ## Overview
 furd.dev is a website that showcases provisioning static site hosting on [AWS](https://aws.amazon.com) using [HashiCorp Terraform](https://www.terraform.io). It uses a combination of AWS services to create a fast, secure, and scalable web presence. The website overview covers the following aspects:
