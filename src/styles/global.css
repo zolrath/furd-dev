@@ -147,6 +147,24 @@ code {
   -moz-osx-font-smoothing: grayscale;
 }
 
+pre[data-theme*=" "],
+code[data-theme*=" "],
+code[data-theme*=" "] span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+:root.theme-dark pre[data-theme*=" "],
+:root.theme-dark code[data-theme*=" "],
+:root.theme-dark code[data-theme*=" "] span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+}
+
+span[data-rehype-pretty-code-figure] code {
+  border-radius: 8px;
+}
+
 pre {
   border-radius: 8px !important;
   margin: 1.2em 0 !important;
@@ -225,12 +243,12 @@ td {
   background-color: var(--theme-code-inline-bg);
 }
 
-.theme-toggle > label:focus-within {
+.theme-toggle>label:focus-within {
   outline: 2px solid transparent;
   box-shadow: 0 0 0 0.08em var(--theme-accent), 0 0 0 0.12em white;
 }
 
-.theme-toggle > label {
+.theme-toggle>label {
   color: var(--theme-code-inline-text);
   position: relative;
   display: flex;

@@ -13,8 +13,8 @@ In my war against content shift I've applied this fix to [Logseq](https://github
 
 ![Video displaying content shift before and after using scrollbar-gutter](/assets/blog/scrollbar-gutter/logseq-fix.webp)
 
-Luckily this has been made fairly easy in modern browsers with the `scrollbar-gutter` property. (RIP `overflow-y: overlay`)
-By simply adding `scrollbar-gutter: stable` to the `html` element the space for the scrollbar will always be reserved, even if the content doesn't overflow.
+Luckily this has been made fairly easy in modern browsers with the `scrollbar-gutter{:css}` property. (RIP `overflow-y: overlay{:css}`)
+By simply adding `scrollbar-gutter: stable{:css}` to the `html{:html}` element the space for the scrollbar will always be reserved, even if the content doesn't overflow.
 
 ```css
 @supports (scrollbar-gutter: stable) {

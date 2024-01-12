@@ -66,7 +66,7 @@ In the tutorial example we loop through each user in our assigns and render thei
 ..
 ```
 
-When rendering the cursors we can check if the cursor is the local user and ignore the `x` and `y` positions sent by the server, instead using our local `--x` and `--y` CSS variables as our coordinates to use the absolute latest mouse position.
+When rendering the cursors we can check if the cursor is the local user and ignore the `x{:css}` and `y{:css}` positions sent by the server, instead using our local `--x{:css}` and `--y{:css}` CSS variables as our coordinates to use the absolute latest mouse position.
 
 ```elixir
 <% is_local_user = user.socket_id == @socket.id %>
@@ -85,7 +85,7 @@ Voila! Now our local mouse is being tracked in real time, even with 100ms of sim
 
 Nice.
 
-Now all we need to do is put our `cursor-none` back in to hide our default cursor and we've got a custom, multi-user, LiveView mouse that still feels perfectly responsive! 
+Now all we need to do is put our `cursor-none{:css}` back in to hide our default cursor and we've got a custom, multi-user, LiveView mouse that still feels perfectly responsive! 
 
 ## Remaining Issues
 
