@@ -5,7 +5,7 @@ import getPostData from '../../utils/getPostData';
 
 export async function getStaticPaths() {
   const posts: any[] = await Astro.glob('../../data/blog-posts/*.md');
-  return posts.filter(p => p.frontmatter.hidden != true).map((p: any) => ({
+  return posts.filter(p => !p.frontmatter.hidden).map((p: any) => ({
     params: { slug: p.file.split('/')?.pop().split('.').shift() },
     props: { post: p },
   }));

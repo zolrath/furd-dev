@@ -2,24 +2,8 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
-  const tags = [
-    "godot",
-    "steam",
-    "uprooted",
-    "elixir",
-    "odin",
-    "webdev",
-    "css",
-    "software",
-    "linux",
-    "programming",
-    "advent-of-code",
-    "art",
-    "personal",
-    "learning-in-public"
-  ];
-
-  const allPosts: any = await Astro.glob("../../../data/blog-posts/*.md");
+  const allPosts: MD[] = await Astro.glob("../../../data/blog-posts/*.md");
+  let tags: string[] = allPosts.filter((post: MD) => !post.frontmatter.hidden).map((post: MD) => post.frontmatter.tags).flat();
 
   return tags.map(tag => {
     return {
@@ -31,7 +15,7 @@ export async function getStaticPaths() {
 
 const { tag } = Astro.params;
 const { posts } = Astro.props;
-const filteredPosts = posts.filter((post: any) => post.frontmatter.tags?.includes(tag));
+const filteredPosts = posts.filter(post => post.frontmatter.tags?.includes(tag));
 const permalink = `${Astro.site?.href ?? '/'}blog/tag/${tag}`;
 ---
 
@@ -39,8 +23,8 @@ const permalink = `${Astro.site?.href ?? '/'}blog/tag/${tag}`;
   <p><a href="/blog">⬅️ Back to all posts</a></p>
   <p>Posts tagged with {tag}</p>
   <ul>
-    {filteredPosts.map((post: any) => {
-      const href = `/blog/${post.file.split('/').pop().split('.').shift()}`;
+    {filteredPosts.map(post => {
+      const href = `/blog/${post.file.split('/')?.pop()?.split('.').shift()}`;
       return <>
         <li><a href={href}>{post.frontmatter.title}</a></li>
         <p class="text-sm">{post.frontmatter.description}</p>

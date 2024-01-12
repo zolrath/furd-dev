@@ -73,13 +73,9 @@ title: Dynamic Masking Shader in Godot
 hidden: true
 publishDate: 02 Dec 2023
 description: How I'm dynamically masking portions of my players sprite in Godot.
-tags: [godot]
+tags: [godot, programming]
 ---
 ```
-
-### Adding Tags
-When you add a new tag to a post, be sure to add it to the `tags` array in `/src/pages/blog/tag/[tag].astro`.
-
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
