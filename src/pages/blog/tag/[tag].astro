@@ -19,7 +19,7 @@ export async function getStaticPaths() {
     "learning-in-public"
   ];
 
-  const allPosts = await Astro.glob("../../../data/blog-posts/*.md");
+  const allPosts: any = await Astro.glob("../../../data/blog-posts/*.md");
 
   return tags.map(tag => {
     return {
@@ -31,14 +31,15 @@ export async function getStaticPaths() {
 
 const { tag } = Astro.params;
 const { posts } = Astro.props;
-const filteredPosts = posts.filter(post => post.frontmatter.tags?.includes(tag));
+const filteredPosts = posts.filter((post: any) => post.frontmatter.tags?.includes(tag));
+const permalink = `${Astro.site?.href ?? '/'}blog/tag/${tag}`;
 ---
 
-<BaseLayout pageTitle={tag}>
+<BaseLayout title={tag} description="Filtered posts by tag" permalink={permalink} current="blog">
   <p><a href="/blog">⬅️ Back to all posts</a></p>
   <p>Posts tagged with {tag}</p>
   <ul>
-    {filteredPosts.map(post => {
+    {filteredPosts.map((post: any) => {
       const href = `/blog/${post.file.split('/').pop().split('.').shift()}`;
       return <>
         <li><a href={href}>{post.frontmatter.title}</a></li>

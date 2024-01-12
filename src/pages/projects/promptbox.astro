@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const title = 'Promptbox';
 const description = 'About Promptbox';
-const permalink = `${Astro.site.href}projects/promptbox`;
+const permalink = `${Astro.site?.href}projects/promptbox`;
 ---
 
 <BaseLayout title={title} description={description} permalink={permalink} current="projects">

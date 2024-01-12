@@ -4,9 +4,9 @@ import Bio from '../../components/Bio.astro';
 import getPostData from '../../utils/getPostData';
 
 export async function getStaticPaths() {
-  const posts = await Astro.glob('../../data/blog-posts/*.md');
-  return posts.filter(p => p.frontmatter.hidden != true).map(p => ({
-    params: { slug: p.file.split('/').pop().split('.').shift() },
+  const posts: any[] = await Astro.glob('../../data/blog-posts/*.md');
+  return posts.filter(p => p.frontmatter.hidden != true).map((p: any) => ({
+    params: { slug: p.file.split('/')?.pop().split('.').shift() },
     props: { post: p },
   }));
 }
@@ -14,8 +14,8 @@ export async function getStaticPaths() {
 const { Content, frontmatter } = Astro.props.post;
 const { title, description, publishDate, tags } = frontmatter;
 const { slug, readingTime } = getPostData(Astro.props.post);
-const permalink = `${Astro.site.href}blog/${slug}`;
-const tagBase = `${Astro.site.href}blog/tags`;
+const permalink = `${Astro.site?.href ?? '/'}blog/${slug}`;
+const tagBase = `${Astro.site?.href ?? '/'}blog/tag`;
 ---
 
 <BaseLayout title={title} description={description} permalink={permalink} current="blog">
@@ -31,7 +31,7 @@ const tagBase = `${Astro.site.href}blog/tags`;
     <p>
 
     <div class="text-sm">
-    <em>tags:</em> { tags.map(tag => <><a href={`/blog/tags/${tag}`}>{tag}</a> </> ) }
+    <em>tags:</em> { tags.map((tag: string) => <><a href={`${tagBase}/${tag}`}>{tag}</a> </> ) }
     </div>
     </p>
     <hr />

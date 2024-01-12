@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const title = 'Blog';
 const description = 'Latest articles.';
-const permalink = `${Astro.site.href}blog`;
+const permalink = `${Astro.site?.href}blog`;
 
 let allPosts = await Astro.glob('../../data/blog-posts/*.md');
 
@@ -14,7 +14,7 @@ allPosts = allPosts.filter(p => p.frontmatter.hidden != true).sort((a, b) => new
   <div class="container">
     <h1>Blog</h1>
     {allPosts.map((post, index) => {
-      const href = `/blog/${post.file.split('/').pop().split('.').shift()}`;
+      const href = `/blog/${post.file.split('/')?.pop()?.split('.').shift()}`;
       return (
         <div>
           { index !== 0 && <hr /> }
