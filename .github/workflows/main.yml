@@ -1,0 +1,41 @@
+name: Deploy furd.dev to S3
+ 
+on:
+  push:
+    branches:
+      - main
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy_to_s3:
+    name: Deploy furd.dev to S3
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: 🛒 Checkout
+        uses: actions/checkout@v3
+      
+      - name: ⚙️ Setup
+        run: | 
+          npm install
+          npm run build
+      
+      - name: ✅ Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.GH_ACTION_ROLE_ARN }}
+          role-session-name: github-cd
+          aws-region: us-west-1
+      
+      - name: 🚀 Deploy to S3
+        run: aws s3 sync --delete ./dist/ s3://${{ secrets.SITE_BUCKET }}/
+      
+      - name: 🧼 Invalidate CloudFront cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRO_ID }} --paths "/*"

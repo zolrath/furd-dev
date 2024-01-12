@@ -23,7 +23,7 @@ resource "aws_route53_record" "furd_dev_mx" {
 
   records = [
     "1 smtp.google.com.",
-    "15 ${var.mx_verification}"
+    "15 LDFPU2H4TO5HSOQHMUSCGDWXVF2AVXZIW4ASNBQQINDFDK24DWIQ.MX-VERIFICATION.GOOGLE.COM"
   ]
 }
 

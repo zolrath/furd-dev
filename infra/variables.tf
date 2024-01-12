@@ -8,4 +8,7 @@ variable "bucket_name" {
   type    = string
 }
 
-variable "mx_verification" { type = string }
+variable "github_repo" {
+  default = "zolrath/furd-dev"
+  type    = string
+}
