@@ -1,0 +1,50 @@
+name: Terraform Drift Detection
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'infra/*'
+
+jobs:
+  detect_drift:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    defaults:
+      run:
+        working-directory: ./infra
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: ✅ Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.GH_ACTION_ROLE_ARN }}
+          role-session-name: github-cd
+          aws-region: us-west-1
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: "1.5.7"
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform format
+        run: terraform fmt -check
+
+      - name: Terraform plan
+        id: plan
+        run: terraform plan -detailed-exitcode -input=false -out=tfplan
+
+      - name: Terraform apply
+        if: steps.plan.exitcode == 2
+        run: terraform apply -auto-approve tfplan
