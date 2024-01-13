@@ -8,7 +8,13 @@ output "GH_ACTION_ROLE_ARN" {
   value = aws_iam_role.github_deploy.arn
 }
 
+output "GH_TERRAFORM_ROLE_ARN" {
+  description = "GitHub terraform role ARN"
+  value = aws_iam_role.github_terraform.arn
+}
+
 output "SITE_BUCKET" {
   description = "Site bucket"
   value = aws_s3_bucket.website_bucket.bucket
 }
+

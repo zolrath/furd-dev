@@ -16,6 +16,12 @@ resource "github_actions_secret" "GH_ACTION_ROLE_ARN" {
   plaintext_value  = aws_iam_role.github_deploy.arn
 }
 
+resource "github_actions_secret" "GH_TERRAFORM_ROLE_ARN" {
+  repository       = var.github_repo_name
+  secret_name      = "GH_TERRAFORM_ROLE_ARN"
+  plaintext_value  = aws_iam_role.github_terraform.arn
+}
+
 # Get GitHub TLS certificate
 data "tls_certificate" "github" {
   url = "https://token.actions.githubusercontent.com/.well-known/openid-configuration"
