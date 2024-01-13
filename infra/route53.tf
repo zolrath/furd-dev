@@ -43,7 +43,7 @@ resource "aws_route53_record" "www-a" {
 # Verify name with Bluesky for official website account
 resource "aws_route53_record" "bluesky" {
   zone_id = aws_route53_zone.furd_dev_zone.zone_id
-  name    = "_atproto.${vars.domain_name}"
+  name    = "_atproto.${var.domain_name}"
   type    = "TXT"
   ttl     = 1800
 

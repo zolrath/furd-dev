@@ -19,6 +19,9 @@ jobs:
       run:
         working-directory: ./infra
 
+    env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

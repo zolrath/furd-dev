@@ -13,6 +13,11 @@ variable "github_repo" {
   type    = string
 }
 
+variable "github_repo_name" {
+  default = "furd-dev"
+  type    = string
+}
+
 variable "mx_verification" {
   default = "LDFPU2H4TO5HSOQHMUSCGDWXVF2AVXZIW4ASNBQQINDFDK24DWIQ.MX-VERIFICATION.GOOGLE.COM"
   type    = string

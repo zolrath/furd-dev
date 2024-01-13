@@ -4,6 +4,10 @@ terraform {
       version = ">= 2.7.0"
       source  = "hashicorp/aws"
     }
+    github = {
+      source  = "integrations/github"
+      version = "~> 5.0"
+    }
   }
   backend "s3" {
     bucket  = "furd-dev-terraform"
@@ -23,3 +27,4 @@ provider "aws" {
   region = "us-east-1"
 }
 
+provider "github" { }

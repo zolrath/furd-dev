@@ -1,3 +1,21 @@
+# Set secrets for GitHub Actions
+resource "github_actions_secret" "CLOUDFRONT_DISTRO_ID" {
+  repository       = var.github_repo_name
+  secret_name      = "CLOUDFRONT_DISTRO_ID"
+  plaintext_value  = aws_cloudfront_distribution.s3_distribution.id
+}
+resource "github_actions_secret" "SITE_BUCKET" {
+  repository       = var.github_repo_name
+  secret_name      = "SITE_BUCKET"
+  plaintext_value  = aws_s3_bucket.website_bucket.bucket
+}
+
+resource "github_actions_secret" "GH_ACTION_ROLE_ARN" {
+  repository       = var.github_repo_name
+  secret_name      = "GH_ACTION_ROLE_ARN"
+  plaintext_value  = aws_iam_role.github_deploy.arn
+}
+
 # Get GitHub TLS certificate
 data "tls_certificate" "github" {
   url = "https://token.actions.githubusercontent.com/.well-known/openid-configuration"
@@ -125,5 +143,55 @@ data "aws_iam_policy_document" "github_access_control_bucket" {
       type        = "AWS"
       identifiers = [aws_iam_role.github_deploy.arn]
     }
+  }
+}
+
+# Create another role that can run Terraform apply
+resource "aws_iam_role" "github_terraform" {
+  name                 = "github-actions-terraform-furd-dev"
+  path                 = "/github-actions/"
+  assume_role_policy   = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid = ""
+        Effect = "Allow"
+        Principal = {
+          Federated = aws_iam_openid_connect_provider.github_actions.arn
+        }
+        Action = "sts:AssumeRoleWithWebIdentity"
+        Condition = {
+          StringLike = {
+            "token.actions.githubusercontent.com:sub": "repo:${var.github_repo}:ref:refs/heads/main"
+          }
+          StringEquals = {
+            "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+          }
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "github_terraform_role" {
+  name   = "github_terraform_role"
+  role   = aws_iam_role.github_terraform.name
+  policy = data.aws_iam_policy_document.github_terraform_role.json
+}
+
+# Overly permissive policy for Terraform, figure out a restrictive policy later
+data "aws_iam_policy_document" "github_terraform_role" {
+  statement {
+    sid = "GithubAccessControlObjects"
+    actions = [
+      "s3:*",
+      "route53:*",
+      "cloudfront:*",
+      "acm:*",
+      "iam:*",
+    ]
+    effect = "Allow"
+
+    resources = ["*"]
   }
 }
