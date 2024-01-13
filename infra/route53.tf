@@ -15,6 +15,7 @@ resource "aws_route53_zone" "furd_dev_zone" {
   name = "${var.domain_name}"
 }
 
+# Create an MX Record for Gmail
 resource "aws_route53_record" "furd_dev_mx" {
   zone_id = aws_route53_zone.furd_dev_zone.zone_id
   name    = ""
@@ -23,7 +24,7 @@ resource "aws_route53_record" "furd_dev_mx" {
 
   records = [
     "1 smtp.google.com.",
-    "15 LDFPU2H4TO5HSOQHMUSCGDWXVF2AVXZIW4ASNBQQINDFDK24DWIQ.MX-VERIFICATION.GOOGLE.COM"
+    "15 ${var.mx_verification}"
   ]
 }
 
@@ -37,6 +38,16 @@ resource "aws_route53_record" "www-a" {
     zone_id                = "${aws_cloudfront_distribution.s3_distribution.hosted_zone_id}"
     evaluate_target_health = false
   }
+}
+
+# Verify name with Bluesky for official website account
+resource "aws_route53_record" "bluesky" {
+  zone_id = aws_route53_zone.furd_dev_zone.zone_id
+  name    = "_atproto.${vars.domain_name}"
+  type    = "TXT"
+  ttl     = 1800
+
+  records = [var.bluesky_verification]
 }
 
 resource "aws_route53_record" "furd_dev_certificate_dns" {

@@ -1,8 +1,9 @@
-# Create GitHub OIDC Provider
+# Get GitHub TLS certificate
 data "tls_certificate" "github" {
   url = "https://token.actions.githubusercontent.com/.well-known/openid-configuration"
 }
 
+# Create GitHub OIDC Provider
 resource "aws_iam_openid_connect_provider" "github_actions" {
   url             = "https://token.actions.githubusercontent.com"
   client_id_list  = ["sts.amazonaws.com"]
