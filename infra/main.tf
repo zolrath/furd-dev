@@ -10,9 +10,9 @@ terraform {
     }
   }
   backend "s3" {
-    bucket  = "furd-dev-terraform"
-    key     = "terraform.tfstate"
-    region  = "us-west-1"
+    bucket = "furd-dev-terraform"
+    key    = "terraform.tfstate"
+    region = "us-west-1"
   }
 }
 
@@ -23,8 +23,8 @@ provider "aws" {
 # Cloudfront requires the certificate be located in us-east-1
 # even if our actual site is hosted in a different region
 provider "aws" {
-  alias = "virginia"
+  alias  = "virginia"
   region = "us-east-1"
 }
 
-provider "github" { }
+provider "github" {}

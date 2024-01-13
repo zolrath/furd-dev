@@ -1,25 +1,25 @@
 # Set secrets for GitHub Actions
 resource "github_actions_secret" "CLOUDFRONT_DISTRO_ID" {
-  repository       = var.github_repo_name
-  secret_name      = "CLOUDFRONT_DISTRO_ID"
-  plaintext_value  = aws_cloudfront_distribution.s3_distribution.id
+  repository      = var.github_repo_name
+  secret_name     = "CLOUDFRONT_DISTRO_ID"
+  plaintext_value = aws_cloudfront_distribution.s3_distribution.id
 }
 resource "github_actions_secret" "SITE_BUCKET" {
-  repository       = var.github_repo_name
-  secret_name      = "SITE_BUCKET"
-  plaintext_value  = aws_s3_bucket.website_bucket.bucket
+  repository      = var.github_repo_name
+  secret_name     = "SITE_BUCKET"
+  plaintext_value = aws_s3_bucket.website_bucket.bucket
 }
 
 resource "github_actions_secret" "GH_ACTION_ROLE_ARN" {
-  repository       = var.github_repo_name
-  secret_name      = "GH_ACTION_ROLE_ARN"
-  plaintext_value  = aws_iam_role.github_deploy.arn
+  repository      = var.github_repo_name
+  secret_name     = "GH_ACTION_ROLE_ARN"
+  plaintext_value = aws_iam_role.github_deploy.arn
 }
 
 resource "github_actions_secret" "GH_TERRAFORM_ROLE_ARN" {
-  repository       = var.github_repo_name
-  secret_name      = "GH_TERRAFORM_ROLE_ARN"
-  plaintext_value  = aws_iam_role.github_terraform.arn
+  repository      = var.github_repo_name
+  secret_name     = "GH_TERRAFORM_ROLE_ARN"
+  plaintext_value = aws_iam_role.github_terraform.arn
 }
 
 # Get GitHub TLS certificate
@@ -29,8 +29,8 @@ data "tls_certificate" "github" {
 
 # Create GitHub OIDC Provider
 resource "aws_iam_openid_connect_provider" "github_actions" {
-  url             = "https://token.actions.githubusercontent.com"
-  client_id_list  = ["sts.amazonaws.com"]
+  url            = "https://token.actions.githubusercontent.com"
+  client_id_list = ["sts.amazonaws.com"]
   thumbprint_list = [
     data.tls_certificate.github.certificates[0].sha1_fingerprint,
     data.tls_certificate.github.certificates[1].sha1_fingerprint,
@@ -39,13 +39,13 @@ resource "aws_iam_openid_connect_provider" "github_actions" {
 
 # Create IAM Role for GitHub Actions
 resource "aws_iam_role" "github_deploy" {
-  name                 = "github-actions-furd-dev"
-  path                 = "/github-actions/"
-  assume_role_policy   = jsonencode({
+  name = "github-actions-furd-dev"
+  path = "/github-actions/"
+  assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
-        Sid = ""
+        Sid    = ""
         Effect = "Allow"
         Principal = {
           Federated = aws_iam_openid_connect_provider.github_actions.arn
@@ -53,10 +53,10 @@ resource "aws_iam_role" "github_deploy" {
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
           StringLike = {
-            "token.actions.githubusercontent.com:sub": "repo:${var.github_repo}:ref:refs/heads/main"
+            "token.actions.githubusercontent.com:sub" : "repo:${var.github_repo}:ref:refs/heads/main"
           }
           StringEquals = {
-            "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+            "token.actions.githubusercontent.com:aud" : "sts.amazonaws.com"
           }
         }
       }
@@ -154,13 +154,13 @@ data "aws_iam_policy_document" "github_access_control_bucket" {
 
 # Create another role that can run Terraform apply
 resource "aws_iam_role" "github_terraform" {
-  name                 = "github-actions-terraform-furd-dev"
-  path                 = "/github-actions/"
-  assume_role_policy   = jsonencode({
+  name = "github-actions-terraform-furd-dev"
+  path = "/github-actions/"
+  assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
-        Sid = ""
+        Sid    = ""
         Effect = "Allow"
         Principal = {
           Federated = aws_iam_openid_connect_provider.github_actions.arn
@@ -168,10 +168,10 @@ resource "aws_iam_role" "github_terraform" {
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
           StringLike = {
-            "token.actions.githubusercontent.com:sub": "repo:${var.github_repo}:ref:refs/heads/main"
+            "token.actions.githubusercontent.com:sub" : "repo:${var.github_repo}:ref:refs/heads/main"
           }
           StringEquals = {
-            "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+            "token.actions.githubusercontent.com:aud" : "sts.amazonaws.com"
           }
         }
       }
