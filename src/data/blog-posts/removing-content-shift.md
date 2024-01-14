@@ -11,7 +11,7 @@ Usually it's a passing desire but I've been trying various *Personal Knowledge M
 
 In my war against content shift I've applied this fix to [Logseq](https://github.com/logseq/logseq/pull/1972), [Athens](https://github.com/athensresearch/athens/pull/1212) and most importantly the [Phoenix Framework](https://github.com/phoenixframework/phoenix/pull/5101) for Elixir, solving this issue to an untold number of sites built in the framework.
 
-![Video displaying content shift before and after using scrollbar-gutter](/assets/blog/scrollbar-gutter/logseq-fix.webp)
+![Video displaying content shift before and after using scrollbar-gutter](@assets/blog/scrollbar-gutter/logseq-fix.webp)
 
 Luckily this has been made fairly easy in modern browsers with the `scrollbar-gutter{:css}` property. (RIP `overflow-y: overlay{:css}`)
 By simply adding `scrollbar-gutter: stable{:css}` to the `html{:html}` element the space for the scrollbar will always be reserved, even if the content doesn't overflow.

@@ -1,5 +1,10 @@
+---
+import { Image } from 'astro:assets';
+
+import profileImage from '@assets/profile-pic.jpg';
+---
 <div>
-  <img src="/assets/profile-pic.jpg" alt="Headshot of Matt Furden">
+  <Image src={profileImage} alt="Headshot of Matt Furden" width="100" height="100" />
   <p>
     Hi, I'm <strong>Matt</strong>. I'm a software engineer and artist based in the Central Coast of California.
     You can chat with me on <a href="https://discordapp.com/users/54376664171294720" target="_blank">Discord</a>,

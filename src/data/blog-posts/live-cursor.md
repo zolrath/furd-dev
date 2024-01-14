@@ -23,7 +23,7 @@ The ping pong of sending your mouse position to the server and waiting for it to
 
 It's perfectly acceptable for the other users cursors to be slightly behind their actual position, but when applied to your own cursor the slight lag leaves you feeling like your mouse is covered in peanut butter.
 
-![mouse lag](/assets/blog/live-cursor/mouselag.gif)
+![mouse lag](@assets/blog/live-cursor/mouselag.gif)
 
 We can make the issue clear by adding 100ms of simulated latency to the LiveView. By rendering both the default local cursor along with your LiveView synced cursor we can see that the networked cursor lags behind the actual mouse position.
 
@@ -77,9 +77,7 @@ When rendering the cursors we can check if the cursor is the local user and igno
 >
 ```
 
-
-
-![mouse fast](/assets/blog/live-cursor/mousefast.gif)
+![mouse fast](@assets/blog/live-cursor/mousefast.gif)
 
 Voila! Now our local mouse is being tracked in real time, even with 100ms of simulated latency.
 

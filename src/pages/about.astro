@@ -1,5 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+
+import profileImage from '@assets/profile-pic.jpg';
 
 const title = 'About';
 const description = 'About your Matt Furden.';
@@ -10,7 +13,7 @@ const permalink = `${Astro.site?.href}about`;
   <div class="container">
     <h1>About</h1>
     <figure class="about-image">
-      <img src="/assets/profile-pic.jpg" alt="Headshot of Matt Furden" width="330">
+      <Image src={profileImage} alt="Headshot of Matt Furden" width="330" />
       <figcaption>
         Matt Furden in his natural habitat.
       </figcaption>

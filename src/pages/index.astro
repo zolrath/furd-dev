@@ -1,5 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+
+import computerImage from '@assets/home-computer.webp';
 
 const title = 'Matt Furden - Developer';
 const description = 'Matt Furden does stuff.';
@@ -15,8 +18,7 @@ const permalink = Astro.site?.href ?? '/';
 
     <div class="hero-image-container">
       <picture>
-        <source srcset="/assets/home-computer.webp" media="(min-width: 600px)">
-        <img class="hero-image" alt="Image of a universe inside of a monitor" src="/assets/home-computer-small.webp" width="550" height="466">
+        <Image class="hero-image" src={computerImage} alt="Image of a universe inside of a monitor" width="550" height="466" />
       </picture>
     </div>
   </div>
