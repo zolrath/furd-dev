@@ -1,6 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
+import { Image } from 'astro:assets';
+import broccoli from '@assets/broccoli-idle.gif';
+
 const title = 'Projects';
 const description = 'Projects';
 const permalink = `${Astro.site?.href ?? '/'}projects`;
@@ -10,7 +13,7 @@ const permalink = `${Astro.site?.href ?? '/'}projects`;
   <div class="container">
     <h1>Projects</h1>
     <figure class="broccoli-image">
-      <img src="/assets/broccoli-idle.gif" alt="Anthropomorphic broccoli standing idle." width="330">
+      <Image src={broccoli} alt="Anthropomorphic broccoli standing idle." width="330" />
       <figcaption>
       Broccoli from <a href="/projects/uprooted">Uprooted</a>
       </figcaption>

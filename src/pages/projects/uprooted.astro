@@ -1,6 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
+import { Image } from 'astro:assets';
+import broccoli from '@assets/broccoli-idle.gif';
+
 const title = 'Uprooted';
 const description = 'About Uprooted';
 const permalink = `${Astro.site?.href}projects/uprooted`;
@@ -10,12 +13,26 @@ const permalink = `${Astro.site?.href}projects/uprooted`;
   <div class="container">
     <h1>Uprooted</h1>
     <figure class="broccoli-image">
-      <img src="/assets/broccoli-idle.gif" alt="Anthropomorphic broccoli standing idle." width="330">
+      <Image src={broccoli} alt="Anthropomorphic broccoli standing idle." width="330" />
       <figcaption>
       Broccoli from <a href="/projects/uprooted">Uprooted</a>
       </figcaption>
     </figure>
-    <p>A 2d local multiplayer platformer versus game.</p>
+    <h3>Stomp your friends into the ground!</h1>
+    <p>Uprooted is a local multiplayer versus game. Fight to be the last vegetable standing!</p>
+    <h3>Key Features</h1>
+    <ul>
+      <li>2-8 player local multiplayer.</li>
+      <li>A variety of team and free for all modes.</li>
+      <li><strong>Grounded:</strong> Try to bury the other team. Pull your friends out of the ground to stay alive!</li>
+      <li><strong>Seedling:</strong> First veggie to hold the seed for 30 seconds wins!</li>
+      <li><strong>Capture the Seed:</strong> Bring the opponents seed back to your side to win!</li>
+      <li><strong>King of the Hill:</strong> Score points while being the only veggie on the hill.</li>
+      <li><strong>And more!</strong></li>
+      <li>Play as a broccoli, carrot, turnip, and more veggies that you've <strong>always</strong> wanted to be.</li>
+      <li>Unlock dozens of unique costumes, all wearable by any character!</li>
+      <li>Easy to pick up with deep movement mechanics to master.</li>
+    </ul>
   </div>
 </BaseLayout>
 
