@@ -23,6 +23,6 @@
   },
   "devDependencies": {
     "rehype-pretty-code": "^0.12.3",
-    "shikiji-transformers": "^0.9.18"
+    "shikiji-transformers": "^0.10.0-beta.1"
   }
 }
