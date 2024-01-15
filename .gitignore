@@ -11,6 +11,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# Astro collection type definitions
+.astro/
 
 # environment variables
 .env

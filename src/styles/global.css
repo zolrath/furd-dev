@@ -295,3 +295,15 @@ input[name='theme-toggle'] {
     margin: 1em 0;
   }
 }
+
+.pixel-image {
+  /* IE, only works on <img> tags */
+  -ms-interpolation-mode: nearest-neighbor;
+  /* Firefox */
+  image-rendering: crisp-edges;
+  /* Chromium + Safari */
+  image-rendering: pixelated;
+  margin-bottom: 1.5em;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}

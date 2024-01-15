@@ -1,24 +1,43 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { Image } from 'astro:assets';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
 
-import computerImage from '@assets/home-computer.webp';
+import computerImage from "@assets/home-computer.webp";
 
-const title = 'Matt Furden - Developer';
-const description = 'Matt Furden does stuff.';
-const permalink = Astro.site?.href ?? '/';
+const title = "Matt Furden - Developer";
+const description = "Matt Furden does stuff.";
+const permalink = Astro.site?.href ?? "/";
 ---
 
 <BaseLayout title={title} description={description} permalink={permalink}>
   <div class="home-container">
     <div class="home-copy">
       <h1>Hi, I'm Matt 👋</h1>
-      <p>Check out the <a href="/blog">blog</a> or my <a href="http://github.com/zolrath" target="_blank">projects</a>. Or <a href="/about">me</a>.</p>
+      <p>
+        Check out the <a href="/blog">blog</a>,
+        {
+          // Show projects link only in dev mode for now
+          import.meta.env.PROD ? null : (
+            <>
+              <a href="/projects">projects</a>,{" "}
+            </>
+          )
+        }
+        <a href="http://github.com/zolrath" target="_blank">GitHub</a>, or <a
+          href="/about">me</a
+        >.
+      </p>
     </div>
 
     <div class="hero-image-container">
       <picture>
-        <Image class="hero-image" src={computerImage} alt="Image of a universe inside of a monitor" width="550" height="466" />
+        <Image
+          class="hero-image"
+          src={computerImage}
+          alt="Image of a universe inside of a monitor"
+          width="550"
+          height="466"
+        />
       </picture>
     </div>
   </div>
@@ -60,7 +79,7 @@ const permalink = Astro.site?.href ?? '/';
   }
 
   .caption {
-    font-size: .8em;
+    font-size: 0.8em;
     font-style: italic;
     text-align: left;
   }
@@ -69,6 +88,18 @@ const permalink = Astro.site?.href ?? '/';
     width: 100%;
     max-width: 550px;
     margin-bottom: 1em;
+  }
+
+  .pixel-image {
+    /* IE, only works on <img> tags */
+    -ms-interpolation-mode: nearest-neighbor;
+    /* Firefox */
+    image-rendering: crisp-edges;
+    /* Chromium + Safari */
+    image-rendering: pixelated;
+    margin-bottom: 1.5em;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
   }
 
   @media (max-width: 1200px) {

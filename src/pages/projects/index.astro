@@ -1,29 +1,64 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ProjectCard from "@components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+import { ProjectDisplay } from "@mytypes/project";
+import ProjectHero from "@components/ProjectHero.astro";
+import ProjectListItem from "@components/ProjectListItem.astro";
 
-import { Image } from 'astro:assets';
-import broccoli from '@assets/broccoli-idle.gif';
+const title = "Projects";
+const description = "Projects";
+const permalink = `${Astro.site?.href ?? "/"}projects`;
 
-const title = 'Projects';
-const description = 'Projects';
-const permalink = `${Astro.site?.href ?? '/'}projects`;
+let projects = await getCollection("projects", ({ data }) => {
+  return data.display !== ProjectDisplay.Hidden;
+});
+
+const projectDisplayOrder = [
+  ProjectDisplay.Hero,
+  ProjectDisplay.Card,
+  ProjectDisplay.List,
+];
+
+projects = projects.sort(
+  (a, b) =>
+    projectDisplayOrder.indexOf(a.data.display) -
+    projectDisplayOrder.indexOf(b.data.display),
+);
 ---
 
-<BaseLayout title={title} description={description} permalink={permalink} current="projects">
+<BaseLayout
+  title={title}
+  description={description}
+  permalink={permalink}
+  current="projects"
+>
   <div class="container">
     <h1>Projects</h1>
-    <figure class="broccoli-image">
-      <Image src={broccoli} alt="Anthropomorphic broccoli standing idle." width="330" />
-      <figcaption>
-      Broccoli from <a href="/projects/uprooted">Uprooted</a>
-      </figcaption>
-    </figure>
-    <p><a href="/projects/uprooted">Uprooted</a></p>
-    <p><a href="/projects/promptbox">Promptbox</a></p>
-    <p><a href="https://github.com/zolrath/obsidian-auto-link-title" target="_blank">Obsidian Auto Link Title</a></p>
-    <p><a href="https://github.com/zolrath/wemux" target="_blank">wemux</a></p>
+    <!-- <figure class="broccoli-image"> -->
+    <!--   <img class="pixel-image" src="/assets/broccoli-idle.gif" alt="Anthropomorphic broccoli standing idle." width="330" /> -->
+    <!--   <figcaption> -->
+    <!--   Broccoli from <a href="/projects/uprooted">Uprooted</a> -->
+    <!--   </figcaption> -->
+    <!-- </figure> -->
+    {
+      projects.map((project, _index) => {
+        if (project.data.display == ProjectDisplay.Hero) {
+          return <ProjectHero project={project} />;
+        }
+        if (project.data.display == ProjectDisplay.Card) {
+          return <ProjectCard project={project} />;
+        }
+        if (project.data.display == ProjectDisplay.List) {
+          return <ProjectListItem project={project} />;
+        }
+      })
+    }
 
-    <p>Active member instructing and helping users in the Elixir Newbies and Godot discords.</p>
+    <p>
+      Active member instructing and helping users in the Elixir Newbies and
+      Godot discords.
+    </p>
   </div>
 </BaseLayout>
 
@@ -33,7 +68,7 @@ const permalink = `${Astro.site?.href ?? '/'}projects`;
     margin: -3em -7em 2em 2em;
     max-width: 300px;
   }
-  
+
   .broccoli-image figcaption {
     text-align: center;
   }

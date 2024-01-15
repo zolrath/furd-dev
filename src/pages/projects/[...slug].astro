@@ -1,0 +1,64 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Bio from "../../components/Bio.astro";
+import { ProjectDisplay } from "@mytypes/project";
+
+export async function getStaticPaths() {
+  let projects = await getCollection("projects", ({ data }) => {
+    return data.display !== ProjectDisplay.Hidden;
+  });
+
+  return projects.map((p) => ({
+    params: { slug: p.slug },
+    props: { project: p },
+  }));
+}
+
+const { data, slug } = Astro.props.project;
+const { Content } = await Astro.props.project.render();
+const { name, description, status, category } = data;
+
+const permalink = `${Astro.site?.href ?? "/"}projects/${slug}`;
+---
+
+<BaseLayout
+  title={name}
+  description={description}
+  permalink={permalink}
+  current="blog"
+>
+  <header>
+    <h1>{name}</h1>
+    <hr />
+  </header>
+  <div class="container">
+    <article class="content">
+      <Content />
+    </article>
+    <hr />
+    <Bio />
+  </div>
+</BaseLayout>
+
+<style>
+  header {
+    text-align: center;
+  }
+
+  header h1 {
+    margin-bottom: 0.7em;
+  }
+
+  header p {
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-family: var(--font-family-sans);
+    font-weight: 600;
+  }
+
+  header hr {
+    min-width: 100px;
+    width: 30%;
+  }
+</style>

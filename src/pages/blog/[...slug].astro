@@ -10,18 +10,18 @@ export async function getStaticPaths() {
     return import.meta.env.PROD ? data.draft !== true : true;
   });
 
-  return posts.map((p: any) => ({
+  return posts.map((p) => ({
     params: { slug: p.slug },
     props: { post: p },
   }));
 }
 
-const { body, data } = Astro.props.post;
+const { body, data, slug } = Astro.props.post;
 const { Content } = await Astro.props.post.render();
 const { title, description, publishDate, tags } = data;
 var readTime = readingTime(body).text;
 
-const permalink = `${Astro.site?.href ?? "/"}blog/${data.slug}`;
+const permalink = `${Astro.site?.href ?? "/"}blog/${slug}`;
 ---
 
 <BaseLayout

@@ -17,6 +17,9 @@
       "@layouts/*": [
         "src/layouts/*"
       ],
+      "@mytypes/*": [
+        "src/types/*"
+      ],
     }
   },
   "extends": "astro/tsconfigs/strict"
