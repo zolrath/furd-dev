@@ -1,7 +1,7 @@
 ---
 title: Integrating Steam Input Godot Steam
-hidden: true
-publishDate: 07 Dec 2023
+draft: true
+publishDate: 2023-12-07
 description: The basics of integrating Godot Steam into your project.
 tags: [godot, steam]
 ---

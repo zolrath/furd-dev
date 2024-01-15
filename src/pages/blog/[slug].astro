@@ -1,26 +1,37 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Bio from '../../components/Bio.astro';
-import getPostData from '../../utils/getPostData';
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Bio from "../../components/Bio.astro";
+import readingTime from "reading-time";
 
 export async function getStaticPaths() {
-  const posts: any[] = await Astro.glob('../../data/blog-posts/*.md');
-  return posts.filter(p => !p.frontmatter.hidden).map((p: any) => ({
-    params: { slug: p.file.split('/')?.pop().split('.').shift() },
+  const posts = await getCollection("blog", ({ data }) => {
+    // Filter out draft posts in production
+    return import.meta.env.PROD ? data.draft !== true : true;
+  });
+
+  return posts.map((p: any) => ({
+    params: { slug: p.slug },
     props: { post: p },
   }));
 }
 
-const { Content, frontmatter } = Astro.props.post;
-const { title, description, publishDate, tags } = frontmatter;
-const { slug, readingTime } = getPostData(Astro.props.post);
-const permalink = `${Astro.site?.href ?? '/'}blog/${slug}`;
-const tagBase = `${Astro.site?.href ?? '/'}blog/tag`;
+const { body, data } = Astro.props.post;
+const { Content } = await Astro.props.post.render();
+const { title, description, publishDate, tags } = data;
+var readTime = readingTime(body).text;
+
+const permalink = `${Astro.site?.href ?? "/"}blog/${data.slug}`;
 ---
 
-<BaseLayout title={title} description={description} permalink={permalink} current="blog">
+<BaseLayout
+  title={title}
+  description={description}
+  permalink={permalink}
+  current="blog"
+>
   <header>
-    <p>{publishDate} ~ {readingTime}</p>
+    <p>{publishDate.toLocaleDateString()} ~ {readTime}</p>
     <h1>{title}</h1>
     <hr />
   </header>
@@ -29,10 +40,16 @@ const tagBase = `${Astro.site?.href ?? '/'}blog/tag`;
       <Content />
     </article>
     <p>
-
-    <div class="text-sm">
-    <em>tags:</em> { tags.map((tag: string) => <><a href={`${tagBase}/${tag}`}>{tag}</a> </> ) }
-    </div>
+      <div class="text-sm">
+        <em>tags:</em>
+        {
+          tags.map((tag: string) => (
+            <>
+              <a href={`/blog/tag/${tag}`}>{tag}</a>{" "}
+            </>
+          ))
+        }
+      </div>
     </p>
     <hr />
     <Bio />

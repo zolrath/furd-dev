@@ -1,34 +1,57 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
-  const allPosts: MD[] = await Astro.glob("../../../data/blog-posts/*.md");
-  let tags: string[] = allPosts.filter((post: MD) => !post.frontmatter.hidden).map((post: MD) => post.frontmatter.tags).flat();
+  let posts = await getCollection("blog", ({ data }) => {
+    // Filter out draft posts in production
+    return import.meta.env.PROD ? data.draft !== true : true;
+  });
 
-  return tags.map(tag => {
+  posts = posts.sort(
+    (a, b) =>
+      new Date(b.data.publishDate).valueOf() -
+      new Date(a.data.publishDate).valueOf(),
+  );
+
+  let tags: string[] = posts.map((post) => post.data.tags).flat();
+
+  return tags.map((tag) => {
     return {
       params: { tag: tag },
-      props: { posts: allPosts }
-    }
+      props: { posts: posts },
+    };
   });
 }
 
 const { tag } = Astro.params;
 const { posts } = Astro.props;
-const filteredPosts = posts.filter(post => post.frontmatter.tags?.includes(tag));
-const permalink = `${Astro.site?.href ?? '/'}blog/tag/${tag}`;
+
+const filteredPosts = posts.filter((post) => post.data.tags?.includes(tag));
+const permalink = `${Astro.site?.href ?? "/"}blog/tag/${tag}`;
 ---
 
-<BaseLayout title={tag} description="Filtered posts by tag" permalink={permalink} current="blog">
+<BaseLayout
+  title={tag}
+  description="Filtered posts by tag"
+  permalink={permalink}
+  current="blog"
+>
   <p><a href="/blog">⬅️ Back to all posts</a></p>
   <p>Posts tagged with {tag}</p>
   <ul>
-    {filteredPosts.map(post => {
-      const href = `/blog/${post.file.split('/')?.pop()?.split('.').shift()}`;
-      return <>
-        <li><a href={href}>{post.frontmatter.title}</a></li>
-        <p class="text-sm">{post.frontmatter.description}</p>
-      </>
-      })}
+    {
+      filteredPosts.map((post) => {
+        const href = `/blog/${post.slug}`;
+        return (
+          <>
+            <li>
+              <a href={href}>{post.data.title}</a>
+            </li>
+            <p class="text-sm">{post.data.description}</p>
+          </>
+        );
+      })
+    }
   </ul>
 </BaseLayout>

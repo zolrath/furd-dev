@@ -1,9 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-import { Image } from 'astro:assets';
-import broccoli from '@assets/broccoli-idle.gif';
-
 const title = 'Uprooted';
 const description = 'About Uprooted';
 const permalink = `${Astro.site?.href}projects/uprooted`;
@@ -13,7 +10,7 @@ const permalink = `${Astro.site?.href}projects/uprooted`;
   <div class="container">
     <h1>Uprooted</h1>
     <figure class="broccoli-image">
-      <Image src={broccoli} alt="Anthropomorphic broccoli standing idle." width="330" />
+      <img class="pixel-image" src="/assets/broccoli-idle.gif" alt="Anthropomorphic broccoli standing idle." width="330" />
       <figcaption>
       Broccoli from <a href="/projects/uprooted">Uprooted</a>
       </figcaption>
@@ -47,7 +44,7 @@ const permalink = `${Astro.site?.href}projects/uprooted`;
     text-align: center;
   }
 
-  .broccoli-image img {
+  .pixel-image {
     /* IE, only works on <img> tags */
     -ms-interpolation-mode: nearest-neighbor;
     /* Firefox */

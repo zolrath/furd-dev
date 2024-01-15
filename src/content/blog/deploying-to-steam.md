@@ -1,7 +1,7 @@
 ---
 title: Deploying to Steam
-hidden: true
-publishDate: 21 Dec 2023
+draft: true
+publishDate: 2023-12-21
 description: Deploying to steam
 tags: [steam]
 ---

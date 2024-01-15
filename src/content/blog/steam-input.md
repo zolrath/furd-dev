@@ -1,7 +1,7 @@
 ---
 title: Integrating Steam Input
-hidden: true
-publishDate: 02 Jan 2024
+draft: true
+publishDate: 2024-01-02
 description: Integrating Steam Input with Godot's Input system.
 tags: [godot, steam]
 ---

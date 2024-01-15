@@ -1,7 +1,7 @@
 ---
 title: A love letter to Zellij.
-hidden: true
-publishDate: 03 Jan 2024
+draft: true
+publishDate: 2024-01-03
 description: A user friendly terminal multiplexer.
 tags: [linux]
 ---

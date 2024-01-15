@@ -1,6 +1,7 @@
 ---
 title: Improved Live Cursor with Phoenix
-publishDate: 08 Apr 2023
+draft: false
+publishDate: 2023-04-08
 description: How to show a lag-free live cursor in your Phoenix app
 tags: [elixir]
 ---

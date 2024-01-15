@@ -1,36 +1,58 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
-const title = 'Blog';
-const description = 'Latest articles.';
+const title = "Blog";
+const description = "Latest articles.";
 const permalink = `${Astro.site?.href}blog`;
 
-let allPosts = await Astro.glob('../../data/blog-posts/*.md');
+let posts = await getCollection("blog", ({ data }) => {
+  // Filter out draft posts in production
+  return import.meta.env.PROD ? data.draft !== true : true;
+});
 
-allPosts = allPosts.filter(p => p.frontmatter.hidden != true).sort((a, b) => new Date(b.frontmatter.publishDate).valueOf() - new Date(a.frontmatter.publishDate).valueOf());
+posts = posts.sort(
+  (a, b) =>
+    new Date(b.data.publishDate).valueOf() -
+    new Date(a.data.publishDate).valueOf(),
+);
 ---
 
-<BaseLayout title={title} description={description} permalink={permalink} current="blog">
+<BaseLayout
+  title={title}
+  description={description}
+  permalink={permalink}
+  current="blog"
+>
   <div class="container">
     <h1>Blog</h1>
-    {allPosts.map((post, index) => {
-      const href = `/blog/${post.file.split('/')?.pop()?.split('.').shift()}`;
-      return (
-        <div>
-          { index !== 0 && <hr /> }
-          <div class="post-item">
-            <h2>
-              <a href={href}>{post.frontmatter.title}</a>
-            </h2>
-            <em>tags:</em> { post.frontmatter.tags?.map((tag: string) => <><a href={`/blog/tag/${tag}`}>{tag}</a> </> ) }
-            <p>{post.frontmatter.description}</p>
-            <div class="post-item-footer">
-              <span class="post-item-date">— {post.frontmatter.publishDate}</span>
+    {
+      posts.map((post, index) => {
+        const href = `/blog/${post.slug}`;
+        return (
+          <div>
+            {index !== 0 && <hr />}
+            <div class="post-item">
+              <h2>
+                <a href={href}>{post.data.title}</a>
+              </h2>
+              <em>tags:</em>{" "}
+              {post.data.tags?.map((tag: string) => (
+                <>
+                  <a href={`/blog/tag/${tag}`}>{tag}</a>{" "}
+                </>
+              ))}
+              <p>{post.data.description}</p>
+              <div class="post-item-footer">
+                <span class="post-item-date">
+                  — {post.data.publishDate.toLocaleDateString()}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      )
-    })}
+        );
+      })
+    }
   </div>
 </BaseLayout>
 

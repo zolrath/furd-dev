@@ -1,7 +1,7 @@
 ---
 title: Dynamic Masking Shader in Godot
-hidden: true
-publishDate: 02 Dec 2023
+draft: true
+publishDate: 2023-12-02
 description: How I'm dynamically masking portions of my players sprite in Godot.
 tags: [godot]
 ---

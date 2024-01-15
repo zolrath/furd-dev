@@ -1,7 +1,7 @@
 ---
 title: Markdown Test Page
-hidden: true
-publishDate: 01 Dec 2021
+draft: true
+publishDate: 2021-12-01
 description: A sample page with the most common elements of an article, including headings, paragraphs, lists, and images. Use it as a starting point for applying your own styles.
 tags: ["programming"]
 ---

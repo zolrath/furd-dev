@@ -1,6 +1,7 @@
 ---
 title: Removing content shift caused by scrollbars
-publishDate: 24 May 2021
+draft: false
+publishDate: 2021-04-24
 description: It's gotten easy to remove content shift when a scrollbar appears with `scrollbar-gutter`
 tags: [webdev, css]
 ---

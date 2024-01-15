@@ -1,6 +1,7 @@
 ---
 title: Hello 👋
-publishDate: 28 Dec 2023
+draft: false
+publishDate: 2023-12-28
 description: A little about me.
 tags: ["personal"]
 ---

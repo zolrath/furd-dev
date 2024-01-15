@@ -1,7 +1,7 @@
 ---
 title: wemux
-hidden: true
-publishDate: 11 Jan 2024
+draft: true
+publishDate: 2024-01-11
 description: My first foray into open source, wait - 14 years ago??
 tags: [linux]
 ---
