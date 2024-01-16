@@ -6,7 +6,10 @@ import MarkdownIt from "markdown-it";
 const parser = new MarkdownIt();
 
 export async function GET(context) {
-  const posts = await getCollection("blog");
+  const posts = await getCollection("blog", ({ data }) => {
+    // Filter out draft posts in production
+    return import.meta.env.PROD ? data.draft !== true : true;
+  });
   return rss({
     title: 'Furd.dev | Blog',
     description: 'Musings about programming, art, and game dev.',
