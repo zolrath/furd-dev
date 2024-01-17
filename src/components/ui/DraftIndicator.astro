@@ -1,0 +1,14 @@
+---
+import { cn } from '@/utils';
+
+type Props = {
+  slug: string;
+  className: string;
+}
+
+const { slug, className } = Astro.props;
+---
+
+<span transition:name={`${slug}-draft`} class={cn("absolute py-2 px-6 font-bold text-white bg-red-600 rounded-md transition duration-300 group-hover:-translate-y-2", className)}>
+  DRAFT
+</span>

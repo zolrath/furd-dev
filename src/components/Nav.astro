@@ -3,6 +3,23 @@ import ThemeToggleButton from "./ThemeToggleButton.svelte";
 const { current = "" } = Astro.props;
 ---
 
+<nav>
+  <a class={current === "" ? "selected" : ""} href="/">home</a>
+  <a class={current === "about" ? "selected" : ""} href="/about">about</a>
+  {
+    // Show projects link only in dev mode for now
+    import.meta.env.PROD ? null : (
+      <a class={current === "projects" ? "selected" : ""} href="/projects">
+        projects
+      </a>
+    )
+  }
+  <a class={current === "blog" ? "selected" : ""} href="/blog">blog</a>
+  <div class="theme-toggle-container">
+    <ThemeToggleButton client:load />
+  </div>
+</nav>
+
 <style>
   nav {
     align-items: center;
@@ -54,20 +71,3 @@ const { current = "" } = Astro.props;
     width: 75px;
   }
 </style>
-
-<nav>
-  <a class={current === "" ? "selected" : ""} href="/">home</a>
-  <a class={current === "about" ? "selected" : ""} href="/about">about</a>
-  {
-    // Show projects link only in dev mode for now
-    import.meta.env.PROD ? null : (
-      <a class={current === "projects" ? "selected" : ""} href="/projects">
-        projects
-      </a>
-    )
-  }
-  <a class={current === "blog" ? "selected" : ""} href="/blog">blog</a>
-  <div class="theme-toggle-container">
-    <ThemeToggleButton client:load />
-  </div>
-</nav>

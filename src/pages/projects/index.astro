@@ -5,6 +5,7 @@ import { getCollection } from "astro:content";
 import { ProjectDisplay } from "@mytypes/project";
 import ProjectHero from "@components/ProjectHero.astro";
 import ProjectListItem from "@components/ProjectListItem.astro";
+import MainLayout from "@layouts/MainLayout.astro";
 
 const title = "Projects";
 const description = "Projects";
@@ -27,11 +28,9 @@ projects = projects.sort(
 );
 ---
 
-<BaseLayout
+<MainLayout
   title={title}
   description={description}
-  permalink={permalink}
-  current="projects"
 >
   <div class="container">
     <h1>Projects</h1>
@@ -60,7 +59,7 @@ projects = projects.sort(
       Godot discords.
     </p>
   </div>
-</BaseLayout>
+</MainLayout>
 
 <style>
   .broccoli-image {

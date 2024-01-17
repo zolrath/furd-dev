@@ -3,6 +3,9 @@ title: Integrating Steam Input Godot Steam
 draft: true
 publishDate: 2023-12-07
 description: The basics of integrating Godot Steam into your project.
+coverImage: /src/assets/home-computer.webp
+coverImageAlt: A cover image alt
+category: programming
 tags: [godot, steam]
 ---
 

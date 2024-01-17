@@ -3,6 +3,9 @@ title: Integrating Steam Input
 draft: true
 publishDate: 2024-01-02
 description: Integrating Steam Input with Godot's Input system.
+coverImage: /src/assets/home-computer.webp
+coverImageAlt: A cover image alt
+category: programming
 tags: [godot, steam]
 ---
 

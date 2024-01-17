@@ -5,10 +5,20 @@ const blog = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    draft: z.boolean().default(false),
-    publishDate: z.date(),
     description: z.string(),
+    coverImage: z.string(),
+    coverImageAlt: z.string(),
+    draft: z.boolean().default(false),
+    publishDate: z
+      .string()
+      .or(z.date())
+      .transform((val) => new Date(val)),
+    updatedDate: z
+      .string()
+      .optional()
+      .transform((str) => (str ? new Date(str) : undefined)),
     tags: z.array(z.string()),
+    category: z.string(),
     relatedPosts: z.array(reference('blog')).optional(),
   }),
 })

@@ -1,9 +1,28 @@
+  <!-- <header> -->
+  <!--   <p>{publishDate.toLocaleDateString()} ~ {readTime}</p> -->
+  <!--   <h1>{title}</h1> -->
+  <!--   <hr /> -->
+  <!-- </header> -->
+  <!-- <div class="my-0 mx-auto w-full max-w-2xl"> -->
+  <!--   <div class="flex"> -->
+  <!--     <article class="content"> -->
+  <!--         <Content /> -->
+  <!--       <div class="text-sm"> -->
+  <!--         <em>tags:</em> -->
+  <!--         { -->
+  <!--         tags.map((tag: string) => ( -->
+  <!--           <> -->
+  <!--             <a href={`/blog/tag/${tag}`}>{tag}</a>{" "} -->
+  <!--           </> -->
+  <!--         )) -->
+  <!--         } -->
+  <!--       </div> -->
+  <!--     </article> -->
+  <!--     <TableOfContents headings={headings} /> -->
 ---
-import { getCollection } from "astro:content";
-import BaseLayout from "@layouts/BaseLayout.astro";
-import TableOfContents from "@components/TableOfContentss.astro";
-import Bio from "@components/Bio.astro";
-import readingTime from "reading-time";
+import BlogPostLayout from '@/layouts/BlogPostLayout.astro';
+import GuideLayout from '@layouts/GuideLayout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => {
@@ -11,72 +30,25 @@ export async function getStaticPaths() {
     return import.meta.env.PROD ? data.draft !== true : true;
   });
 
-  return posts.map((p) => ({
-    params: { slug: p.slug },
-    props: { post: p },
-  }));
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+		props: post,
+	}));
 }
 
-const { body, data, slug } = Astro.props.post;
-const { Content, headings } = await Astro.props.post.render();
-const { title, description, publishDate, tags } = data;
-var readTime = readingTime(body).text;
+type Props = CollectionEntry<'blog'>;
 
-const permalink = `${Astro.site?.href ?? "/"}blog/${slug}`;
+const post = Astro.props;
+const slug = Astro.params.slug;
+const { Content } = await post.render();
+
+if (!slug || !post) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Not found'
+  });
+}
 ---
-
-<BaseLayout
-  title={title}
-  description={description}
-  permalink={permalink}
-  current="blog"
->
-  <header>
-    <p>{publishDate.toLocaleDateString()} ~ {readTime}</p>
-    <h1>{title}</h1>
-    <hr />
-  </header>
-  <div class="my-0 mx-auto w-full max-w-2xl">
-    <div class="flex">
-      <article class="content">
-          <Content />
-        <div class="text-sm">
-          <em>tags:</em>
-          {
-          tags.map((tag: string) => (
-            <>
-              <a href={`/blog/tag/${tag}`}>{tag}</a>{" "}
-            </>
-          ))
-          }
-        </div>
-      </article>
-      <TableOfContents headings={headings} />
-    </div>
-    <hr />
-    <Bio />
-  </div>
-  </div>
-</BaseLayout>
-
-<style>
-  header {
-    text-align: center;
-  }
-
-  header h1 {
-    margin-bottom: 0.7em;
-  }
-
-  header p {
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    font-family: var(--font-family-sans);
-    font-weight: 600;
-  }
-
-  header hr {
-    min-width: 100px;
-    width: 30%;
-  }
-</style>
+<GuideLayout {...post}>
+	<Content />
+</GuideLayout>

@@ -1,76 +1,26 @@
+              <!-- <em>tags:</em>{" "} -->
+              <!-- {post.data.tags?.map((tag: string) => ( -->
+              <!--   <> -->
+              <!--     <a href={`/blog/tag/${tag}`}>{tag}</a>{" "} -->
+              <!--   </> -->
+              <!-- ))} -->
 ---
-import { getCollection } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogHeader from "@/components/BlogHeader.astro";
+import BlogCard from "@/components/cards/BlogCard.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
+import { getPosts } from "@/fetchers/posts";
 
-const title = "Blog";
-const description = "Latest articles.";
-const permalink = `${Astro.site?.href}blog`;
-
-let posts = await getCollection("blog", ({ data }) => {
-  // Filter out draft posts in production
-  return import.meta.env.PROD ? data.draft !== true : true;
-});
-
-posts = posts.sort(
-  (a, b) =>
-    new Date(b.data.publishDate).valueOf() -
-    new Date(a.data.publishDate).valueOf(),
-);
+const posts = await getPosts();
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  permalink={permalink}
-  current="blog"
->
-  <div class="container">
-    <h1>Blog</h1>
-    {
-      posts.map((post, index) => {
-        const href = `/blog/${post.slug}`;
-        return (
-          <div>
-            {index !== 0 && <hr />}
-            <div class="post-item">
-              <h2>
-                <a href={href}>{post.data.title}</a>
-              </h2>
-              <em>tags:</em>{" "}
-              {post.data.tags?.map((tag: string) => (
-                <>
-                  <a href={`/blog/tag/${tag}`}>{tag}</a>{" "}
-                </>
-              ))}
-              <p>{post.data.description}</p>
-              <div class="post-item-footer">
-                <span class="post-item-date">
-                  — {post.data.publishDate.toLocaleDateString()}
-                </span>
-              </div>
-            </div>
-          </div>
-        );
-      })
-    }
-  </div>
-</BaseLayout>
+<MainLayout title="Blog">
+  <section class="container py-10">
+    <BlogHeader title="Blog" />
 
-<style>
-  h2,
-  .post-item-footer {
-    font-family: var(--font-family-sans);
-    font-weight: 700;
-  }
-
-  .post-item-date {
-    color: var(--text-secondary);
-    text-align: left;
-    text-transform: uppercase;
-    margin-right: 16px;
-  }
-
-  hr {
-    margin: 60px auto;
-  }
-</style>
+    <div
+      class="grid grid-cols-1 gap-x-6 gap-y-9 md:grid-cols-2 md:gap-y-11 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16"
+    >
+      {posts.map((post) => <BlogCard {...post} />)}
+    </div>
+  </section>
+</MainLayout>

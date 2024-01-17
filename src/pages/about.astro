@@ -1,15 +1,13 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-
 import { Image } from 'astro:assets';
 import profileImage from '@assets/profile-pic.jpg';
+import MainLayout from '@layouts/MainLayout.astro';
 
 const title = 'About';
 const description = 'About your Matt Furden.';
-const permalink = `${Astro.site?.href}about`;
 ---
 
-<BaseLayout title={title} description={description} permalink={permalink} current="about">
+<MainLayout title={title} description={description}>
   <div class="container">
     <h1>About</h1>
     <figure class="about-image">
@@ -25,7 +23,7 @@ const permalink = `${Astro.site?.href}about`;
     see some of my (public) work on <a href="https://www.github.com/zolrath" target="_blank">GitHub</a> or <a href="https://www.instagram.com/furd">Instagram</a>.</p>
     <p>I've been making a game on weekends called <a href="/projects/uprooted">Uprooted</a> few the last few months.
   </div>
-</BaseLayout>
+</MainLayout>
 
 <style>
   .about-image {
