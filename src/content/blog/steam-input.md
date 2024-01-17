@@ -9,6 +9,8 @@ category: programming
 tags: [godot, steam]
 ---
 
+
+## Handling Connections
 First we'll connect to the controller connected and disconnected signals to handle when a player connects or disconnects their controller.
 ```gdscript
 ## Call this after calling `Steam.inputInit()` and `Steam.enableDeviceCallbacks()`
@@ -76,7 +78,7 @@ func get_action_handles(action_names: Dictionary):
 ```
 
 
-# Input Wrappers
+## Input Wrappers
 ```gdscript
 ## This is equivalent to Input.get_action_strength except it will only check the relevant device.
 func get_action_strength(device: int, action: StringName, exact_match: bool = false) -> float:

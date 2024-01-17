@@ -5,8 +5,8 @@ publishDate: 2023-12-28
 description: A little about me.
 coverImage: /src/assets/blog/hello/header.png
 coverImageAlt: A cover image alt
-category: programming
-tags: ["personal"]
+category: life
+tags: []
 ---
 
 ## Hello

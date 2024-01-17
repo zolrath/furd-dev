@@ -32,15 +32,28 @@ if (!images[post.data.coverImage]) throw new Error(`"${post.data.coverImage}" do
   </a>
 
   <div class="flex justify-between items-center">
-    <a href={`/blog/category/${post.data.category}`}>
-      <Badge
-        radius="md"
-        className="capitalize"
-        transition:name={"category-" + post.slug}
-      >
-        {post.data.category}
-      </Badge>
-    </a>
+    <div class="flex gap-2">
+      <a href={`/blog/category/${post.data.category}`}>
+        <Badge
+          radius="md"
+          className="capitalize"
+          transition:name={"category-" + post.slug}
+        >
+          {post.data.category}
+        </Badge>
+      </a>
+      {post.data.tags?.map((tag: string) => (
+        <a href={`/blog/tag/${tag}`}>
+          <Badge
+            radius="md"
+            variant="outline"
+            className="capitalize"
+          >
+            {tag}
+          </Badge>
+        </a>
+      ))}
+    </div>
     <span
       class="font-medium text-muted-foreground"
       transition:name={"date-" + post.slug}

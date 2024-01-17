@@ -6,7 +6,7 @@ description: It's gotten easy to remove content shift when a scrollbar appears w
 coverImage: /src/assets/blog/scrollbar-gutter/header.png
 coverImageAlt: A cover image alt
 category: programming
-tags: [webdev, css]
+tags: [webdev, CSS]
 ---
 
 For some reason whenever a site's content shifts when a scrollbar appears a little part of me feels the need to fix it.

@@ -7,4 +7,5 @@ export type SiteConfig = {
     twitter: string;
     github: string;
   };
+  showDrafts: boolean;
 };

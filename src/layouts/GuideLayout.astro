@@ -15,7 +15,7 @@ import generateToc from "@/utils/generateToc";
 type Props = CollectionEntry<"blog">;
 
 const slug = Astro.props.slug;
-const { draft, title, description, publishDate, updatedDate, coverImage, category } =
+const { draft, title, description, publishDate, updatedDate, coverImage, category, tags } =
   Astro.props.data;
 // const toc = await getTableOfContents(Astro.props.body);
 const { headings } = await Astro.props.render();
@@ -38,15 +38,28 @@ const { headings } = await Astro.props.render();
     </a>
 
     <article class="mx-auto max-w-none md:max-w-screen-md prose dark:prose-invert">
-      <a href={`/blog/category/${category}`}>
-        <Badge
-          radius="md"
-          className="capitalize"
-          transition:name={"category-" + slug}
-        >
-          {category}
-        </Badge>
-      </a>
+      <div class="flex gap-2">
+        <a href={`/blog/category/${category}`}>
+          <Badge
+            radius="md"
+            className="capitalize"
+            transition:name={"category-" + slug}
+          >
+            {category}
+          </Badge>
+        </a>
+        {tags?.map((tag: string) => (
+          <a href={`/blog/tag/${tag}`}>
+            <Badge
+              radius="md"
+              variant="outline"
+              className="capitalize"
+            >
+              {tag}
+            </Badge>
+          </a>
+        ))}
+      </div>
       <Image
         class="overflow-hidden my-6 rounded-xl"
         width={1020}

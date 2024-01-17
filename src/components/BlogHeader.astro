@@ -1,31 +1,27 @@
 ---
 import { buttonVariants } from "@/components/ui/Button";
-import { getCategories } from "@/fetchers/posts";
+import { getCategories, getTags } from "@/fetchers/posts";
 import { cn } from "@/utils";
 import { Icon } from "astro-icon/components";
 
 const categories = await getCategories();
+const tags = await getTags();
 
 type Props = {
   title: string;
 };
 
 const { title } = Astro.props;
-const { category } = Astro.params;
+const { category, tag } = Astro.params;
 ---
 
 <h1 class="inline-block text-4xl font-heading">{title}</h1>
 
 <div
-  class="flex justify-between items-start my-6 max-md:gap-4"
+  class="flex flex-col justify-start items-end my-6 max-md:gap-4"
 >
-  <span class="flex items-center px-2 max-w-xs h-10 rounded-md border lg:px-3 lg:w-full text-muted-foreground">
-    <Icon name="ri:search-line" class="size-5" />
-    <span class="hidden ml-2 text-sm lg:flex">Search (coming soon)</span>
-  </span>
-
   {
-    categories?.length ? (
+    !tag && categories?.length ? (
       <ul class="flex overflow-auto items-center pb-2 space-x-2 lg:space-x-2.5 snap-x snap-mandatory">
         <li class="flex-shrink-0 snap-start">
           <a
@@ -49,6 +45,44 @@ const { category } = Astro.params;
                 item === category ? "select-none" : "",
                 buttonVariants({
                   variant: item === category ? "default" : "outline"
+                })
+              )}
+            >
+              {item}
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <div />
+    )
+  }
+
+  {
+    tag && tags?.length ? (
+      <ul class="flex overflow-auto items-center pb-2 space-x-2 lg:space-x-2.5 snap-x snap-mandatory">
+        <li class="flex-shrink-0 snap-start">
+          <a
+            href={`/blog`}
+            class={cn(
+              !tag ? "select-none" : "",
+              buttonVariants({
+                variant: !tag ? "default" : "outline"
+              })
+            )}
+          >
+            All posts
+          </a>
+        </li>
+        {tags.map((item) => (
+          <li class="flex-shrink-0 snap-start">
+            <a
+              href={`/blog/tag/${item}`}
+              class={cn(
+                "capitalize",
+                item === tag ? "select-none" : "",
+                buttonVariants({
+                  variant: item === tag ? "default" : "outline"
                 })
               )}
             >
