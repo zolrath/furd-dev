@@ -1,17 +1,15 @@
 ---
-title: Integrating Steam Input Godot Steam
+title: Integrating Godot Steam
 draft: true
 publishDate: 2023-12-07
 description: The basics of integrating Godot Steam into your project.
-coverImage: /src/assets/home-computer.webp
+coverImage: /src/assets/blog/godot-steam/header.png
 coverImageAlt: A cover image alt
 category: programming
 tags: [godot, steam]
 ---
 
-![Illustration of Godot logo robot with steam coming out of its head](/assets/blog/godot-steam/godot-robot.png)
-
-# Godot Steam
+## Godot Steam
 
 [Godot Steam](https://github.com/CoaguCo-Industries/GodotSteam) is a plugin for Godot that makes it easy to integrate Steamworks into your game. It's a great option if you're looking to add Steam achievements, leaderboards, Steam Input, or cloud saves to your game.
 

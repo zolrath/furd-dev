@@ -3,31 +3,22 @@ import { Image } from 'astro:assets';
 
 import profileImage from '@assets/profile-pic.jpg';
 ---
-<div>
-  <Image src={profileImage} alt="Headshot of Matt Furden" width="100" height="100" />
+<hr />
+<div class="flex items-center -mt-10">
+  <Image class="block mr-5 rounded-full w-[100px] h-[100px]" src={profileImage} alt="Headshot of Matt Furden" width="100" height="100" />
   <p>
-    Hi, I'm <strong>Matt</strong>. I'm a software engineer and artist based in the Central Coast of California.
+    Hi! I'm <strong>Matt</strong>, a software engineer and artist based in the Central Coast of California.
     You can chat with me on <a href="https://discordapp.com/users/54376664171294720" target="_blank">Discord</a>,
-    see some of my work on <a href="https://www.github.com/zolrath" target="_blank">GitHub</a>,
-    or read more about me <a href="https://www.furd.dev/about" target="_blank">here</a>.
+    see some of my work on <a href="https://www.github.com/zolrath" target="_blank">GitHub</a> or <a href="https://www.instagram.com/furd" target="_blank">Instagram</a>,
+    or read more about me <a href="/about">here</a>.
   </p>
 </div>
 
 <style>
-  div {
-    align-items: center;
-    display: flex;
-  }
-
-  img {
-    width: 100px;
-    height: 100px;
-    border-radius: 100px;
-    display: block;
-    margin-right: 20px;
-  }
-
-  p {
-    font-size: 1.125rem;
+  hr {
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    background-image: linear-gradient(to right, #333, #ccc, #333);
   }
 </style>

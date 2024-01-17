@@ -3,7 +3,7 @@ title: wemux
 draft: true
 publishDate: 2024-01-11
 description: My first foray into open source, wait - 14 years ago??
-coverImage: /src/assets/home-computer.webp
+coverImage: /src/assets/blog/wemux/header.png
 coverImageAlt: A cover image alt
 category: programming
 tags: [linux]

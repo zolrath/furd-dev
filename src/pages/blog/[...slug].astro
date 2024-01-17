@@ -1,34 +1,10 @@
-  <!-- <header> -->
-  <!--   <p>{publishDate.toLocaleDateString()} ~ {readTime}</p> -->
-  <!--   <h1>{title}</h1> -->
-  <!--   <hr /> -->
-  <!-- </header> -->
-  <!-- <div class="my-0 mx-auto w-full max-w-2xl"> -->
-  <!--   <div class="flex"> -->
-  <!--     <article class="content"> -->
-  <!--         <Content /> -->
-  <!--       <div class="text-sm"> -->
-  <!--         <em>tags:</em> -->
-  <!--         { -->
-  <!--         tags.map((tag: string) => ( -->
-  <!--           <> -->
-  <!--             <a href={`/blog/tag/${tag}`}>{tag}</a>{" "} -->
-  <!--           </> -->
-  <!--         )) -->
-  <!--         } -->
-  <!--       </div> -->
-  <!--     </article> -->
-  <!--     <TableOfContents headings={headings} /> -->
 ---
-import BlogPostLayout from '@/layouts/BlogPostLayout.astro';
-import GuideLayout from '@layouts/GuideLayout.astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getPosts } from '@/fetchers/posts';
+import BlogPostLayout from '@layouts/BlogPostLayout.astro';
+import { type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => {
-    // Filter out draft posts in production
-    return import.meta.env.PROD ? data.draft !== true : true;
-  });
+  const posts = await getPosts()
 
 	return posts.map((post) => ({
 		params: { slug: post.slug },
@@ -49,6 +25,6 @@ if (!slug || !post) {
   });
 }
 ---
-<GuideLayout {...post}>
+<BlogPostLayout {...post}>
 	<Content />
-</GuideLayout>
+</BlogPostLayout>

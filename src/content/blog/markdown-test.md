@@ -6,7 +6,7 @@ description: A sample page with the most common elements of an article, includin
 coverImage: /src/assets/home-computer.webp
 coverImageAlt: A cover image alt
 category: programming
-tags: ["test"]
+tags: []
 ---
 
 ![Illustration of woman using a computer receiving likes](/assets/blog/casual-life-3d-likes.webp)

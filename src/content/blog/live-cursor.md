@@ -9,8 +9,6 @@ category: programming
 tags: [elixir]
 ---
 
-# LiveCursor
-
 ## Overview
 
 This is a follow up to Koen van Gilst's great blog post [Phoenix LiveView Cursors](https://koenvangilst.nl/blog/phoenix-liveview-cursors) which walks you through the process of adding cursors for the visitors on page using LiveView and Phoenix Presence. Be sure to read it before continuing here, this builds upon what you'll make there.
@@ -99,16 +97,11 @@ That won't do.
 
 Next time we'll work on changing our mouse position logic to be independent of screen size!
 
-## Running the example project
+## Example project
 
-To start your Phoenix server:
-
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
-
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+If you'd like to take this code for a spin grab the [example project](https://github.com/zolrath/live_cursor) and try it out!
 
 ## Learn more
 
-  * Koen van Gilst's Phoenix LiveView Cursors: https://koenvangilst.nl/blog/phoenix-liveview-cursors
-  * Official website: https://www.phoenixframework.org/
+  * [Koen van Gilst's Phoenix LiveView Cursors](https://koenvangilst.nl/blog/phoenix-liveview-cursors)
+  * [Phoenix Framework](https://www.phoenixframework.org)

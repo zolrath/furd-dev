@@ -42,6 +42,7 @@ if (!images[post.data.coverImage]) throw new Error(`"${post.data.coverImage}" do
           {post.data.category}
         </Badge>
       </a>
+      <div class="hidden md:flex">
       {post.data.tags?.map((tag: string) => (
         <a href={`/blog/tag/${tag}`}>
           <Badge
@@ -53,6 +54,7 @@ if (!images[post.data.coverImage]) throw new Error(`"${post.data.coverImage}" do
           </Badge>
         </a>
       ))}
+      </div>
     </div>
     <span
       class="font-medium text-muted-foreground"

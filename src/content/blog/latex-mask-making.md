@@ -3,7 +3,7 @@ title: Making Latex Masks
 draft: true
 publishDate: 2024-8-28
 description: The journey of making my own latex mask for halloween.
-coverImage: /src/assets/blog/hello/header.png
+coverImage: /src/assets/blog/latex-mask-making/header.png
 coverImageAlt: A cover image alt
 category: art
 tags: [sculpture, costume]

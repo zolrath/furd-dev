@@ -11,7 +11,11 @@ export function wait(ms: number) {
 }
 
 export function formatDate(date: Date) {
-  return format(date, "LLL dd, y");
+  // zod adds the timezone to the parsed date which makes the site
+  // report incorrect dates for the publishDate frontmatter.
+  // Remove the timezone from the date to fix this.
+  var timezoneless_date = new Date(date.toISOString().slice(0, -1))
+  return format(timezoneless_date, "LLL dd, y");
 }
 
 export function extractSegmentURL(path: string) {
