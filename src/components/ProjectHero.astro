@@ -9,26 +9,24 @@ const { project } = Astro.props;
 const { name, headerImage, description, link } = project.data;
 ---
 
-<img
-  class="pixel-image"
-  transition:name={`${name} image`}
-  src={headerImage}
-  alt={name}
-/>
-<a href={link}><h3 transition:name={`${name} title`}>{name}</h3></a>
-<p>Hero</p>
-<p>{description}</p>
-
-<style>
-  .pixel-image {
-    /* IE, only works on <img> tags */
-    -ms-interpolation-mode: nearest-neighbor;
-    /* Firefox */
-    image-rendering: crisp-edges;
-    /* Chromium + Safari */
-    image-rendering: pixelated;
-    margin-bottom: 1.5em;
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-  }
-</style>
+<a href={link}>
+  <div
+    class="rounded-md overflow-hidden aspect-video shadow-md hover:shadow-lg transition"
+  >
+    <figure
+      class="relative overflow-hidden flex content-center items-center w-full h-full"
+    >
+      <img
+        class="h-[200px] rounded-xl"
+        transition:name={`${name}-image`}
+        src={headerImage}
+        alt={name}
+      />
+      <h1 transition:name={`${name}-title`}>
+        {name}
+      </h1>
+    </figure>
+    <p class="z-10">Hero</p>
+    <p>{description}</p>
+  </div>
+</a>

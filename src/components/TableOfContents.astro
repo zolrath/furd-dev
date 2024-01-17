@@ -1,0 +1,12 @@
+---
+import generateToc from "src/utils/generateToc"
+import TableOfContentsHeading from "./TableOfContentsHeading.astro";
+const { headings } = Astro.props;
+const toc = generateToc(headings);
+---
+
+<nav class="hidden sticky order-2 pt-8 lg:block t-0">
+  <ul>
+    {toc.map(heading => <TableOfContentsHeading heading={heading} />)}
+  </ul>
+</nav>

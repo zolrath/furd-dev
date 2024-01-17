@@ -69,22 +69,6 @@ projects = projects.sort(
     max-width: 300px;
   }
 
-  .broccoli-image figcaption {
-    text-align: center;
-  }
-
-  .broccoli-image img {
-    /* IE, only works on <img> tags */
-    -ms-interpolation-mode: nearest-neighbor;
-    /* Firefox */
-    image-rendering: crisp-edges;
-    /* Chromium + Safari */
-    image-rendering: pixelated;
-    margin-bottom: 1.5em;
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-  }
-
   @media (max-width: 1020px) {
     .broccoli-image {
       float: none;

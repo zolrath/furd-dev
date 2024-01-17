@@ -6,29 +6,12 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { name, headerImage, description, link } = project.data;
+const { name, description, link } = project.data;
 ---
 
-<img
-  class="pixel-image"
-  transition:name={`${name} image`}
-  src={headerImage}
-  alt={name}
-/>
-<a href={link}><h3 transition:name={`${name} title`}>{name}</h3></a>
-<p>List</p>
-<p>{description}</p>
-
-<style>
-  .pixel-image {
-    /* IE, only works on <img> tags */
-    -ms-interpolation-mode: nearest-neighbor;
-    /* Firefox */
-    image-rendering: crisp-edges;
-    /* Chromium + Safari */
-    image-rendering: pixelated;
-    margin-bottom: 1.5em;
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-  }
-</style>
+<a href={link}>
+  <div class="mb-4 dark:bg-zinc-700 rounded-md p-4">
+    <h3 transition:name={`${name} title`}>{name}</h3>
+    {description}
+  </div>
+</a>

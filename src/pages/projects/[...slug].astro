@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 
 const { data, slug } = Astro.props.project;
 const { Content } = await Astro.props.project.render();
-const { name, description, status, category } = data;
+const { name, description, headerImage, status, category } = data;
 
 const permalink = `${Astro.site?.href ?? "/"}projects/${slug}`;
 ---
@@ -28,11 +28,16 @@ const permalink = `${Astro.site?.href ?? "/"}projects/${slug}`;
   permalink={permalink}
   current="blog"
 >
-  <header>
-    <h1>{name}</h1>
-    <hr />
-  </header>
   <div class="container">
+    <header>
+      <h1 transition:name={`${name}-title`}>{name}</h1>
+      <img
+        class="rounded-xl"
+        transition:name={`${name}-image`}
+        src={headerImage}
+      />
+      <hr />
+    </header>
     <article class="content">
       <Content />
     </article>

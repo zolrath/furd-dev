@@ -133,7 +133,7 @@ Minim id consequat adipisicing cupidatat laborum culpa veniam non consectetur et
 
 [[Top]](#top)
 
-# <a name="Code"></a>Code
+# Code
 
 ## Inline code
 

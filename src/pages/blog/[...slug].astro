@@ -1,7 +1,8 @@
 ---
 import { getCollection } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import Bio from "../../components/Bio.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import TableOfContents from "@components/TableOfContentss.astro";
+import Bio from "@components/Bio.astro";
 import readingTime from "reading-time";
 
 export async function getStaticPaths() {
@@ -17,7 +18,7 @@ export async function getStaticPaths() {
 }
 
 const { body, data, slug } = Astro.props.post;
-const { Content } = await Astro.props.post.render();
+const { Content, headings } = await Astro.props.post.render();
 const { title, description, publishDate, tags } = data;
 var readTime = readingTime(body).text;
 
@@ -35,24 +36,26 @@ const permalink = `${Astro.site?.href ?? "/"}blog/${slug}`;
     <h1>{title}</h1>
     <hr />
   </header>
-  <div class="container">
-    <article class="content">
-      <Content />
-    </article>
-    <p>
-      <div class="text-sm">
-        <em>tags:</em>
-        {
+  <div class="my-0 mx-auto w-full max-w-2xl">
+    <div class="flex">
+      <article class="content">
+          <Content />
+        <div class="text-sm">
+          <em>tags:</em>
+          {
           tags.map((tag: string) => (
             <>
               <a href={`/blog/tag/${tag}`}>{tag}</a>{" "}
             </>
           ))
-        }
-      </div>
-    </p>
+          }
+        </div>
+      </article>
+      <TableOfContents headings={headings} />
+    </div>
     <hr />
     <Bio />
+  </div>
   </div>
 </BaseLayout>
 
