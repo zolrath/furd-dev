@@ -15,6 +15,7 @@ const blog = defineCollection({
       .transform((val) => new Date(val)),
     updatedDate: z
       .string()
+      .or(z.date())
       .optional()
       .transform((str) => (str ? new Date(str) : undefined)),
     tags: z.array(z.string()),

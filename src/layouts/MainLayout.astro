@@ -6,6 +6,7 @@ import BaseLayout from "./BaseLayout.astro";
 import { SheetMobileNav } from "@/components/layout/SheetMobileNav";
 import { navMenuConfig } from "@/config/nav-menu";
 import MainNav from "@components/layout/MainNav.astro";
+import { ThemeToggle } from "@components/ThemeToggle";
 
 type Props = {
   title: string;
@@ -27,11 +28,11 @@ const { title, description, mainClass } = Astro.props;
     />
 
     <nav slot="right-header">
-        Nice
+      <ThemeToggle client:idle />
     </nav>
   </Header>
 
-  <main class={cn(mainClass)}>
+  <main class={cn(mainClass, "flex-grow")}>
     <slot />
   </main>
 

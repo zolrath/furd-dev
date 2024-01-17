@@ -2,11 +2,12 @@
 title: Markdown Test Page
 draft: true
 publishDate: 2021-12-01
+updatedDate: 2024-01-17
 description: A sample page with the most common elements of an article, including headings, paragraphs, lists, and images. Use it as a starting point for applying your own styles.
 coverImage: /src/assets/home-computer.webp
 coverImageAlt: A cover image alt
 category: programming
-tags: []
+tags: [webdev]
 ---
 
 ![Illustration of woman using a computer receiving likes](/assets/blog/casual-life-3d-likes.webp)

@@ -1,0 +1,31 @@
+---
+import { siteConfig } from "@/config/site";
+import { cn } from "@//utils";
+import { Icon } from "astro-icon/components";
+import { ThemeToggle } from "@/components/ThemeToggle";
+
+type Props = {
+  className?: string;
+};
+
+const { className } = Astro.props;
+---
+
+<footer class={cn(className)}>
+  <div
+    class="container flex flex-col gap-4 justify-between items-center py-10 md:flex-row md:py-0 md:h-24"
+  >
+    <div
+      class="flex flex-col gap-4 items-center px-8 md:flex-row md:gap-2 md:px-0"
+    >
+      <a href="/" aria-label="Furd.dev homepage">
+        <Icon name="stars-outline" class="size-8" /></a
+      >
+
+      <p class="text-sm leading-loose text-center md:text-left balance-text">
+        &copy; {new Date().getFullYear()} Matt Furden
+      </p>
+    </div>
+
+  </div>
+</footer>

@@ -35,9 +35,9 @@ const { category, tag } = Astro.params;
             All posts
           </a>
 
-      <ul class="flex overflow-auto items-start pb-2 space-x-2 lg:space-x-2.5 scrollbar scrollbar-thumb-white scrollbar-thumb-rounded-md scrollbar-track-rounded-md scrollbar-track-zinc-700 snap-x snap-mandatory">
+      <ul id="categories" class="flex overflow-auto items-start pb-2 space-x-2 lg:space-x-2.5 scrollbar scrollbar-thumb-zinc-700 scrollbar-track-zinc-200 scrollbar-thumb-rounded-md scrollbar-track-rounded-md snap-x snap-mandatory dark:scrollbar-track-zinc-700 dark:scrollbar-thumb-white">
         {categories.map((item) => (
-          <li class="flex-shrink-0 snap-start">
+          <li id={item} class="flex-shrink-0 snap-start">
             <a
               href={`/blog/category/${item}`}
               class={cn(
@@ -74,9 +74,9 @@ const { category, tag } = Astro.params;
         >
           All posts
         </a>
-        <ul class="flex overflow-auto items-start pb-2 space-x-2 lg:space-x-2.5 scrollbar scrollbar-thumb-white scrollbar-thumb-rounded-md scrollbar-track-rounded-md scrollbar-track-zinc-700 snap-x snap-mandatory">
+      <ul id="tags" class="flex overflow-auto items-start pb-2 space-x-2 lg:space-x-2.5 scrollbar scrollbar-thumb-zinc-700 scrollbar-track-zinc-200 scrollbar-thumb-rounded-md scrollbar-track-rounded-md snap-x snap-mandatory dark:scrollbar-track-zinc-700 dark:scrollbar-thumb-white">
           {tags.map((item) => (
-            <li class="flex-shrink-0 snap-start">
+            <li id={item} class="flex-shrink-0 snap-start">
               <a
                 href={`/blog/tag/${item}`}
                 class={cn(
@@ -98,6 +98,16 @@ const { category, tag } = Astro.params;
     )
   }
 </div>
+
+<script define:vars={{ tag, category }}>
+if (tag) {
+  document.getElementById(tag)?.scrollIntoView();
+}
+
+if (category) {
+  document.getElementById(category)?.scrollIntoView();
+}
+</script>
 
 <hr class="mb-7" />
 <style>
