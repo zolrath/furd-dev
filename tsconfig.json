@@ -6,22 +6,22 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "baseUrl": "/home/furd/code/personal/site/furd-dev",
+    "baseUrl": "./src",
     "paths": {
       "@components/*": [
-        "src/components/*"
+        "components/*"
       ],
       "@assets/*": [
-        "src/assets/*"
+        "assets/*"
       ],
       "@layouts/*": [
-        "src/layouts/*"
+        "layouts/*"
       ],
       "@mytypes/*": [
-        "src/types/*"
+        "types/*"
       ],
       "@/*": [
-        "src/*"
+        "*"
       ]
     },
     "jsx": "react-jsx",
