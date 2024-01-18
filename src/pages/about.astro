@@ -1,52 +1,35 @@
 ---
-import { Image } from 'astro:assets';
-import profileImage from '@assets/profile-pic.jpg';
-import MainLayout from '@layouts/MainLayout.astro';
+import { Image } from "astro:assets";
 
-const title = 'About';
-const description = 'About your Matt Furden.';
+import profileImage from '@assets/profile-pic.jpg';
+import MainLayout from "@layouts/MainLayout.astro";
+
+const title = "Matt Furden - Developer";
+const description = "Matt Furden does stuff.";
 ---
 
 <MainLayout title={title} description={description}>
-  <div class="container">
-    <h1>About</h1>
-    <figure class="about-image">
-      <Image src={profileImage} alt="Headshot of Matt Furden" width="330" />
-      <figcaption>
-        Matt Furden in his natural habitat.
-      </figcaption>
-    </figure>
-    <p>Hello!</p>
+  <div class="flex flex-col flex-grow gap-12 justify-center items-center px-8 mx-auto max-w-screen-xl lg:flex-row underlined align-center min-h-96">
+    <div class="leading-8 text-md lg:basis-2/3">
+      <h1 class="text-5xl md:text-7xl font-heading">Hi, I'm still Matt 👋</h1>
+      <p class="pt-4">I'm a software engineer, artist, and overly enthusiastic, awkward dancer based in the Central Coast of California.</p>
+      <p>You can chat with me on <a href="https://discordapp.com/users/54376664171294720" rel="me" target="_blank">Discord</a>,
+      see some of my (public) work on <a href="https://www.github.com/zolrath" rel="me" target="_blank">GitHub</a> or <a href="https://www.instagram.com/furd" rel="me" target="_blank">Instagram</a>.</p>
+      <h2 class="mt-8 mb-2 text-2xl font-heading">What'cha up to?</h2>
+      <p>I've been making a game on weekends called <a href="/projects/uprooted">Uprooted</a> few the last few months in <a href="https://godotengine.org" target="_blank">Godot</a> which has been a fun mix of programming, game design, and pixel art.
+      <ul class="hidden">
+        <li><a href="https://twitter.com/zolrath" rel="me">Twitter</a></li>
+        <li><a href="https://bsky.app/profile/furd.dev" rel="me">Bluesky</a></li>
+      </ul>
+    </div>
 
-    <p>Hi, I'm <strong>Matt</strong>. I'm a software engineer and artist based in the Central Coast of California.</p>
-    <p>You can chat with me on <a href="https://discordapp.com/users/54376664171294720" rel="me" target="_blank">Discord</a>,
-    see some of my (public) work on <a href="https://www.github.com/zolrath" rel="me" target="_blank">GitHub</a> or <a href="https://www.instagram.com/furd" rel="me" target="_blank">Instagram</a>.</p>
-    <p>I've been making a game on weekends called <a href="/projects/uprooted">Uprooted</a> few the last few months.
-
-    <ul class="hidden">
-      <li><a href="https://twitter.com/zolrath" rel="me">Twitter</a></li>
-      <li><a href="https://bsky.app/profile/furd.dev" rel="me">Bluesky</a></li>
-    </ul>
-
+    <div class="order-last lg:order-last lg:basis-1/3">
+      <figure>
+        <Image class="rounded-xl" src={profileImage} alt="Headshot of Matt Furden" width="330" />
+        <figcaption class="pt-2 italic text-left text-md">
+          Matt Furden in his natural habitat.
+        </figcaption>
+      </figure>
+    </div>
   </div>
 </MainLayout>
-
-<style>
-  .about-image {
-    float: right;
-    margin: -3em -7em 2em 2em;
-    max-width: 300px;
-  }
-
-  .about-image img {
-    border-radius: 8px;
-    margin-bottom: 1.5em;
-  }
-
-  @media (max-width: 1020px) {
-    .about-image {
-      float: none;
-      margin: 0 auto 2em;
-    }
-  }
-</style>
