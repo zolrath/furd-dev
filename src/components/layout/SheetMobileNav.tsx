@@ -48,14 +48,14 @@ export function SheetMobileNav({
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-10">
           <div className="mt-2 mb-20">
             {mainNavItems?.length ? (
-              <div className="flex flex-col space-y-3">
+              <div className="flex flex-col space-y-2">
                 {mergedMainNavItems?.map(
                   (item) =>
                     item.href && (
                       <a
                         key={item.href}
                         href={item.href}
-                        className="text-muted-foreground"
+                        className="py-4 text-lg text-muted-foreground"
                         onClick={() =>
                           item.href.startsWith("/#")
                             ? setOpen(false)
