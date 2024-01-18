@@ -13,7 +13,7 @@ import Bio from "@components/Bio.astro";
 type Props = CollectionEntry<"blog">;
 
 const slug = Astro.props.slug;
-const { draft, title, description, publishDate, updatedDate, coverImage, category, tags } =
+const { draft, title, description, publishDate, updatedDate, coverImage, coverImageAlt, category, tags } =
   Astro.props.data;
 const { headings } = await Astro.props.render();
 ---
@@ -62,7 +62,7 @@ const { headings } = await Astro.props.render();
           width={1020}
           height={510}
           src={coverImage}
-          alt=""
+          alt={coverImageAlt}
           transition:name={"img-" + slug}
         />
         { draft ? <DraftIndicator slug={slug} className="top-8 left-8" /> : null }

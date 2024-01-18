@@ -23,7 +23,7 @@ if (!images[post.data.coverImage]) throw new Error(`"${post.data.coverImage}" do
       width={400}
       height={200}
       src={images[post.data.coverImage]()}
-      alt="descriptive text"
+      alt={post.data.coverImageAlt}
       transition:name={"img-" + post.slug}
     />
     { post.data.draft ?
