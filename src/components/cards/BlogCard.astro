@@ -19,9 +19,9 @@ if (!images[post.data.coverImage]) throw new Error(`"${post.data.coverImage}" do
     class="flex h-52 transition duration-300 group-hover:shadow-xl group-hover:-translate-y-2"
   >
     <Image
-      class="object-cover overflow-hidden w-full h-full rounded-xl"
-      width={400}
-      height={200}
+      class="object-cover overflow-hidden w-full h-full rounded-xl aspect-7/4"
+      width={700}
+      height={400}
       src={images[post.data.coverImage]()}
       alt={post.data.coverImageAlt}
       transition:name={"img-" + post.slug}

@@ -3,6 +3,7 @@ import BlogHeader from "@/components/BlogHeader.astro";
 import BlogCard from "@/components/cards/BlogCard.astro";
 import MainLayout from "@/layouts/MainLayout.astro";
 import { getPosts } from "@/fetchers/posts";
+import FeaturedBlogCard from "@components/cards/FeaturedBlogCard.astro";
 
 const posts = await getPosts();
 ---
@@ -14,7 +15,9 @@ const posts = await getPosts();
     <div
       class="grid grid-cols-1 gap-x-6 gap-y-9 md:grid-cols-2 md:gap-y-11 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16"
     >
-      {posts.map((post) => <BlogCard {...post} />)}
+      <FeaturedBlogCard {...posts[0]} />
+      <hr class="col-span-full" />
+      {posts.slice(1).map((post) => <BlogCard {...post} />)}
     </div>
   </section>
 </MainLayout>
