@@ -153,11 +153,6 @@ path.toc-marker {
     text-wrap: balance;
   }
 
-  /* Documentation part */
-  .docs-grid-cols-2 {
-    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-4;
-  }
-
   .callout > * {
     @apply my-0 !important;
   }
@@ -179,25 +174,15 @@ path.toc-marker {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-/* --- Link Underlines ---*/
-a.underline {
-  color: #b3b3e6;
-  background-image: linear-gradient(#93bad9, #93bad9),
-    linear-gradient(#1a66cc, #1a66cc);
-  background-size: 0% 0.2em, 100% 0.2em;
-  background-position-y: 100%;
-  background-repeat: no-repeat;
-  transition: background-size 0.2s ease-in-out;
-  text-decoration: none;
-}
-a.underline {
-  background-position-x: 50%;
+
+a.underlined {
+  @apply font-bold dark:text-white text-zinc-800;
+  @apply underline-offset-[7px] underline decoration-4 decoration-zinc-400 dark:decoration-zinc-200 decoration-solid hover:before:scale-x-100 hover:before:origin-left relative before:w-full before:h-2 before:origin-right before:transition-transform before:duration-300 before:scale-x-0 before:bg-blue-500 before:absolute before:left-0 before:-bottom-2
 }
 
-a.underline:hover,
-a.underline:focus,
-a.underline:active {
-  background-size: 100% 0.2em, 100% 0.2em;
+.underlined a {
+  @apply font-bold dark:text-white text-zinc-800;
+  @apply underline-offset-[7px] underline decoration-4 decoration-zinc-400 dark:decoration-zinc-200 decoration-solid hover:before:scale-x-100 hover:before:origin-left relative before:w-full before:h-2 before:origin-right before:transition-transform before:duration-300 before:scale-x-0 before:bg-blue-500 before:absolute before:left-0 before:-bottom-2
 }
 
 /* -- CODE BLOCKS --- */

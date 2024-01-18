@@ -2,6 +2,7 @@ import type { SiteConfig } from "@/types/site";
 
 export const siteConfig: SiteConfig = {
   name: "Furd.dev",
+  author: "Matt Furden",
   description: "Musings about programming, art, and game dev.",
   url: "https://furd.dev",
   ogImage: "https://furd.dev/og.jpg",
