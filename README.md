@@ -1,6 +1,6 @@
 # [Furd.dev](https://furd.dev)
 
-[![Screenshot](screenshot.jpg)](https://furd.dev)
+[![Screenshot](screenshot.png)](https://furd.dev)
 
 ## 👩‍🚀 Getting Started
 
