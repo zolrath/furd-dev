@@ -11,7 +11,7 @@ export async function getCategories() {
     ...new Set([].concat.apply(posts.map((post) => post.data.category))),
   ];
 
-  return categories;
+  return categories.sort();
 }
 
 export async function getPosts() {
@@ -53,5 +53,5 @@ export async function getTags() {
     return tags
   }, new Set<string>())
 
-  return Array.from(tags);
+  return Array.from(tags).sort();
 }
