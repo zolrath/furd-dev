@@ -37,7 +37,7 @@ One simple solution is simply to only render other users cursors using LiveView,
 
 In this solution we render the users cursor independently of the other networked cursors, instead relying on a **bit** of client side JavaScript and the glory of CSS variables to modify the rendered cursors position.
 
-## How
+### Pushing the remote mouse position
 
 The heart of the cursor tracking solution presented in Koen's post relies on tracking the `'mousemove'` event in a JavaScript hook, pushing the mouses position to the server:
 
@@ -49,6 +49,7 @@ document.addEventListener('mousemove', (e) => {
 });
 ```
 
+### Storing our local mouse position
 In order to control our local cursor from the client side we save our mouse position into two new [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties), `--x` and `--y`.
 
 ```js
@@ -58,6 +59,8 @@ document.documentElement.style.setProperty("--y", `${y}%`);
 
 The beauty of CSS variables is that they can be referenced in our cursor positions, allowing us to use the latest and greatest coordinates when rendering our local cursor!
 
+
+### Rendering our local cursor
 In the tutorial example we loop through each user in our assigns and render their custom cursor.
 
 ```elixir
