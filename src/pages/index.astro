@@ -15,6 +15,7 @@ const description = "Matt Furden does stuff.";
       <p class="pt-4 text-xl">
         Check out the <a href="/blog">blog</a>,
         {
+          // TODO: Show projects to everyone
           // Show projects link only in dev mode for now
           import.meta.env.PROD ? null : (
             <>
