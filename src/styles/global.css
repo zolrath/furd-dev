@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@700&family=Rubik+Mono+One&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -110,14 +111,6 @@ path.toc-marker {
 }
 
 @layer base {
-  @font-face {
-    font-family: 'CalSans Semibold';
-    src: url('/fonts/calsans-semibold.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-
   * {
     @apply border-border;
   }
@@ -185,4 +178,63 @@ path.toc-marker {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+/* --- Link Underlines ---*/
+a.underline {
+  color: #b3b3e6;
+  background-image: linear-gradient(#93bad9, #93bad9),
+    linear-gradient(#1a66cc, #1a66cc);
+  background-size: 0% 0.2em, 100% 0.2em;
+  background-position-y: 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.2s ease-in-out;
+  text-decoration: none;
+}
+a.underline {
+  background-position-x: 50%;
+}
+
+a.underline:hover,
+a.underline:focus,
+a.underline:active {
+  background-size: 100% 0.2em, 100% 0.2em;
+}
+
+/* -- CODE BLOCKS --- */
+code {
+  font-family: 'SF Mono', menlo, inconsolata, monospace;
+  font-size: calc(1em - 2px);
+  color: #555;
+  padding: 0.2em 0.4em;
+  border-radius: 2px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+pre[data-theme*=" "],
+code[data-theme*=" "],
+code[data-theme*=" "] span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+:root.dark pre[data-theme*=" "],
+:root.dark code[data-theme*=" "],
+:root.dark code[data-theme*=" "] span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+}
+
+span[data-rehype-pretty-code-figure] code {
+  border-radius: 8px;
+}
+
+pre {
+  border-radius: 8px !important;
+  margin: 1.2em 0 !important;
+  padding: 1.2em;
+}
+
+pre code {
+  padding: 0;
 }

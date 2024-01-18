@@ -1,0 +1,25 @@
+---
+import { cn } from "@/utils";
+import { Image } from "astro:assets";
+
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  className?: string;
+}
+const { src, alt, className, height, width, ...attrs } = Astro.props;
+---
+
+<Image
+  class:list={cn(
+    "w-full h-full object-cover rounded-md overflow-hidden border",
+    className
+  )}
+  {...attrs}
+  width={width}
+  height={height}
+  src={src}
+  alt={alt}
+/>

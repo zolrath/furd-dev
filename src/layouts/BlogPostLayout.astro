@@ -1,5 +1,5 @@
 ---
-import { cn, formatDate } from "@/utils";
+import { cn, longDate } from "@/utils";
 import type { CollectionEntry } from "astro:content";
 import MainLayout from "./MainLayout.astro";
 import { buttonVariants } from "@components/ui/Button";
@@ -56,24 +56,26 @@ const { headings } = await Astro.props.render();
           </a>
         ))}
       </div>
-      <Image
-        class="overflow-hidden my-6 rounded-xl"
-        width={1020}
-        height={510}
-        src={coverImage}
-        alt=""
-        transition:name={"img-" + slug}
-      />
-      { draft ? <DraftIndicator slug={slug} className="left-10 top-28" /> : null }
+      <span class="relative">
+        <Image
+          class="overflow-hidden my-6 rounded-xl"
+          width={1020}
+          height={510}
+          src={coverImage}
+          alt=""
+          transition:name={"img-" + slug}
+        />
+        { draft ? <DraftIndicator slug={slug} className="top-8 left-8" /> : null }
+      </span>
       <div class="flex justify-between items-center">
         <span
           class="font-medium text-muted-foreground"
           transition:name={"date-" + slug}
         >
-          {formatDate(publishDate)}
+          {longDate(publishDate)}
           {
             updatedDate && (
-              <span>- Last updated on {formatDate(updatedDate)}</span>
+              <span>- Last updated on {longDate(updatedDate)}</span>
             )
           }
         </span>

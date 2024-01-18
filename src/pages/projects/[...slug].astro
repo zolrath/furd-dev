@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import MainLayout from "@/layouts/MainLayout.astro";
 import Bio from "../../components/Bio.astro";
 import { ProjectDisplay } from "@mytypes/project";
 
@@ -22,7 +22,7 @@ const { name, description, headerImage, status, category } = data;
 const permalink = `${Astro.site?.href ?? "/"}projects/${slug}`;
 ---
 
-<BaseLayout
+<MainLayout
   title={name}
   description={description}
   permalink={permalink}
@@ -44,7 +44,7 @@ const permalink = `${Astro.site?.href ?? "/"}projects/${slug}`;
     <hr />
     <Bio />
   </div>
-</BaseLayout>
+</MainLayout>
 
 <style>
   header {

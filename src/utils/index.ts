@@ -1,6 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { format } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -10,12 +9,28 @@ export function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export function formatDate(date: Date) {
+export function shortDate(date: Date) {
   // zod adds the timezone to the parsed date which makes the site
   // report incorrect dates for the publishDate frontmatter.
   // Remove the timezone from the date to fix this.
   var timezoneless_date = new Date(date.toISOString().slice(0, -1))
-  return format(timezoneless_date, "LLL dd, y");
+  return new Date(timezoneless_date).toLocaleDateString('default', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+
+export function longDate(date: Date) {
+  // zod adds the timezone to the parsed date which makes the site
+  // report incorrect dates for the publishDate frontmatter.
+  // Remove the timezone from the date to fix this.
+  var timezoneless_date = new Date(date.toISOString().slice(0, -1))
+  return new Date(timezoneless_date).toLocaleDateString('default', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 }
 
 export function extractSegmentURL(path: string) {

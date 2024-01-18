@@ -2,8 +2,6 @@
 import { siteConfig } from "@/config/site";
 import { cn } from "@/utils";
 
-import { Icon } from "astro-icon/components";
-
 type Props = {
   className?: string;
 };
@@ -20,8 +18,7 @@ const { className } = Astro.props;
   <div class="container flex relative justify-between items-center w-full">
     <div class="flex gap-6 items-center md:gap-8 lg:gap-10">
       <a href="/" class="hidden items-center space-x-2 md:flex">
-        <Icon name="stars-outline" class="size-8" />
-        <span class="hidden font-bold sm:inline-block">
+        <span class="hidden text-2xl uppercase sm:inline-block font-logo">
           {siteConfig.name}
         </span>
       </a>
@@ -35,10 +32,10 @@ const { className } = Astro.props;
 
     <!-- logo mobile center -->
     <div
-      class="absolute top-1/2 left-1/2 -translate-x-4 -translate-y-4 md:hidden"
+      class="absolute top-1/2 left-1/2 -translate-y-3 md:hidden -translate-x-18"
     >
       <a href="/" aria-label="Furd.dev homepage">
-        <Icon name="stars-outline" class="size-8" />
+        <span class="text-2xl uppercase font-logo">{siteConfig.name}</span>
       </a>
     </div>
 

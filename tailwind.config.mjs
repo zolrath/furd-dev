@@ -15,7 +15,8 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Inter", ...fontFamily.sans],
-        heading: ["CalSans Semibold", ...fontFamily.sans],
+        heading: ["Archivo Narrow", ...fontFamily.sans],
+        logo: ["Rubik Mono One", ...fontFamily.sans],
       },
       height: {
         "18": "4.5rem",

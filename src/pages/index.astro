@@ -11,16 +11,16 @@ const description = "Matt Furden does stuff.";
 ---
 
 <MainLayout title={title} description={description}>
-  <div class="home-container">
-    <div class="home-copy">
-      <h1>Hi, I'm Matt 👋</h1>
-      <p>
-        Check out the <a href="/blog">blog</a>,
+  <div class="flex flex-col flex-grow justify-center items-center px-8 max-w-screen-xl md:flex-row align-center min-h-96">
+    <div>
+      <h1 class="text-4xl md:text-6xl font-heading">Hi, I'm Matt 👋</h1>
+      <p class="text-lg">
+        Check out the <a class="underline" href="/blog">blog</a>,
         {
           // Show projects link only in dev mode for now
           import.meta.env.PROD ? null : (
             <>
-              <a href="/projects">projects</a>,{" "}
+              <a class="underline" href="/projects">projects</a>,{" "}
             </>
           )
         }

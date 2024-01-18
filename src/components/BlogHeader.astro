@@ -21,38 +21,37 @@ const { category, tag } = Astro.params;
 >
   {
     !tag && categories?.length ? (
-      <div class="flex justify-end space-x-2 w-full">
-          <a
-            href={`/blog`}
-            class={cn(
-              !category ? "select-none" : "",
-              "flex-shrink-0",
-              buttonVariants({
-                variant: !category ? "default" : "outline"
-              })
-            )}
-          >
-            All posts
-          </a>
-
-      <ul id="categories" class="flex overflow-auto items-start pb-2 space-x-2 lg:space-x-2.5 scrollbar scrollbar-thumb-zinc-700 scrollbar-track-zinc-200 scrollbar-thumb-rounded-md scrollbar-track-rounded-md snap-x snap-mandatory dark:scrollbar-track-zinc-700 dark:scrollbar-thumb-white">
-        {categories.map((item) => (
-          <li id={item} class="flex-shrink-0 snap-start">
-            <a
-              href={`/blog/category/${item}`}
-              class={cn(
-                "capitalize",
-                item === category ? "select-none" : "",
-                buttonVariants({
-                  variant: item === category ? "default" : "outline"
-                })
-              )}
-            >
-              {item}
-            </a>
-          </li>
-        ))}
-      </ul>
+      <div class="flex justify-end space-x-2 w-full lg:space-x-2.5">
+        <a
+          href={`/blog`}
+          class={cn(
+            !category ? "select-none" : "",
+            "flex-shrink-0",
+            buttonVariants({
+              variant: !category ? "default" : "outline"
+            })
+          )}
+        >
+          All posts
+        </a>
+        <ul id="categories" class="flex overflow-auto items-start pb-2 space-x-2 lg:space-x-2.5 scrollbar scrollbar-thumb-zinc-700 scrollbar-track-zinc-200 scrollbar-thumb-rounded-md scrollbar-track-rounded-md snap-x snap-mandatory dark:scrollbar-track-zinc-700 dark:scrollbar-thumb-white">
+          {categories.map((item) => (
+            <li id={item} class="flex-shrink-0 snap-start">
+              <a
+                href={`/blog/category/${item}`}
+                class={cn(
+                  "capitalize",
+                  item === category ? "select-none" : "",
+                  buttonVariants({
+                    variant: item === category ? "default" : "outline"
+                  })
+                )}
+              >
+                {item}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     ) : (
       <div />
@@ -61,7 +60,7 @@ const { category, tag } = Astro.params;
 
   {
     tag && tags?.length ? (
-      <div class="flex justify-end space-x-2 w-full">
+      <div class="flex justify-end space-x-2 w-full lg:space-x-2.5">
         <a
           href={`/blog`}
           class={cn(

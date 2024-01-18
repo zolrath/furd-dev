@@ -1,6 +1,6 @@
 ---
 import { Badge } from "@/components/ui/Badge";
-import { formatDate } from "@/utils";
+import { shortDate } from "@/utils";
 import { Image } from "astro:assets";
 import DraftIndicator from "@components/ui/DraftIndicator.astro";
 import type { ImageMetadata } from 'astro';
@@ -32,7 +32,7 @@ if (!images[post.data.coverImage]) throw new Error(`"${post.data.coverImage}" do
   </a>
 
   <div class="flex justify-between items-center">
-    <div class="flex gap-2">
+    <div class="flex overflow-hidden flex-grow gap-2 masked">
       <a href={`/blog/category/${post.data.category}`}>
         <Badge
           radius="md"
@@ -42,7 +42,7 @@ if (!images[post.data.coverImage]) throw new Error(`"${post.data.coverImage}" do
           {post.data.category}
         </Badge>
       </a>
-      <div class="hidden md:flex">
+      <div class="hidden gap-2 md:flex">
       {post.data.tags?.map((tag: string) => (
         <a href={`/blog/tag/${tag}`}>
           <Badge
@@ -57,10 +57,10 @@ if (!images[post.data.coverImage]) throw new Error(`"${post.data.coverImage}" do
       </div>
     </div>
     <span
-      class="font-medium text-muted-foreground"
+      class="flex-shrink-0 font-medium text-muted-foreground"
       transition:name={"date-" + post.slug}
     >
-      {formatDate(post.data.publishDate)}
+      {shortDate(post.data.publishDate)}
     </span>
   </div>
 
@@ -75,3 +75,9 @@ if (!images[post.data.coverImage]) throw new Error(`"${post.data.coverImage}" do
     </a>
   </div>
 </article>
+
+<style>
+.masked {
+    mask-image: linear-gradient(to left,transparent 0, #000 26px, #000 100%);
+}
+</style>
