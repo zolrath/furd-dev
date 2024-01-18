@@ -1,6 +1,8 @@
 import * as React from "react";
 
+// @ts-ignore
 import Callout from "@/components/content/Callout.astro";
+// @ts-ignore
 import MdxCard from "@/components/content/MdxCard.astro";
 import { cn } from "@/utils";
 import { Image } from "astro:assets";
@@ -22,7 +24,7 @@ export const MdxComponents = {
   h2: ({ className, ...props }: Props) => (
     <h2
       className={cn(
-        "mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0",
+        "mt-10 scroll-m-20 pb-1 text-3xl font-semibold tracking-tight first:mt-0",
         className
       )}
       {...props}
@@ -97,11 +99,19 @@ export const MdxComponents = {
   img: ({
     className,
     alt,
+    src,
     ...props
-  }: React.ImgHTMLAttributes<HTMLImageElement>) => (
+  }: React.ImgHTMLAttributes<HTMLImageElement>) => {
+    console.log(props)
+    var source
+    // @ts-ignore
+    if (typeof src === "object") { source = src.src }
+    if (typeof src === "string") { source = src }
+
+    return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img className={cn("rounded-md border", className)} alt={alt} {...props} />
-  ),
+    <img className={cn("rounded-md border", className)} src={source} alt={alt} {...props} />
+  )},
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
     <div className="overflow-y-auto my-6 w-full">

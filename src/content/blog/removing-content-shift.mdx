@@ -1,0 +1,48 @@
+---
+title: Removing layout shift caused by scrollbars
+draft: false
+publishDate: 2021-04-24
+description: It's gotten easy to remove layout shift when a scrollbar appears with `scrollbar-gutter`
+coverImage: /src/assets/blog/scrollbar-gutter/header.png
+coverImageAlt: A cover image alt
+category: programming
+tags: [webdev, CSS]
+---
+
+## Overview
+
+<Callout icon="⚠️" type="info">
+Thanks to Shiki, highlighting is done at build time. No JavaScript is sent to the client for runtime highlighting.
+
+</Callout>
+
+For some reason whenever a site's layout shifts when a scrollbar appears a little part of me feels the need to fix it.
+
+Usually it's a passing desire but I've been trying various *Personal Knowledge Management* solutions and it's extremely apparent in that type of application as you dive into nodes and expand or collapse them.
+
+In my war against layout shift I've applied this fix to [Logseq](https://github.com/logseq/logseq/pull/1972), [Athens](https://github.com/athensresearch/athens/pull/1212) and most importantly the [Phoenix Framework](https://github.com/phoenixframework/phoenix/pull/5101) for Elixir, solving this issue to an untold number of sites built in the framework.
+
+## Wait, what layout shift?
+I'm glad you asked. Let's take a look at the issue in action.
+
+![Video displaying layout shift before and after using scrollbar-gutter](@assets/blog/scrollbar-gutter/logseq-fix.webp)
+
+By default, when a scrollbar appears the content will shift to the left to make room for the scrollbar. This is because the scrollbar is taking up space in the content area, so the content needs to be moved to make room for it.
+
+## Okay, how do we fix it?
+
+Luckily this has been made fairly easy in modern browsers with the `scrollbar-gutter{:css}` property. (RIP `overflow-y: overlay{:css}`)
+By simply adding `scrollbar-gutter: stable{:css}` to the `html{:html}` element the space for the scrollbar will always be reserved, even if the content doesn't overflow.
+
+```css
+@supports (scrollbar-gutter: stable) {
+  html {
+      overflow-y: auto;
+      scrollbar-gutter: stable;
+  }
+}
+```
+
+Now, when a page gets longer or you navigate to a page with a scrollbar the content will no longer shift.
+
+Please add this to your site and save me from the layout shift. **Please.**
