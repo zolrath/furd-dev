@@ -100,11 +100,11 @@ const { category, tag } = Astro.params;
 
 <script define:vars={{ tag, category }}>
 if (tag) {
-  document.getElementById(tag)?.scrollIntoView();
+  document.getElementById(tag)?.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
 }
 
 if (category) {
-  document.getElementById(category)?.scrollIntoView();
+  document.getElementById(category)?.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
 }
 </script>
 
