@@ -184,7 +184,7 @@ function drawPath() {
 function updatePath() {
   const path = document.querySelector("path.toc-marker");
   // If we have no path return
-  // if (!path) return;
+  if (!path) return;
   const pathLength = path?.getTotalLength() ?? 0;
   const activeLinks = document.querySelectorAll("nav.toc a.active");
   let linkStart = pathLength;
