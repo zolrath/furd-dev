@@ -12,6 +12,9 @@ status: in-progress
 display: hero
 technologies: ["Elixir", "StableDiffusion", "AI"]
 ---
+import { Image } from 'astro:assets';
+import doodle from '/src/assets/projects/promptbox/doodle.png';
+import promptboxLoader from '/src/assets/projects/promptbox/promptbox-loader.webp';
 
 If you've played the game [Eat Poop You Cat](https://boardgamegeek.com/boardgame/30618/eat-poop-you-cat) or its more commercially acceptable [Telestrations](https://boardgamegeek.com/boardgame/46213/telestrations) you know how fun it is to play a game of artistic telephone.
 
@@ -25,5 +28,5 @@ The next player sees the selected image and round and round it goes!
 
 At the end of the game the whole chain is replayed, showing the prompt, the players drawing, and the AI assisted image.
 
-![Doodle of a dog](/src/assets/projects/promptbox/doodle.png)
-![Animation of images made from a drawing of a dog](/src/assets/projects/promptbox/promptbox-loader.webp)
+<Image src={doodle} alt="Doodle of a dog" class="rounded-md" />
+<Image src={promptboxLoader} alt="Animation of images made from a drawing of a dog" class="rounded-md" />
