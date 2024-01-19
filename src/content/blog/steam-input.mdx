@@ -1,25 +1,54 @@
 ---
 title: Integrating Steam Input
-draft: true
-publishDate: 2024-01-02
+draft: false
+publishDate: 2024-01-18
 description: Integrating Steam Input with Godot's Input system.
 coverImage: /src/assets/blog/steam-input/header.png
-coverImageAlt: A cover image alt
+coverImageAlt: A blue, slightly robotic, xbox controller.
 category: programming
 tags: [godot, steam]
 ---
 
+<Callout icon="⚠️" type="danger">
+  This article a work in progress. It's being published early to allow users of the GodotSteam discord to use it as a reference.
+</Callout>
 
+## Setting up
+First, let's get some prep work done and define some variables to store our handles and the actions we're going to be querying Steam Input for.
+```gdscript
+# Track if we've gotten the handles yet.
+var got_handles = false
+
+# The action set handles and the current action set.
+var game_action_set
+var current_action_set
+
+# The actions defined in the Steam .vdf file are listed here
+# with true or false indicating if input is analog or digital.
+# False is digital (buttons), true is analog (joysticks, triggers, etc).
+var action_names = {
+	"Move": true,
+	"Up": false,
+	"Down": false,
+	"Left": false,
+	"Right": false,
+	"Jump": false,
+	"Pause": false,
+}
+
+# Here we will store the resulting handles for each action.
+var actions = {}
+```gdscript
+```
 ## Handling Connections
-First we'll connect to the controller connected and disconnected signals to handle when a player connects or disconnects their controller.
+Next we'll connect to the controller connected and disconnected signals to handle when a player connects or disconnects their controller.
+
 ```gdscript
 ## Call this after calling `Steam.inputInit()` and `Steam.enableDeviceCallbacks()`
 func init() -> void:
   Steam.input_device_connected.connect(_on_steam_input_device_connected)
   Steam.input_device_disconnected.connect(_on_steam_input_device_disconnected)
-```
 
-```gdscript
 func _on_steam_input_device_connected(input_handle: int):
 	if not got_handles:
 		get_handles()
@@ -30,43 +59,24 @@ func _on_steam_input_device_disconnected(input_handle: int):
 	print("Device disconnected %s" % str(input_handle))
 ```
 
-Now we should see 
+### Getting Action Handles
+<Callout icon="⚠️" type="warning">
+  You need to wait until a controller has been connected before you can get the action and action set handles.
+  If you try to get them before a controller has been connected Godot Steam will return `0` for all handles.
+</Callout>
 
+Now that a controller is connected, we can get the action set and action handles.
+In this example vdf file I have a single action set called `GameControls` and a number of actions defined within it.
 
-Once a controller has been connected we can retrieve the handles, hopefully this is a temporary situation that will be fixed in GodotSteam soon.
 ```gdscript
 func get_handles():
-	action_set_handles[ACTION_SETS.GAME] = Steam.getActionSetHandle("GameControls")
-	action_set_handles[ACTION_SETS.MENU] = Steam.getActionSetHandle("MenuControls")
-	current_action_set = action_set_handles[ACTION_SETS.MENU]
+	game_action_set = Steam.getActionSetHandle("GameControls")
+	current_action_set = game_action_set
 	get_action_handles(action_names)
 	got_handles = true
 ```
 
-
-```gdscript
-# True or false denote if it should be an analog or digial input when querying SteamInput.
-var action_names = {
-	"Jump": false,
-	"Dash": false,
-	"Interact": false,
-	"Move": true,
-	"Up": false,
-	"Down": false,
-	"Left": false,
-	"Right": false,
-	"Pause": false,
-	# Menu
-	"Start": false,
-	"Back": false,
-	"Select": false,
-	"Deselect": false,
-	"NextCostume": false,
-	"PrevCostume": false,
-}
-var actions = {}
-```
-
+Now we iterate over the action names and get the handles for each action, using the `Steam.getAnalogActionHandle` and `Steam.getDigitalActionHandle` functions depending on the input type.
 ```gdscript
 func get_action_handles(action_names: Dictionary):
 	for action in action_names.keys():
@@ -77,8 +87,15 @@ func get_action_handles(action_names: Dictionary):
 			actions[action] = Steam.getDigitalActionHandle(action)
 ```
 
+## What about keyboards?
+Steam Input doesn't handle keyboard input, so for my use case I'm not going to be able to use Steam Input directly in gameplay code.
+
+As long as we name the action the same in Godot's Input system as we do in Steam Input, we can write a simple wrapper to check both easily.
 
 ## Input Wrappers
+These wrappers expect a device handle to be passed in. If the device handle is less than 0, it will fall back to the default Input functions.
+
+### get_action_strength
 ```gdscript
 ## This is equivalent to Input.get_action_strength except it will only check the relevant device.
 func get_action_strength(device: int, action: StringName, exact_match: bool = false) -> float:
@@ -89,6 +106,7 @@ func get_action_strength(device: int, action: StringName, exact_match: bool = fa
 	return Input.get_action_strength(action, exact_match)
 ```
 
+### get_axis
 ```gdscript
 ## This is equivalent to Input.get_axis except it will only check the relevant device.
 func get_axis(device: int, negative_action: StringName, positive_action: StringName) -> float:
@@ -100,7 +118,7 @@ func get_axis(device: int, negative_action: StringName, positive_action: StringN
 		return positive.x - negative.x
 	return Input.get_axis(negative_action, positive_action)
 ```
-
+### get_vector
 ```gdscript
 ## This is equivalent to Input.get_vector except it will only check the relevant device.
 func get_vector(device: int, negative_x: StringName, positive_x: StringName, negative_y: StringName, positive_y: StringName, deadzone: float = -1.0) -> Vector2:
@@ -114,8 +132,5 @@ func get_vector(device: int, negative_x: StringName, positive_x: StringName, neg
 	return Input.get_vector(negative_x, positive_x, negative_y, positive_y, deadzone)
 ```
 
-```gdscript
-```
-
-```gdscript
-```
+And now you've got a basic Steam Input wrapper!
+You also need to write wrappers for `is_action_pressed`, `is_action_just_pressed`, and `is_action_just_released` but those implementations are not simple and will need another post.
