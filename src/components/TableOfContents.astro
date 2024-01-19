@@ -93,44 +93,6 @@ function addIntersectionObserver() {
       // section is visible
       const addRemove = section.intersectionRatio > 0 ? "add" : "remove";
       link.classList[addRemove]("active");
-
-      // Get parent node
-      let parent = section.target.parentNode;
-      if (parent.tagName != "SECTION") return;
-      var children = parent.querySelectorAll("h1, h2, h3, h4, h5");
-      const parentId = children[0].getAttribute("id");
-      const parentLink = document.querySelector(`nav.toc li a[href="#${parentId}"]`);
-
-      // Check if we've got children and if we have one not visible followed by one that is visible
-      var hasInactiveChild = false;
-      var hasActiveChild = false;
-      var hasActiveChildAfterInactive = false;
-
-      for (var i = 1; i < children.length; i++) {
-        var newHeading = children[i];
-        const newId = newHeading.getAttribute("id");
-        const newLink = document.querySelector(`nav.toc li a[href="#${newId}"]`);
-        if (!newLink) continue;
-
-        if (!newLink.classList.contains("active")) {
-          hasInactiveChild = true;
-          continue;
-        }
-        if (newLink.classList.contains("active")) {
-          hasActiveChild = true;
-          if (hasInactiveChild) {
-            hasActiveChildAfterInactive = true
-            break;
-          }
-        }
-      }
-      // If we have an inactive child followed by an active one, remove the parent active class
-      if (hasActiveChildAfterInactive) {
-         parentLink.classList["remove"]("active");
-      // If our first child is active, add the parent active class
-      } else if (hasActiveChild) {
-         parentLink.classList["add"]("active");
-      }
     });
     updatePath();
   }, { rootMargin: "-80px 0px 0px 0px"});

@@ -4,7 +4,7 @@ import remarkGfm from 'remark-gfm';
 import remarkSmartypants from 'remark-smartypants';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypePrettyCode from 'rehype-pretty-code';
-import remarkSectionize from 'remark-sectionize';
+import remarkSectionize from '/src/utils/remarkFlatSectionize';
 import icon from "astro-icon";
 // import { transformerNotationDiff } from "shikiji-transformers";
 

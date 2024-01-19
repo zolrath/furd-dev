@@ -39,13 +39,13 @@
     "rehype-external-links": "^3.0.0",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.0",
-    "remark-sectionize": "^2.0.0",
     "remark-smartypants": "^2.1.0",
     "sanitize-html": "^2.11.0",
     "tailwind-merge": "^2.2.0",
     "tailwind-scrollbar": "^3.0.5",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "unist-util-find-after": "^5.0.0"
   },
   "devDependencies": {
     "prettier": "^3.2.2",
