@@ -4,6 +4,8 @@ import * as React from "react";
 import Callout from "@/components/content/Callout.astro";
 // @ts-ignore
 import MdxCard from "@/components/content/MdxCard.astro";
+// @ts-ignore
+import Pre from "@/components/content/Pre.astro";
 import { cn } from "@/utils";
 import { Image } from "astro:assets";
 
@@ -142,15 +144,7 @@ export const MdxComponents = {
       {...props}
     />
   ),
-  pre: ({ className, ...props }: Props) => (
-    <pre
-      className={cn(
-        "mb-4 mt-6 overflow-x-auto rounded-lg border bg-black p-4",
-        className
-      )}
-      {...props}
-    />
-  ),
+  pre: Pre,
   Image,
   Callout,
   Card: MdxCard,

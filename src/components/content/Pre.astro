@@ -1,0 +1,10 @@
+---
+import PreReact from "./Pre";
+
+interface Props {
+  className: string;
+}
+const { className, ...props } = Astro.props;
+---
+
+<PreReact client:load className={className} {...props}><slot /></PreReact>
