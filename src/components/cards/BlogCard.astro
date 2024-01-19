@@ -20,8 +20,8 @@ if (!images[post.data.coverImage]) throw new Error(`"${post.data.coverImage}" do
   >
     <Image
       class="object-cover overflow-hidden w-full h-full rounded-xl aspect-7/4"
-      width={700}
-      height={400}
+      width={1050}
+      height={600}
       src={images[post.data.coverImage]()}
       alt={post.data.coverImageAlt}
       transition:name={"img-" + post.slug}
