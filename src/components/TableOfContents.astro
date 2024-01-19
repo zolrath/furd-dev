@@ -41,7 +41,7 @@ const groupedHeadings = headings.reduce((array, heading) => {
       ))
     }
   </ol>
-  <svg class="text-black dark:text-white -translate-x-2 pointer-events-none toc-progress" xmlns="http://www.w3.org/2000/svg">
+  <svg class="text-black -translate-x-2 pointer-events-none dark:text-white toc-progress" xmlns="http://www.w3.org/2000/svg">
       <path
         class="toc-marker"
         fill="none"
@@ -81,7 +81,7 @@ document.addEventListener('astro:after-swap',
 function addIntersectionObserver() {
   const observer = new IntersectionObserver((sections) => {
     sections.forEach((section) => {
-      const heading = section.target.querySelector("h1, h2, h3, h4, h5");
+      var heading = section.target.querySelector("h1, h2, h3, h4, h5");
       if (!heading) return;
       const id = heading.getAttribute("id");
 
@@ -93,6 +93,44 @@ function addIntersectionObserver() {
       // section is visible
       const addRemove = section.intersectionRatio > 0 ? "add" : "remove";
       link.classList[addRemove]("active");
+
+      // Get parent node
+      let parent = section.target.parentNode;
+      if (parent.tagName != "SECTION") return;
+      var children = parent.querySelectorAll("h1, h2, h3, h4, h5");
+      const parentId = children[0].getAttribute("id");
+      const parentLink = document.querySelector(`nav.toc li a[href="#${parentId}"]`);
+
+      // Check if we've got children and if we have one not visible followed by one that is visible
+      var hasInactiveChild = false;
+      var hasActiveChild = false;
+      var hasActiveChildAfterInactive = false;
+
+      for (var i = 1; i < children.length; i++) {
+        var newHeading = children[i];
+        const newId = newHeading.getAttribute("id");
+        const newLink = document.querySelector(`nav.toc li a[href="#${newId}"]`);
+        if (!newLink) continue;
+
+        if (!newLink.classList.contains("active")) {
+          hasInactiveChild = true;
+          continue;
+        }
+        if (newLink.classList.contains("active")) {
+          hasActiveChild = true;
+          if (hasInactiveChild) {
+            hasActiveChildAfterInactive = true
+            break;
+          }
+        }
+      }
+      // If we have an inactive child followed by an active one, remove the parent active class
+      if (hasActiveChildAfterInactive) {
+         parentLink.classList["remove"]("active");
+      // If our first child is active, add the parent active class
+      } else if (hasActiveChild) {
+         parentLink.classList["add"]("active");
+      }
     });
     updatePath();
   }, { rootMargin: "-80px 0px 0px 0px"});
@@ -111,7 +149,6 @@ function addResizeObserver() {
   });
   observer.observe(document.querySelector("nav.toc"));
 }
-
 
 function drawPath() {
   const path = document.querySelector("path.toc-marker");
@@ -145,12 +182,17 @@ function drawPath() {
       // Offset the line upward a bit if we're moving to the left
       // otherwise the line will be at the top edge of the next link
       let yPos = y;
-      if (left > x) yPos -= 8;
-      if (left < x) yPos += 0;
+      let yMod = 0;
+      if (left > x) {
+        yPos -= 8;
+        yMod += 8;
+      }
+
       if (left !== x) pathData.push("L", left, yPos);
 
       // Draw a line to the top left of the current link
       pathData.push("L", x, yPos);
+      if (yMod > 0) pathData.push("L", x, yPos + yMod);
 
       // Apply the current path data to the path element
       path.setAttribute("d", pathData.join(" "));
@@ -161,7 +203,7 @@ function drawPath() {
       document.linkStarts.set(link, path?.getTotalLength() ?? 0);
 
       // Draw a line to the bottom left of the current link
-      pathData.push("L", x, yPos + height);
+      pathData.push("L", x, yPos + height + yMod);
     }
 
     // Save the current link's x position to compare with the next
