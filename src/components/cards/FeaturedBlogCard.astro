@@ -20,13 +20,13 @@ if (!images[post.data.coverImage]) throw new Error(`"${post.data.coverImage}" do
     <p>Hot off the press 🔥 <Icon name="lucide:arrow-right" class="hidden mr-2 lg:inline size-4" /><Icon name="lucide:corner-right-down" class="inline mr-2 lg:hidden size-4" />
     </p>
   </div>
-  <div class="flex flex-col col-span-2 gap-4 p-3 rounded-lg border-2 md:flex-row border-foreground/10 bg-foreground/5 group">
+  <div class="flex flex-col col-span-2 gap-4 p-3 rounded-2xl border-2 transition-all md:flex-row border-foreground/5 bg-foreground/5 group hover:border-foreground/10">
     <a
       href={`/blog/${post.slug}/`}
-      class="flex relative transition duration-300 group-hover:shadow-xl group-hover:scale-[102%] aspect-7/4 md:max-w-[500px]"
+      class="flex relative transition duration-300 origin-center group-hover:scale-[102%] aspect-7/4 md:max-w-[500px]"
     >
       <Image
-        class="object-cover overflow-hidden w-full h-full rounded-xl"
+        class="object-cover overflow-hidden w-full h-full rounded-lg transition-all group-hover:rounded-xl"
         width={1050}
         height={600}
         src={images[post.data.coverImage]()}

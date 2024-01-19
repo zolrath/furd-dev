@@ -13,9 +13,10 @@ const { title, coverImage, coverImageAlt, description, link, external, technolog
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{jpeg,jpg,png,gif,webp}')
 if (!images[coverImage]) throw new Error(`"${coverImage}" does not exist in glob: "src/assets/**/*.{jpeg,jpg,png,gif,webp}"`);
 ---
-<a href={link} target={external ? "_blank" : "_self"} class="flex flex-col gap-4 p-3 rounded-lg border-2 md:flex-row border-foreground/10 bg-foreground/5 group">
+
+<a href={link} target={external ? "_blank" : "_self"} class="flex flex-col col-span-2 gap-4 p-3 rounded-2xl border-2 transition-all md:flex-row border-foreground/5 bg-foreground/5 group hover:border-foreground/10">
   <Image
-    class="object-cover overflow-hidden w-full max-h-48 rounded-xl group-hover:scale-[102%] aspect-7/4"
+    class="object-cover overflow-hidden w-full max-h-48 rounded-lg group-hover:scale-[102%] aspect-7/4 group-hover:rounded-xl transition-all"
     width={1050}
     height={600}
     src={images[coverImage]()}
