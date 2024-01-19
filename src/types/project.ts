@@ -13,7 +13,6 @@ export enum ProjectStatus {
 
 export enum ProjectDisplay {
   Hero = "hero",
-  Card = "card",
   List = "list",
   Hidden = "hidden",
 }

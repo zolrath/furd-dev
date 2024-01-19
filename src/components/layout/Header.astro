@@ -15,7 +15,7 @@ const { className } = Astro.props;
     className
   )}
 >
-  <div class="container flex relative justify-between items-center w-full pr-8">
+  <div class="container flex relative justify-between items-center pr-8 w-full">
     <div class="flex gap-6 items-center md:gap-8 lg:gap-10">
       <a href="/" class="hidden items-center space-x-2 md:flex">
         <span class="hidden text-2xl uppercase sm:inline-block font-logo">
@@ -32,7 +32,7 @@ const { className } = Astro.props;
 
     <!-- logo mobile center -->
     <div
-      class="absolute top-1/2 left-1/2 -translate-y-3 md:hidden -translate-x-18"
+      class="absolute top-1/2 left-1/2 -translate-x-20 -translate-y-3 md:hidden"
     >
       <a href="/" aria-label="Furd.dev homepage">
         <span class="text-2xl uppercase font-logo">{siteConfig.name}</span>

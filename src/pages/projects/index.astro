@@ -1,5 +1,4 @@
 ---
-import ProjectCard from "@components/ProjectCard.astro";
 import { getCollection } from "astro:content";
 import { ProjectDisplay } from "@mytypes/project";
 import ProjectHero from "@components/ProjectHero.astro";
@@ -16,7 +15,6 @@ let projects = await getCollection("projects", ({ data }) => {
 
 const projectDisplayOrder = [
   ProjectDisplay.Hero,
-  ProjectDisplay.Card,
   ProjectDisplay.List,
 ];
 
@@ -37,9 +35,6 @@ projects = projects.sort(
       projects.map((project, _index) => {
         if (project.data.display == ProjectDisplay.Hero) {
           return <ProjectHero project={project} />;
-        }
-        if (project.data.display == ProjectDisplay.Card) {
-          return <ProjectCard project={project} />;
         }
         if (project.data.display == ProjectDisplay.List) {
           return <ProjectListItem project={project} />;
