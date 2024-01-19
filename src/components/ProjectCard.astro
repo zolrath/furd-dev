@@ -6,24 +6,24 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { name, headerImage, description, link } = project.data;
+const { title, coverImage, description, link } = project.data;
 ---
 
 <a href={link}>
   <div
-    class="rounded-md overflow-hidden aspect-video shadow-md hover:shadow-lg transition"
+    class="overflow-hidden rounded-md shadow-md transition hover:shadow-lg aspect-video"
   >
     <figure
-      class="relative overflow-hidden flex content-center items-center w-full h-full"
+      class="flex overflow-hidden relative content-center items-center w-full h-full"
     >
       <img
-        class="h-[200px] rounded-xl"
-        transition:name={`${name}-image`}
-        src={headerImage}
-        alt={name}
+        class="rounded-xl h-[200px]"
+        transition:name={`${title}-image`}
+        src={coverImage}
+        alt={title}
       />
-      <h1 transition:name={`${name}-title`}>
-        {name}
+      <h1 transition:name={`${title}-title`}>
+        {title}
       </h1>
     </figure>
     <p class="z-10">Hero</p>

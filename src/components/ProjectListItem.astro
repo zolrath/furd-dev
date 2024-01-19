@@ -1,17 +1,17 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import ProjectTechnologyList from "./ProjectTechnologyList.astro";
 
 interface Props {
   project: CollectionEntry<"projects">;
 }
 
 const { project } = Astro.props;
-const { name, description, link } = project.data;
+const { title, external, description, link, technologies } = project.data;
 ---
 
-<a href={link}>
-  <div class="mb-4 dark:bg-zinc-700 rounded-md p-4">
-    <h3 transition:name={`${name} title`}>{name}</h3>
+<a href={link} target={external ? "_blank" : "_self"} class="flex flex-col gap-4 p-3 rounded-lg border-2 border-foreground/10 bg-foreground/5 group">
+    <h3 class="text-xl font-heading" transition:name={`${title} title`}>{title}</h3>
+      <ProjectTechnologyList technologies={technologies} slug={project.slug} />
     {description}
-  </div>
 </a>

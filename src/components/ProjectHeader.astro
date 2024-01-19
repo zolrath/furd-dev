@@ -1,0 +1,15 @@
+---
+import { buttonVariants } from "@/components/ui/Button";
+import { getCategories, getTags } from "@/fetchers/posts";
+import { cn } from "@/utils";
+
+const categories = await getCategories();
+const tags = await getTags();
+
+type Props = {
+  title: string;
+};
+
+const { title } = Astro.props;
+---
+<h1 class="inline-block text-4xl font-heading">{title}</h1>

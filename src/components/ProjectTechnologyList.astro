@@ -1,0 +1,23 @@
+---
+import { Badge } from "@components/ui/Badge";
+
+type Props = {
+  technologies: string[],
+  slug: string
+}
+
+let { technologies, slug } = Astro.props;
+---
+<div class="flex justify-between items-center" transition:name={"technologies-" + slug}>
+  <div class="flex overflow-hidden flex-grow gap-2 masked">
+    {technologies?.map((technology: string) => (
+      <Badge
+        radius="md"
+        variant="outline"
+        className="capitalize"
+      >
+        {technology}
+      </Badge>
+    ))}
+  </div>
+</div>

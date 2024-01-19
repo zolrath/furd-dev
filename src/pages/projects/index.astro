@@ -5,6 +5,7 @@ import { ProjectDisplay } from "@mytypes/project";
 import ProjectHero from "@components/ProjectHero.astro";
 import ProjectListItem from "@components/ProjectListItem.astro";
 import MainLayout from "@layouts/MainLayout.astro";
+import ProjectHeader from "@components/ProjectHeader.astro";
 
 const title = "Projects";
 const description = "Projects";
@@ -21,8 +22,8 @@ const projectDisplayOrder = [
 
 projects = projects.sort(
   (a, b) =>
-    projectDisplayOrder.indexOf(a.data.display) -
-    projectDisplayOrder.indexOf(b.data.display),
+   (projectDisplayOrder.indexOf(a.data.display) - projectDisplayOrder.indexOf(b.data.display)) || 
+      (b.data.projectStart.valueOf() - a.data.projectStart.valueOf())
 );
 ---
 
@@ -30,14 +31,8 @@ projects = projects.sort(
   title={title}
   description={description}
 >
-  <div class="container">
-    <h1>Projects</h1>
-    <!-- <figure class="broccoli-image"> -->
-    <!--   <img class="pixel-image" src="/assets/broccoli-idle.gif" alt="Anthropomorphic broccoli standing idle." width="330" /> -->
-    <!--   <figcaption> -->
-    <!--   Broccoli from <a href="/projects/uprooted">Uprooted</a> -->
-    <!--   </figcaption> -->
-    <!-- </figure> -->
+  <section class="container flex flex-col gap-6 py-10 mx-auto max-w-4xl">
+    <ProjectHeader title="Personal Projects" />
     {
       projects.map((project, _index) => {
         if (project.data.display == ProjectDisplay.Hero) {
@@ -51,25 +46,5 @@ projects = projects.sort(
         }
       })
     }
-
-    <p>
-      Active member instructing and helping users in the Elixir Newbies and
-      Godot discords.
-    </p>
   </div>
 </MainLayout>
-
-<style>
-  .broccoli-image {
-    float: right;
-    margin: -3em -7em 2em 2em;
-    max-width: 300px;
-  }
-
-  @media (max-width: 1020px) {
-    .broccoli-image {
-      float: none;
-      margin: 0 auto 2em;
-    }
-  }
-</style>

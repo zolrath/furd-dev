@@ -1,32 +1,32 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import ProjectTechnologyList from "./ProjectTechnologyList.astro";
 
 interface Props {
   project: CollectionEntry<"projects">;
 }
 
 const { project } = Astro.props;
-const { name, headerImage, description, link } = project.data;
----
+const { title, coverImage, coverImageAlt, description, link, external, technologies } = project.data;
 
-<a href={link}>
-  <div
-    class="rounded-md overflow-hidden aspect-video shadow-md hover:shadow-lg transition"
-  >
-    <figure
-      class="relative overflow-hidden flex content-center items-center w-full h-full"
-    >
-      <img
-        class="h-[200px] rounded-xl"
-        transition:name={`${name}-image`}
-        src={headerImage}
-        alt={name}
-      />
-      <h1 transition:name={`${name}-title`}>
-        {name}
-      </h1>
-    </figure>
-    <p class="z-10">Hero</p>
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{jpeg,jpg,png,gif,webp}')
+if (!images[coverImage]) throw new Error(`"${coverImage}" does not exist in glob: "src/assets/**/*.{jpeg,jpg,png,gif,webp}"`);
+---
+<a href={link} target={external ? "_blank" : "_self"} class="flex flex-col gap-4 p-3 rounded-lg border-2 md:flex-row border-foreground/10 bg-foreground/5 group">
+  <Image
+    class="object-cover overflow-hidden w-full max-h-48 rounded-xl group-hover:scale-[102%] aspect-7/4"
+    width={1050}
+    height={600}
+    src={images[coverImage]()}
+    alt={coverImageAlt}
+    transition:name={"img-" + project.slug}
+  />
+  <div class="flex flex-col gap-4 w-full">
+    <h1 class="text-4xl font-heading" transition:name={"title-" + project.slug}>
+      {title}
+    </h1>
+    <ProjectTechnologyList technologies={technologies} slug={project.slug} />
     <p>{description}</p>
   </div>
 </a>

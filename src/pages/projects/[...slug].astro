@@ -1,66 +1,31 @@
 ---
-import { getCollection } from "astro:content";
-import MainLayout from "@/layouts/MainLayout.astro";
-import Bio from "../../components/Bio.astro";
-import { ProjectDisplay } from "@mytypes/project";
+import { getProjects } from '@/fetchers/projects';
+import ProjectLayout from '@layouts/ProjectLayout.astro';
+import { type CollectionEntry } from 'astro:content';
+import { MdxComponents } from '@components/content/MdxComponents';
 
 export async function getStaticPaths() {
-  let projects = await getCollection("projects", ({ data }) => {
-    return data.display !== ProjectDisplay.Hidden;
-  });
+  const projects = await getProjects()
 
-  return projects.map((p) => ({
-    params: { slug: p.slug },
-    props: { project: p },
-  }));
+	return projects.map((project) => ({
+		params: { slug: project.slug },
+		props: project,
+	}));
 }
 
-const { data, slug } = Astro.props.project;
-const { Content } = await Astro.props.project.render();
-const { name, description, headerImage, status, category } = data;
+type Props = CollectionEntry<'projects'>;
+
+const project = Astro.props;
+const slug = Astro.params.slug;
+const { Content } = await project.render();
+
+if (!slug || !project) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Not found'
+  });
+}
 ---
-
-<MainLayout
-  title={name}
-  description={description}
->
-  <div class="container">
-    <header>
-      <h1 transition:name={`${name}-title`}>{name}</h1>
-      <img
-        class="rounded-xl"
-        transition:name={`${name}-image`}
-        src={headerImage}
-      />
-      <hr />
-    </header>
-    <article class="content">
-      <p>Status: {status}</p>
-      <Content />
-    </article>
-    <hr />
-    <Bio />
-  </div>
-</MainLayout>
-
-<style>
-  header {
-    text-align: center;
-  }
-
-  header h1 {
-    margin-bottom: 0.7em;
-  }
-
-  header p {
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    font-family: var(--font-family-sans);
-    font-weight: 600;
-  }
-
-  header hr {
-    min-width: 100px;
-    width: 30%;
-  }
-</style>
+<ProjectLayout {...project}>
+	<Content components={MdxComponents} />
+</ProjectLayout>

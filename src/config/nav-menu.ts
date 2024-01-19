@@ -7,16 +7,16 @@ export const navMenuConfig: NavConfig = {
       href: "/",
     },
     {
-      title: "About",
-      href: "/about",
-    },
-    // {
-    //   title: "Projects",
-    //   href: "/projects",
-    // },
-    {
       title: "Blog",
       href: "/blog",
+    },
+    {
+      title: "Projects",
+      href: "/projects",
+    },
+    {
+      title: "About",
+      href: "/about",
     },
   ],
 }

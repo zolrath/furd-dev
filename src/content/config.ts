@@ -27,13 +27,25 @@ const blog = defineCollection({
 const projects = defineCollection({
   type: 'content',
   schema: z.object({
-    name: z.string(),
+    title: z.string(),
     link: z.string(),
+    external: z.boolean().default(false),
     description: z.string(),
-    headerImage: z.string(),
+    coverImage: z.string(),
+    coverImageAlt: z.string(),
+    projectStart: z
+      .string()
+      .or(z.date())
+      .transform((val) => new Date(val)),
+    projectEnd: z
+      .string()
+      .or(z.date())
+      .optional()
+      .transform((str) => (str ? new Date(str) : undefined)),
     category: z.custom<ProjectCategory>(),
     status: z.custom<ProjectStatus>(),
     display: z.custom<ProjectDisplay>(),
+    technologies: z.array(z.string()),
   }),
 })
 
