@@ -12,11 +12,11 @@ const posts = await getPosts();
   <section class="container py-10">
     <BlogHeader title="Blog" />
 
-    <div
-      class="grid grid-cols-1 gap-x-6 gap-y-9 md:grid-cols-2 md:gap-y-11 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16"
-    >
+    <div class="grid grid-cols-1 gap-x-6 gap-y-9 md:grid-cols-2 md:gap-y-11 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
       <FeaturedBlogCard {...posts[0]} />
-      <hr class="col-span-full" />
+    </div>
+    <hr class="my-11 w-full" />
+    <div class="grid grid-cols-1 gap-x-6 gap-y-9 md:grid-cols-2 md:gap-y-11 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
       {posts.slice(1).map((post) => <BlogCard {...post} />)}
     </div>
   </section>
