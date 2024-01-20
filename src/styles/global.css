@@ -141,7 +141,6 @@ path.toc-marker {
   } */
 
   html {
-    /* scroll-padding-top: 4rem; */
     @apply scroll-pt-16 lg:scroll-pt-0;
   }
 
@@ -163,8 +162,8 @@ path.toc-marker {
   }
 
   /* MdxComponent: For <code></code> with no parent <pre></pre> */
-  :not(pre) > code {
-    @apply relative rounded border px-[0.3rem] py-[0.2rem] font-mono text-sm bg-background text-foreground;
+.prose :not(pre) > code {
+    @apply relative rounded border px-[0.3rem] py-[0.2rem] font-mono text-sm bg-[--ec-codeBg] text-[--ec-codeFg];
   }
 }
 
@@ -186,41 +185,6 @@ a.underlined {
   @apply underline-offset-[7px] underline decoration-4 decoration-zinc-400 dark:decoration-zinc-200 decoration-solid hover:before:scale-x-100 hover:before:origin-left relative before:w-full before:h-2 before:origin-right before:transition-transform before:duration-300 before:scale-x-0 before:bg-blue-500 before:absolute before:left-0 before:-bottom-2
 }
 
-/* -- CODE BLOCKS --- */
-code {
-  font-family: 'SF Mono', menlo, inconsolata, monospace;
-  font-size: calc(1em - 2px);
-  color: #555;
-  padding: 0.2em 0.4em;
-  border-radius: 2px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-pre[data-theme*=" "],
-code[data-theme*=" "],
-code[data-theme*=" "] span {
-  color: var(--shiki-light);
-  background-color: var(--shiki-light-bg);
-}
-
-:root.dark pre[data-theme*=" "],
-:root.dark code[data-theme*=" "],
-:root.dark code[data-theme*=" "] span {
-  color: var(--shiki-dark);
-  background-color: var(--shiki-dark-bg);
-}
-
-span[data-rehype-pretty-code-figure] code {
-  border-radius: 8px;
-}
-
-pre {
-  border-radius: 8px !important;
-  margin: 1.2em 0 !important;
-  padding: 1.2em;
-}
-
-pre code {
-  padding: 0;
+.prose div.expressive-code {
+  @apply my-6
 }

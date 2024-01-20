@@ -5,7 +5,6 @@ import Callout from "@/components/content/Callout.astro";
 // @ts-ignore
 import MdxCard from "@/components/content/MdxCard.astro";
 // @ts-ignore
-import Pre from "@/components/content/Pre.astro";
 import { cn } from "@/utils";
 import { Image } from "astro:assets";
 
@@ -65,12 +64,6 @@ export const MdxComponents = {
         "mt-8 scroll-m-20 text-base font-semibold tracking-tight",
         className
       )}
-      {...props}
-    />
-  ),
-  a: ({ className, ...props }: Props) => (
-    <a
-      className={cn("font-medium underline underline-offset-4", className)}
       {...props}
     />
   ),
@@ -144,7 +137,6 @@ export const MdxComponents = {
       {...props}
     />
   ),
-  pre: Pre,
   Image,
   Callout,
   Card: MdxCard,
