@@ -11,9 +11,11 @@ import sitemap from "@astrojs/sitemap";
 import expressiveCode from "astro-expressive-code";
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import latte from '@catppuccin/vscode/themes/latte.json'
+import macchiato from '@catppuccin/vscode/themes/macchiato.json'
 
 const astroExpressiveCodeOptions = {
-  themes: ['solarized-light', 'dracula'],
+  themes: [latte, macchiato],
   themeCssRoot: ":root",
   themeCssSelector: (theme) => `[data-theme='${theme.type}']`,
   styleOverrides: {
