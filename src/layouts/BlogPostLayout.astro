@@ -1,11 +1,12 @@
 ---
 import { cn, longDate } from "@/utils";
 import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
 import MainLayout from "./MainLayout.astro";
+import { slideInFromLeft } from "@/transitions";
 import { buttonVariants } from "@components/ui/Button";
 import { Icon } from "astro-icon/components";
 import { Badge } from "@components/ui/Badge";
-import { Image } from "astro:assets";
 import TableOfContents from "@components/TableOfContents.astro";
 import DraftIndicator from "@components/ui/DraftIndicator.astro";
 import Bio from "@components/Bio.astro";
@@ -30,7 +31,7 @@ if (!images[coverImage]) throw new Error(`"${coverImage}" does not exist in glob
         buttonVariants({ variant: "ghost" }),
         "absolute left-[-200px] top-10 hidden 2xl:inline-flex text-muted-foreground"
       )}
-      transition:animate="slide"
+      transition:animate={slideInFromLeft()}
     >
       <Icon name="lucide:chevron-left" class="mr-2 size-4" />
        See all posts
