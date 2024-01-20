@@ -9,91 +9,19 @@ const description = "Matt Furden makes stuff.";
 ---
 
 <MainLayout title={title} description={description}>
-  <div class="flex flex-col flex-grow gap-12 justify-center items-center px-8 mx-auto max-w-screen-xl lg:flex-row underlined align-center min-h-96">
+  <div class="flex flex-col flex-grow gap-10 justify-center items-center px-8 mx-auto max-w-screen-xl lg:flex-row underlined align-center min-h-96">
     <div>
-      <h1 class="text-5xl md:text-7xl font-heading">Hi, I'm Matt 👋</h1>
+      <h1 class="text-5xl md:text-7xl lg:text-6xl xl:text-7xl font-heading">Hi, I'm Matt 👋</h1>
       <p class="pt-4 text-xl">
         Check out the <a href="/blog">blog</a>, <a href="/projects">projects</a>, <a href="http://github.com/zolrath" target="_blank">GitHub</a>, or <a href="/about">me</a>.
       </p>
     </div>
-
-    <div class="hero-image-container">
-      <picture>
-        <Image
-          class="hero-image"
-          src={computerImage}
-          alt="Image of a universe inside of a monitor"
-          width="550"
-          height="466"
-        />
-      </picture>
+    <Image
+      src={computerImage}
+      alt="Image of a universe inside of a monitor"
+      width="550"
+      height="466"
+    />
     </div>
   </div>
 </MainLayout>
-
-<style>
-  .home-container {
-    align-items: center;
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    margin: 2em 0;
-    min-height: 400px;
-  }
-
-  .hero-image-container {
-    margin: 0 1em;
-    text-align: center;
-  }
-
-  .hero-image-container picture {
-    display: block;
-    min-height: 250px;
-  }
-
-  .caption {
-    font-size: 0.8em;
-    font-style: italic;
-    text-align: left;
-  }
-
-  .hero-image {
-    width: 100%;
-    max-width: 550px;
-    margin-bottom: 1em;
-  }
-
-  .pixel-image {
-    /* IE, only works on <img> tags */
-    -ms-interpolation-mode: nearest-neighbor;
-    /* Firefox */
-    image-rendering: crisp-edges;
-    /* Chromium + Safari */
-    image-rendering: pixelated;
-    margin-bottom: 1.5em;
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-  }
-
-  @media (max-width: 1200px) {
-    p {
-      font-size: 1.2em;
-    }
-
-    .hero-image {
-      max-width: 400px;
-    }
-  }
-
-  @media (max-width: 800px) {
-    .home-container {
-      flex-direction: column;
-    }
-
-    .home-copy {
-      flex: 0;
-      padding-bottom: 2em;
-      text-align: center;
-    }
-  }
-</style>

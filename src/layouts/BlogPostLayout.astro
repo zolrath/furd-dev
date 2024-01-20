@@ -16,7 +16,9 @@ type Props = CollectionEntry<"blog">;
 const slug = Astro.props.slug;
 const { draft, title, description, publishDate, updatedDate, coverImage, coverImageAlt, category, tags } =
   Astro.props.data;
-const { headings } = await Astro.props.render();
+const { headings, remarkPluginFrontmatter } = await Astro.props.render();
+const { minutesRead } = remarkPluginFrontmatter;
+
 
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{jpeg,jpg,png,gif,webp}')
 if (!images[coverImage]) throw new Error(`"${coverImage}" does not exist in glob: "src/assets/**/*.{jpeg,jpg,png,gif,webp}"`);
@@ -83,6 +85,7 @@ if (!images[coverImage]) throw new Error(`"${coverImage}" does not exist in glob
             )
           }
         </span>
+        <span class="font-medium text-muted-foreground">{minutesRead}</span>
       </div>
       <section>
         <h1 id="title" class="my-4 text-4xl font-heading" transition:name={"title-" + slug}>

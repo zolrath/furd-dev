@@ -3,7 +3,7 @@ import mdx from '@astrojs/mdx';
 import remarkGfm from 'remark-gfm';
 import remarkSmartypants from 'remark-smartypants';
 import rehypeExternalLinks from 'rehype-external-links';
-import remarkSectionize from '/src/utils/remarkFlatSectionize';
+import { remarkReadingTime, remarkFlatSectionize } from '/src/remark';
 import icon from "astro-icon";
 import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
@@ -42,7 +42,12 @@ export default defineConfig({
   markdown: {
     extendDefaultPlugins: true,
     syntaxHighlight: false,
-    remarkPlugins: [remarkGfm, remarkSmartypants, remarkSectionize],
+    remarkPlugins: [
+      remarkGfm,
+      remarkSmartypants,
+      remarkFlatSectionize,
+      remarkReadingTime,
+    ],
     rehypePlugins: [
       rehypeSlug,
       [rehypeAutolinkHeadings, { behavior: 'wrap', properties: { className: "no-underline" } }],

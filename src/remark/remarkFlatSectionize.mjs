@@ -1,7 +1,7 @@
 import { findAfter } from 'unist-util-find-after';
 import { visit } from 'unist-util-visit';
 
-function plugin () {
+export default function plugin () {
   return transform
 }
 
@@ -38,5 +38,3 @@ function sectionize (node, index, parent) {
 
   parent.children.splice(startIndex, section.children.length, section)
 }
-
-export default plugin
