@@ -167,6 +167,14 @@ path.toc-marker {
   }
 }
 
+:root[data-theme="dark"] figure.frame div.copy div.feedback {
+  --tooltip-bg: hsl(185, 24%, 35%);
+}
+
+:root figure.frame div.copy div.feedback {
+  --tooltip-bg: hsl(127, 34%, 53%);
+}
+
 .text-gradient_indigo-purple {
   background: linear-gradient(90deg, #6366f1 0%, rgb(168 85 247 / 0.9) 100%);
   /* background: linear-gradient(83.21deg,#3245ff 0%,#bc52ee 100%); */
