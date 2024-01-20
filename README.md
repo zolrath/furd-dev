@@ -52,8 +52,11 @@ Inside of this project, you'll see the following folders and files:
 ├── src/
 │   ├── components/
 │   │   └── Logo.astro
-│   └── pages/
-│       └── index.astro
+│   ├── pages/
+│   │   └── index.astro
+│   └── content/
+│       ├── blog/
+│       └── projects/
 └── package.json
 ```
 
@@ -65,7 +68,8 @@ Any static assets, like images, can be placed in the `public/` directory, though
 
 
 ### Adding Posts
-In order to add a new post, simply create a new markdown file in `data/blog-posts/`.
+In order to add a new post, simply create a new markdown file in `src/content/blog/`.
+
 #### Frontmatter
 
 Posts currently support the following frontmatter:
@@ -84,6 +88,7 @@ tags: [godot, shaders]
 relatedPosts: [godot-steam]
 ---
 ```
+`draft`, `updatedDate`, and `relatedPosts` are optional.
 
 ## 🧞 Commands
 
@@ -99,5 +104,5 @@ All commands are run from the root of the project, from a terminal:
 
 ## 👀 Want to learn more?
 
-Feel free to check [Astro's documentation](https://github.com/withastro/astro) or jump into Astro's [Discord server](https://astro.build/chat).
+Feel free to check [Astro's documentation](https://github.com/withastro/astro) or jump into Astro's [Discord server](https://astro.build/chat).  
 For more information about [Terraform](https://www.terraform.io) check out their [documentation](https://www.terraform.io/docs/index.html) or other [HashiCorp](https://www.hashicorp.com) tools.
