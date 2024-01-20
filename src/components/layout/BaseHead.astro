@@ -64,9 +64,9 @@ const setDarkMode = () => {
   })();
 
   if (theme === "light") {
-    document.documentElement.classList.remove("dark");
+    document.documentElement.dataset.theme = "light";
   } else {
-    document.documentElement.classList.add("dark");
+    document.documentElement.dataset.theme = "dark";
   }
   window.localStorage.setItem("theme", theme);
 };

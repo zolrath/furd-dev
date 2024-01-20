@@ -95,9 +95,9 @@ export function ThemeToggle() {
   useEffect(() => {
     const root = document.documentElement;
     if (theme === "light") {
-      root.classList.remove("dark");
+      root.dataset.theme = "light"
     } else {
-      root.classList.add("dark");
+      root.dataset.theme = "dark"
     }
   }, [theme]);
 
