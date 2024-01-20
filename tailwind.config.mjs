@@ -24,6 +24,18 @@ export default {
       spacing: {
         "18": "4.5rem",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            h3: {
+              scrollMarginTop: "4rem",
+            },
+            h4: {
+              scrollMarginTop: "4.5rem",
+            },
+          },
+        },
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
