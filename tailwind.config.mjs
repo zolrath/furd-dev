@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", ...fontFamily.sans],
-        heading: ["Archivo Narrow", ...fontFamily.sans],
-        logo: ["Rubik Mono One", ...fontFamily.sans],
+        sans: ["var(--font-inter)", ...fontFamily.sans],
+        logo: ["var(--font-rubik)", ...fontFamily.sans],
+        heading: ["var(--font-archivo)", ...fontFamily.sans],
       },
       height: {
         "18": "4.5rem",
