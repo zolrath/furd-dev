@@ -16,6 +16,7 @@ if (!images[post.data.coverImage]) throw new Error(`"${post.data.coverImage}" do
 <article class="relative space-y-4 group">
   <a
     href={`/blog/${post.slug}/`}
+    data-astro-prefetch
     class="flex h-52 transition duration-300 group-hover:shadow-xl group-hover:-translate-y-2"
   >
     <Image
@@ -63,9 +64,8 @@ if (!images[post.data.coverImage]) throw new Error(`"${post.data.coverImage}" do
       {shortDate(post.data.publishDate)}
     </span>
   </div>
-
   <div>
-    <a href={`/blog/${post.slug}/`} class="group-hover:underline">
+    <a href={`/blog/${post.slug}/`} data-astro-prefetch class="group-hover:underline">
       <h2
         class="text-xl leading-snug md:text-2xl font-heading line-clamp-3"
         transition:name={"title-" + post.slug}

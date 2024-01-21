@@ -53,5 +53,10 @@ export default defineConfig({
       [rehypeAutolinkHeadings, { behavior: 'wrap', properties: { className: "no-underline" } }],
       [rehypeExternalLinks, { target: '_blank' }],
     ]
-  }
+  },
+  prefetch: true,
+  experimental: {
+    clientPrerender: true,
+    globalRoutePriority: true,
+  },
 });

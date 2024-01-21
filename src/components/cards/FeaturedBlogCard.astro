@@ -23,6 +23,7 @@ if (!images[post.data.coverImage]) throw new Error(`"${post.data.coverImage}" do
   <div class="flex flex-col col-span-2 gap-4 p-3 rounded-2xl border-2 transition-all md:flex-row border-foreground/5 bg-foreground/5 group hover:border-foreground/10">
     <a
       href={`/blog/${post.slug}/`}
+      data-astro-prefetch
       class="flex relative transition duration-300 origin-center group-hover:scale-[102%] aspect-7/4 md:max-w-[500px]"
     >
       <Image
@@ -70,16 +71,15 @@ if (!images[post.data.coverImage]) throw new Error(`"${post.data.coverImage}" do
           {shortDate(post.data.publishDate)}
         </span>
       </div>
-
-        <a href={`/blog/${post.slug}/`} class="h-full">
-          <h2
-            class="text-2xl leading-snug md:text-3xl group-hover:underline font-heading line-clamp-3"
-            transition:name={"title-" + post.slug}
-          >
-            {post.data.title}
-          </h2>
+      <a href={`/blog/${post.slug}/`} data-astro-prefetch class="h-full">
+        <h2
+          class="text-2xl leading-snug md:text-3xl group-hover:underline font-heading line-clamp-3"
+          transition:name={"title-" + post.slug}
+        >
+          {post.data.title}
+        </h2>
         <p class="mt-2">{post.data.description}</p>
-        </a>
+      </a>
     </div>
   </div>
 </article>
