@@ -2,6 +2,7 @@
 title: Integrating Steam Input
 draft: false
 publishDate: 2024-01-18
+updatedDate: 2024-01-20
 description: Integrating Steam Input with Godot's Input system.
 coverImage: /src/assets/blog/steam-input/header.png
 coverImageAlt: A blue, slightly robotic, xbox controller.
@@ -14,19 +15,38 @@ tags: [godot, steam]
 </Callout>
 
 ## Setting up
-First, let's get some prep work done and define some variables to store our handles and the actions we're going to be querying Steam Input for.
-```gdscript
-# Track if we've gotten the handles yet.
-var got_handles = false
 
-# The action set handles and the current action set.
-var game_action_set
-var current_action_set
+This article assumes you've already:
+1. [Set up GodotSteam](https://godotsteam.com/tutorials/initializing/)
+2. [Set up Steam Input's required .vdf In-Game Actions File](https://partner.steamgames.com/doc/features/steam_controller/getting_started_for_devs#iga).
+
+Given that you've already those steps, we're going to begin by adding our own initialization code to our Steam autoload.
+The `SteamControllerInput.init()` function needs to be called **after** `Steam.initInput()` and `Steam.enableDeviceCallbacks()`.
+
+```gdscript title="autoloads/steam.gd" ins={3}
+Steam.inputInit()
+Steam.enableDeviceCallbacks()
+SteamControllerInput.init()
+```
+
+### Creating our SteamControllerInput script
+
+First let's create a new script called `steam_controller_input.gd` and add it to our autoloads under the name `SteamControllerInput`.
+
+Next, let's get some prep work done and define some variables to store our handles and the actions we're going to be querying Steam Input for.
+
+```gdscript title="autoloads/steam_controller_input.gd"
+extends Node
+## A globally accessible manager for device-specific actions using SteamInput for any controller
+## and standard Godot Input for the keyboard.
+##
+## All methods in this class that have a "device" parameter can accept -1
+## which means the keyboard device.
 
 # The actions defined in the Steam .vdf file are listed here
 # with true or false indicating if input is analog or digital.
 # False is digital (buttons), true is analog (joysticks, triggers, etc).
-var action_names = {
+var action_names := {
 	"Move": true,
 	"Up": false,
 	"Down": false,
@@ -36,12 +56,19 @@ var action_names = {
 	"Pause": false,
 }
 
-# Here we will store the resulting handles for each action.
+# Track if we've gotten the handles yet.
+var got_handles := false
+
+# The action set handles and the current action set.
+var game_action_set
+var current_action_set
+
+# Store the resulting handles for each action.
 var actions = {}
 ```
 
 ## Handling Connections
-Next we'll connect to the controller connected and disconnected signals to handle when a player connects or disconnects their controller.
+Here we're creating the `init` function that gets called in our Steam autoload, and connecting to the `Steam.input_device_connected` and `Steam.input_device_disconnected` signals to handle when a player connects or disconnects their controller.
 
 ```gdscript
 ## Call this after calling `Steam.inputInit()` and `Steam.enableDeviceCallbacks()`
@@ -49,36 +76,43 @@ func init() -> void:
   Steam.input_device_connected.connect(_on_steam_input_device_connected)
   Steam.input_device_disconnected.connect(_on_steam_input_device_disconnected)
 
-func _on_steam_input_device_connected(input_handle: int):
+func _on_steam_input_device_connected(input_handle: int) -> void:
 	if not got_handles:
 		get_handles()
 	Steam.activateActionSet(input_handle, current_action_set)
 	print("Device connected %s" % str(input_handle))
 
-func _on_steam_input_device_disconnected(input_handle: int):
+func _on_steam_input_device_disconnected(input_handle: int) -> void:
 	print("Device disconnected %s" % str(input_handle))
 ```
 
 ### Getting Action Handles
 <Callout icon="💡" type="info">
   You need to wait until a controller has been connected before you can get the action and action set handles.
-  If you try to get them before a controller has been connected Godot Steam will return `0` for all handles.
+  If you try to get them before a controller has been connected GodotSteam will return `0` for all handles.
+</Callout>
+
+<Callout icon="⚠️" type="danger">
+  Though, as I was writing this I'm still encountering handles returning `0` even after a controller has been connected,
+  so this feels like a bug, similar to the controllers not responding if you pause your game via `get_tree().paused = true`.
+
+  Hopefully these will both be addressed soon.
 </Callout>
 
 Now that a controller is connected, we can get the action set and action handles.
-In this example vdf file I have a single action set called `GameControls` and a number of actions defined within it.
+In this example .vdf file I have a single action set called `GameControls` and a number of actions defined within it.
 
 ```gdscript
-func get_handles():
+func get_handles() -> void:
+	got_handles = true
 	game_action_set = Steam.getActionSetHandle("GameControls")
 	current_action_set = game_action_set
 	get_action_handles(action_names)
-	got_handles = true
 ```
 
 Now we iterate over the action names and get the handles for each action, using the `Steam.getAnalogActionHandle` and `Steam.getDigitalActionHandle` functions depending on the input type.
 ```gdscript
-func get_action_handles(action_names: Dictionary):
+func get_action_handles(action_names: Dictionary) -> void:
 	for action in action_names.keys():
 		# If true, analog
 		if action_names[action]:
@@ -92,23 +126,45 @@ Steam Input doesn't handle keyboard input, so for my use case I'm not going to b
 
 As long as we name the action the same in Godot's Input system as we do in Steam Input, we can write a simple wrapper to check both easily.
 
+## Get Connected Controllers
+Since we'll be supporting both Steam Input and a keyboard via GodotInput,
+we can specify `-1` as the device ID for the keyboard, and add any detected controllers to the list of device IDs.
+
+```gdscript
+func get_controllers() -> Array[int]:
+	var controllers: Array[int] = [-1]
+	var steam_controllers = Steam.getConnectedControllers()
+	if steam_controllers:
+		controllers.append_array(steam_controllers)
+	return controllers
+```
+
+But now that we have controllers, how do we use them?
+
 ## Input Wrappers
-These wrappers expect a device handle to be passed in. If the device handle is less than 0, it will fall back to the default Input functions.
+These wrappers expect a device handle to be passed in. If the device handle is less than 0, it will fall back to the default Input functions, so I use `-1` to indicate a keyboard.
 
 ### get_action_strength
+
+Get the strength of an action. This is useful for analog inputs such as a single axis of a joystick, or a trigger.
+
+Steam's `getAnalogActionData` function returns a `Vector2` with the x and y values of the action, but the y value is always 0 for single axis inputs such as triggers. By only returning the x value we can emulate Godot's `get_action_strength` function.
+
 ```gdscript
-## This is equivalent to Input.get_action_strength except it will only check the relevant device.
 func get_action_strength(device: int, action: StringName, exact_match: bool = false) -> float:
 	if device >= 0:
 		if not got_handles: return 0
+		# getAnalogActionData returns only the x axis for single axis inputs such as triggers.
 		var action_data = Steam.getAnalogActionData(device, actions[action])
 		return action_data.x
 	return Input.get_action_strength(action, exact_match)
 ```
 
 ### get_axis
+
+`get_axis` is useful for things like left/right movement that is comprised of two actions, one for left and one for right.
+
 ```gdscript
-## This is equivalent to Input.get_axis except it will only check the relevant device.
 func get_axis(device: int, negative_action: StringName, positive_action: StringName) -> float:
 	if device >= 0:
 		if not got_handles: return 0
@@ -119,6 +175,10 @@ func get_axis(device: int, negative_action: StringName, positive_action: StringN
 	return Input.get_axis(negative_action, positive_action)
 ```
 ### get_vector
+
+`get_vector` is largely used for movement, and is useful for things like joysticks or dpads.
+We need to invert the y axis because Steam's y axis is inverted from Godot, but otherwise emulates Godot's `get_vector` function.
+
 ```gdscript
 ## This is equivalent to Input.get_vector except it will only check the relevant device.
 func get_vector(device: int, negative_x: StringName, positive_x: StringName, negative_y: StringName, positive_y: StringName, deadzone: float = -1.0) -> Vector2:
@@ -128,9 +188,151 @@ func get_vector(device: int, negative_x: StringName, positive_x: StringName, neg
 		var positive_x_val = Steam.getAnalogActionData(device, actions[positive_x])
 		var negative_y_val = Steam.getAnalogActionData(device, actions[negative_y])
 		var positive_y_val = Steam.getAnalogActionData(device, actions[positive_y])
+    # Steam's y axis is inverted compared to Godot
 		return Vector2(positive_x_val - negative_x_val, -(positive_y_val - negative_y_val)).normalized()
 	return Input.get_vector(negative_x, positive_x, negative_y, positive_y, deadzone)
 ```
 
-And now you've got a basic Steam Input wrapper!
-You also need to write wrappers for `is_action_pressed`, `is_action_just_pressed`, and `is_action_just_released` but those implementations are not simple and will need another post.
+### get_move_input
+
+In order to use an analog joystick from Steam Input, we define a name for the input in the Steam In-Game Actions File.
+
+In this example, I've named it "Move". In Godot I'm querying the Left/Right and Up/Down actions, but they could be named whatever you
+define yourself.
+
+This is one of the few functions that don't share the same name action names between Steam Input and Godot Input.
+
+```gdscript
+func get_move_input(device: int) -> Vector2:
+	if device >= 0:
+		if not got_handles: return Vector2.ZERO
+		# Get the analog stick movement
+		var action_data = Steam.getAnalogActionData(device, actions["Move"])
+		return Vector2(action_data.x, -action_data.y).normalized()
+	return Vector2(Input.get_axis("Left", "Right"), Input.get_axis("Up", "Down")).normalized()
+```
+
+## Tracking press/release states
+By default, Godot gives a really nice set of Input functions that allow you to check if an action was just pressed or just released this frame. This can be very useful for ensuring that you only perform an action once per press, or for tracking how long an action has been held for.
+
+Unfortunately, Steam Input doesn't give us that functionality, so we need to implement it ourselves.
+
+Let's start by adding a new dictionary to store the state of each action at the top of our file:
+```gdscript ins={4-5}
+# Store the resulting handles for each action.
+var actions := {}
+
+# Store the state of each action and the frame it entered that state.
+var action_states := {}
+```
+
+### Getting the action state
+
+In order to use that dictionary, we'll need a function to get the action state for a given device and action.
+If the action state doesn't exist yet, we'll create it with the default values, setting `held` to `false` and `press_frame` and `release_frame` to `-1`.
+
+```gdscript
+func get_action_state(device: int, action: String) -> Dictionary:
+	# Get the current action, but create the defaults along the way if they don't exist.
+	if not action_states.get(device):
+		action_states[device] = {}
+	if not action_states[device].get(action):
+		action_states[device][action] = { "held": false, "press_frame": -1, "release_frame": -1 }
+	return action_states[device][action]
+```
+
+Though that won't be useful without a way to set the action state!
+
+### Setting the action state
+
+In order to set the action state, we'll need to know the current state of the action, and the current frame.
+We can then compare the current state to the previous state to determine if the action was just pressed or just released.
+
+By tracking the frame that the action was pressed or released we can easily implement our missing input methods!
+
+```gdscript
+func set_action_state(device: int, action: StringName, currently_held: bool, current_frame: int) -> Dictionary:
+	# Get the state of the action last frame
+	var previous_action_state = get_action_state(device, action) 
+	
+	# If we're pressing the action now and we weren't pressing it last frame,
+	# track that we pressed the action this frame.
+	if currently_held and not previous_action_state.held:
+		action_states[device][action].held = true
+		action_states[device][action].press_frame = current_frame
+	# If we're not pressing it this frame but we were pressing it last frame,
+	# track that we released the action this frame.
+	elif not currently_held and previous_action_state.held:
+		action_states[device][action].held = false
+		action_states[device][action].release_frame = current_frame
+	
+	# Return the current state of the action
+	return action_states[device][action]
+```
+
+### is_action_pressed
+
+To check if the action was just pressed we can use the `Steam.getDigitalActionData` function to check if the action is currently held.
+But, if we stop there we will have failed to track the press frame, so we'll need to call our `set_action_state` function to update the state of the action.
+
+```gdscript {6}
+func is_action_pressed(device: int, action: StringName, exact_match: bool = false) -> bool:
+	if device >= 0:
+		if not got_handles: return false
+		var current_frame = Engine.get_process_frames()
+		var currently_held = Steam.getDigitalActionData(device, actions[action]).state
+		set_action_state(device, action, currently_held, current_frame)
+		return currently_held
+	# If keyboard, use normal Godot input system.
+	return Input.is_action_pressed(action, exact_match)
+```
+
+### is_action_just_pressed
+
+Checking if the action was just pressed is very similar to checking if it's pressed, but we also ensure the `press_frame` is the current frame.
+
+```gdscript {6-7}
+func is_action_just_pressed(device: int, action: StringName, exact_match: bool = false) -> bool:
+	if device >= 0:
+		if not got_handles: return false
+		var current_frame = Engine.get_process_frames()
+		var currently_held = Steam.getDigitalActionData(device, actions[action])
+		var action_state = set_action_state(device, action, currently_held, current_frame)
+		return currently_held and action_state.press_frame == current_frame
+	# If keyboard, use normal Godot input system.
+	return Input.is_action_just_pressed(action, exact_match)
+```
+
+### is_action_just_released
+
+In order to check if the action was just released, we need to check if the action is not currently held, and if the release frame is the current frame.
+
+```gdscript {7}
+func is_action_just_released(device: int, action: StringName, exact_match: bool = false) -> bool:
+	if device >= 0:
+		if not got_handles: return false
+		var current_frame = Engine.get_process_frames()
+		var currently_held = Steam.getDigitalActionData(device, actions[action]).state
+		var action_state = set_action_state(device, action, currently_held, current_frame)
+		return not currently_held and action_state.release_frame == current_frame
+	# If keyboard, use normal Godot input system.
+	return Input.is_action_just_released(action, exact_match)
+```
+
+## Questions?
+And that's **most** of what I'm doing so far.
+
+Every frame my player script uses the input script to check if the player should move, jump, etc.
+
+```gdscript
+movement_input = SteamControllerInput.get_move_input(deviceId)
+jump_input_actuation = SteamControllerInput.is_action_just_pressed(deviceId, "Jump")
+jump_input = SteamControllerInput.is_action_pressed(deviceId, "Jump")
+```
+
+I've got plans to put more detail in a few areas but let me know if something is unclear or you're trying to do something I haven't covered here.
+I'm in the GodotSteam discord as [furd](https://discordapp.com/users/54376664171294720), feel free to talk to me there.
+
+I've got a few things still in the works but by assigning a `deviceId` to your player you can use this to check the input for a specific player.
+
+Enjoy!
