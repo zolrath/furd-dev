@@ -28,6 +28,7 @@ resource "aws_route53_record" "furd_dev_mx" {
   ]
 }
 
+# Create the A Record for the website
 resource "aws_route53_record" "www-a" {
   zone_id = aws_route53_zone.furd_dev_zone.zone_id
   name    = "furd.dev"
@@ -50,6 +51,7 @@ resource "aws_route53_record" "bluesky" {
   records = [var.bluesky_verification]
 }
 
+# Set up DNS validation for the certificate
 resource "aws_route53_record" "furd_dev_certificate_dns" {
   allow_overwrite = true
   name            = tolist(aws_acm_certificate.website_acm_certificate.domain_validation_options)[0].resource_record_name
@@ -59,6 +61,7 @@ resource "aws_route53_record" "furd_dev_certificate_dns" {
   ttl             = 60
 }
 
+# Cloudfront requires the certificate be located in us-east-1 for validation
 resource "aws_acm_certificate_validation" "website_certificate_validation" {
   provider                = aws.virginia
   certificate_arn         = aws_acm_certificate.website_acm_certificate.arn

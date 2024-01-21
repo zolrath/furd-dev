@@ -7,6 +7,22 @@ resource "aws_s3_bucket" "website_bucket" {
   }
 }
 
+data "aws_cloudfront_log_delivery_canonical_user_id" "current" {}
+data "aws_canonical_user_id" "current" {}
+
+# Create bucket for CloudFront logs
+resource "aws_s3_bucket" "website_log_bucket" {
+  bucket = "${var.bucket_name}-logs"
+}
+
+resource "aws_s3_bucket_ownership_controls" "website_logs" {
+  bucket = aws_s3_bucket.website_log_bucket.id
+
+  rule {
+    object_ownership = "ObjectWriter"
+  }
+}
+
 resource "aws_s3_bucket_public_access_block" "block_public_access" {
   bucket = aws_s3_bucket.website_bucket.id
 

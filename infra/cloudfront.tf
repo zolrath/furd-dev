@@ -9,6 +9,7 @@ resource "aws_cloudfront_origin_access_control" "website_access_control" {
   signing_protocol                  = "sigv4"
 }
 
+# Create CloudFront distribution
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
     domain_name              = aws_s3_bucket.website_bucket.bucket_regional_domain_name
@@ -21,6 +22,12 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   default_root_object = "index.html"
 
   aliases = ["www.${var.domain_name}", "${var.domain_name}"]
+
+  logging_config {
+    include_cookies = false
+    bucket          = aws_s3_bucket.website_log_bucket.bucket_regional_domain_name
+    prefix          = "furd-dev-cf-logs/"
+  }
 
   default_cache_behavior {
     allowed_methods = ["GET", "HEAD", "OPTIONS"]
@@ -58,6 +65,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 }
 
+# Create a CloudFront function to redirect requests for / to /index.html
 resource "aws_cloudfront_function" "index_redirect" {
   name    = "index_redirect"
   runtime = "cloudfront-js-1.0"
