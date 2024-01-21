@@ -10,14 +10,14 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.4.1",
-    "@astrojs/mdx": "^2.0.4",
+    "@astrojs/mdx": "^2.0.5",
     "@astrojs/react": "^3.0.9",
     "@astrojs/rss": "^4.0.2",
-    "@astrojs/sitemap": "^3.0.4",
+    "@astrojs/sitemap": "^3.0.5",
     "@astrojs/svelte": "^5.0.3",
     "@astrojs/tailwind": "^5.1.0",
     "@catppuccin/vscode": "^3.11.0",
-    "@iconify-json/lucide": "^1.1.154",
+    "@iconify-json/lucide": "^1.1.156",
     "@iconify-json/ri": "^1.1.19",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-navigation-menu": "^1.1.4",
@@ -26,13 +26,13 @@
     "@tailwindcss/typography": "^0.5.10",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
-    "astro": "^4.1.2",
+    "astro": "^4.2.1",
     "astro-expressive-code": "^0.31.0",
     "astro-icon": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "framer-motion": "^10.18.0",
-    "lucide-react": "^0.311.0",
+    "lucide-react": "^0.312.0",
     "markdown-it": "^14.0.0",
     "mdast-util-toc": "^7.0.0",
     "react": "^18.2.0",
@@ -52,9 +52,9 @@
     "unist-util-find-after": "^5.0.0"
   },
   "devDependencies": {
-    "prettier": "^3.2.2",
-    "prettier-plugin-astro": "^0.12.3",
-    "shikiji-transformers": "^0.10.0-beta.1",
+    "prettier": "^3.2.4",
+    "prettier-plugin-astro": "^0.13.0",
+    "shikiji-transformers": "^0.10.0-beta.9",
     "tailwindcss-animate": "^1.0.7"
   }
 }
