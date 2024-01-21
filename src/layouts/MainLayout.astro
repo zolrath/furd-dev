@@ -12,14 +12,19 @@ type Props = {
   title: string;
   description?: string;
   mainClass?: string;
+  image?: string;
 };
 
-const { title, description, mainClass } = Astro.props;
+const { title, description, mainClass, image } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} image={image}>
   <Header>
-    <MainNav items={navMenuConfig.mainNav} slot="left-header" transition:persist />
+    <MainNav
+      items={navMenuConfig.mainNav}
+      slot="left-header"
+      transition:persist
+    />
     <SheetMobileNav
       mainNavItems={navMenuConfig.mainNav}
       slot="mobile-nav-header"

@@ -8,15 +8,16 @@ type Props = {
   description?: string;
   current?: string;
   bodyClass?: string;
+  image?: string;
 };
 
-const { title, description, bodyClass } = Astro.props;
+const { title, description, bodyClass, image } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} image={image} />
   </head>
   <body class={cn("flex flex-col min-h-screen", bodyClass)}>
     <slot />

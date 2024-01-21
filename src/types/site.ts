@@ -6,6 +6,7 @@ export type SiteConfig = {
   ogImage: string;
   links: {
     twitter: string;
+    twitter_username: string;
     github: string;
   };
   showDrafts: boolean;

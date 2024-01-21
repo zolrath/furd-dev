@@ -8,6 +8,7 @@ export const siteConfig: SiteConfig = {
   ogImage: "https://furd.dev/og.jpg",
   links: {
     twitter: "https://twitter.com/zolrath",
+    twitter_username: "@zolrath",
     github: "https://github.com/zolrath",
   },
   showDrafts: import.meta.env.DEV ? true : false,

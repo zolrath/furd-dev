@@ -10,101 +10,129 @@ import { Badge } from "@components/ui/Badge";
 import TableOfContents from "@components/TableOfContents.astro";
 import DraftIndicator from "@components/ui/DraftIndicator.astro";
 import Bio from "@components/Bio.astro";
+import { getOgImagePath } from "@/utils/openGraph";
 
 type Props = CollectionEntry<"blog">;
 
 const slug = Astro.props.slug;
-const { draft, title, description, publishDate, updatedDate, coverImage, coverImageAlt, category, tags } =
-  Astro.props.data;
+const {
+  draft,
+  title,
+  description,
+  publishDate,
+  updatedDate,
+  coverImage,
+  coverImageAlt,
+  category,
+  tags,
+} = Astro.props.data;
 const { headings, remarkPluginFrontmatter } = await Astro.props.render();
 const { minutesRead } = remarkPluginFrontmatter;
 
+const ogImage = new URL(getOgImagePath(Astro.url.pathname), Astro.url.origin)
+  .href;
 
-const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/**/*.{jpeg,jpg,png,gif,webp}')
-if (!images[coverImage]) throw new Error(`"${coverImage}" does not exist in glob: "src/assets/**/*.{jpeg,jpg,png,gif,webp}"`);
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/**/*.{jpeg,jpg,png,gif,webp}",
+);
+
+if (!images[coverImage])
+  throw new Error(
+    `"${coverImage}" does not exist in glob: "src/assets/**/*.{jpeg,jpg,png,gif,webp}"`,
+  );
 ---
 
-<MainLayout title={title} description={description}>
-  <main class="container relative py-6 max-w-5xl lg:grid lg:gap-10 lg:py-10 xl:gap-20 lg:grid-cols-[1fr_300px]">
+<MainLayout title={title} description={description} image={ogImage}>
+  <main
+    class="container relative py-6 max-w-5xl lg:grid lg:gap-10 lg:py-10 xl:gap-20 lg:grid-cols-[1fr_300px]"
+  >
     <div>
-    <a
-      href="/blog"
-      class={cn(
-        buttonVariants({ variant: "ghost" }),
-        "absolute left-[-200px] top-10 hidden 2xl:inline-flex text-muted-foreground"
-      )}
-      transition:animate={slideInFromLeft()}
-    >
-      <Icon name="lucide:chevron-left" class="mr-2 size-4" />
-       See all posts
-    </a>
+      <a
+        href="/blog"
+        class={cn(
+          buttonVariants({ variant: "ghost" }),
+          "absolute left-[-200px] top-10 hidden 2xl:inline-flex text-muted-foreground",
+        )}
+        transition:animate={slideInFromLeft()}
+      >
+        <Icon name="lucide:chevron-left" class="mr-2 size-4" />
+        See all posts
+      </a>
 
-    <article class="mx-auto max-w-none md:max-w-screen-md prose dark:prose-invert">
-      <div class="flex gap-2">
-        <a href={`/blog/category/${category}`}>
-          <Badge
-            radius="md"
-            className="capitalize"
-            transition:name={"category-" + slug}
-          >
-            {category}
-          </Badge>
-        </a>
-        {tags?.map((tag: string) => (
-          <a href={`/blog/tag/${tag}`}>
+      <article
+        class="mx-auto max-w-none md:max-w-screen-md prose dark:prose-invert"
+      >
+        <div class="flex gap-2">
+          <a href={`/blog/category/${category}`}>
             <Badge
               radius="md"
-              variant="outline"
               className="capitalize"
+              transition:name={"category-" + slug}
             >
-              {tag}
+              {category}
             </Badge>
           </a>
-        ))}
-      </div>
-      <span class="relative">
-        <Image
-          class="overflow-hidden my-6 rounded-xl aspect-7/4"
-          width={1050}
-          height={600}
-          src={images[coverImage]()}
-          alt={coverImageAlt}
-          transition:name={"img-" + slug}
-        />
-        { draft ? <DraftIndicator slug={slug} className="top-8 left-8" /> : null }
-      </span>
-      <div class="flex justify-between items-center">
-        <span
-          class="font-medium text-muted-foreground"
-          transition:name={"date-" + slug}
-        >
-          {longDate(publishDate)}
           {
-            updatedDate && (
-              <span>- Last updated on {longDate(updatedDate)}</span>
-            )
+            tags?.map((tag: string) => (
+              <a href={`/blog/tag/${tag}`}>
+                <Badge radius="md" variant="outline" className="capitalize">
+                  {tag}
+                </Badge>
+              </a>
+            ))
+          }
+        </div>
+        <span class="relative">
+          <Image
+            class="overflow-hidden my-6 rounded-xl aspect-7/4"
+            width={1050}
+            height={600}
+            src={images[coverImage]()}
+            alt={coverImageAlt}
+            transition:name={"img-" + slug}
+          />
+          {
+            draft ? (
+              <DraftIndicator slug={slug} className="top-8 left-8" />
+            ) : null
           }
         </span>
-        <span class="font-medium text-muted-foreground">{minutesRead}</span>
-      </div>
-      <section>
-        <h1 id="title" class="my-4 text-4xl font-heading" transition:name={"title-" + slug}>
-          {title}
-        </h1>
-        <p>{description}</p>
-      </section>
-      <hr class="mt-12" />
-      <slot />
-      <hr class="flex mt-12 mb-4" />
-      <div class="flex justify-start 2xl:hidden">
-        <a href="/blog" class={cn(buttonVariants({ variant: "ghost" }))}>
-          <Icon name="lucide:chevron-left" class="mr-2 size-4" />
-           See all posts
-        </a>
-      </div>
-      <hr class="my-4 2xl:hidden"/>
-      <Bio />
-    </article>
+        <div class="flex justify-between items-center">
+          <span
+            class="font-medium text-muted-foreground"
+            transition:name={"date-" + slug}
+          >
+            {longDate(publishDate)}
+            {
+              updatedDate && (
+                <span>- Last updated on {longDate(updatedDate)}</span>
+              )
+            }
+          </span>
+          <span class="font-medium text-muted-foreground">{minutesRead}</span>
+        </div>
+        <section>
+          <h1
+            id="title"
+            class="my-4 text-4xl font-heading"
+            transition:name={"title-" + slug}
+          >
+            {title}
+          </h1>
+          <p>{description}</p>
+        </section>
+        <hr class="mt-12" />
+        <slot />
+        <hr class="flex mt-12 mb-4" />
+        <div class="flex justify-start 2xl:hidden">
+          <a href="/blog" class={cn(buttonVariants({ variant: "ghost" }))}>
+            <Icon name="lucide:chevron-left" class="mr-2 size-4" />
+            See all posts
+          </a>
+        </div>
+        <hr class="my-4 2xl:hidden" />
+        <Bio />
+      </article>
     </div>
     <div class="hidden text-sm lg:block">
       <div

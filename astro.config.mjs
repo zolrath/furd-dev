@@ -33,10 +33,10 @@ export default defineConfig({
     mdx(), sitemap(), react(),
     tailwind({ applyBaseStyles: false }),
     icon({
-    include: {
-      lucide: ["*"],
-      ri: ["*"],
-    }
+      include: {
+        lucide: ["*"],
+        ri: ["*"],
+      }
     }),
   ],
   markdown: {
@@ -53,6 +53,10 @@ export default defineConfig({
       [rehypeAutolinkHeadings, { behavior: 'wrap', properties: { className: "no-underline" } }],
       [rehypeExternalLinks, { target: '_blank' }],
     ]
+  },
+  vite: {
+    ssr: { external: ['@resvg/resvg-js'] },
+    optimizeDeps: { exclude: ["@resvg/resvg-js"] },
   },
   prefetch: true,
   experimental: {
