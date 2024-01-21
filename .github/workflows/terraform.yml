@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'infra/*'
+      - 'infra/**'
 
 jobs:
   detect_drift:
@@ -46,8 +46,9 @@ jobs:
 
       - name: Terraform plan
         id: plan
-        run: terraform plan -detailed-exitcode -input=false -out=tfplan
+        continue-on-error: true
+        run: terraform plan -input=false -out=tfplan
 
       - name: Terraform apply
-        if: steps.plan.exitcode == 2
-        run: terraform apply -auto-approve tfplan
+        if: steps.plan.outcome == 'success'
+        run: terraform apply -input=false -auto-approve tfplan
