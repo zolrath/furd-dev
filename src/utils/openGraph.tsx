@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { Resvg } from '@resvg/resvg-js';
+import sharp from "sharp";
 import { readFile } from "node:fs/promises";
 import satori, { type SatoriOptions } from "satori";
 import { getIconCode, loadEmoji } from "./twemoji";
@@ -45,15 +46,17 @@ const generateOgImage = async (
     },
   };
 
+  const base64buffer = await sharp("." + coverImage).toBuffer("base64");
+  const base64 = `data:image/png;base64,${base64buffer.toString('base64')}`
+
   const svg = await satori(
     Template({
       title: text,
-      coverImage: coverImage,
+      coverImage: base64,
       date: date,
     }),
     options
   );
-
   const resvg = new Resvg(svg)
   return resvg.render().asPng();
 };
@@ -78,12 +81,12 @@ export interface OgData {
 }
 
 const Template = (props: OgData) => (
-  <div tw="flex text-white bg-black w-full h-full justify-center items-stretch" style={{
+  <div tw="flex text-white bg-[#040a1a] w-full h-full justify-center items-stretch" style={{
     fontFamily: "Inter",
   }}>
-    <img tw="absolute left-0 top-0 w-[100%] h-[100%]" src={props.coverImage} style={{ filter: "blur(7px)" }} />
+    <img tw="absolute left-0 top-0 w-[100%] h-[100%]" src={props.coverImage} height={315} width={600} style={{ filter: "blur(7px)" }} />
     <div tw="h-full w-full flex font-sans p-4" style={{
-      background: "linear-gradient(174deg, rgba(0, 0, 0, 0.95) 5.01%, rgba(0, 0, 0, 0.80) 57.2%, rgba(0, 0, 0, 0.70) 94.99%)"
+      background: "linear-gradient(174deg, rgba(0, 0, 0, 0.90) 5.01%, rgba(0, 0, 0, 0.75) 57.2%, rgba(0, 0, 0, 0.65) 94.99%)"
     }}>
       <div tw="flex flex-col justify-between border-2 rounded-md border-[#0A2F2F] shadow-xl w-full h-full p-4">
         <div tw="text-5xl text-[#3AF0CF] font-bold leading-10 flex-1 flex" style={{

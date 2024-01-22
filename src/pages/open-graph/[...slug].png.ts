@@ -21,12 +21,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return result;
 };
 
-export const GET: APIRoute<OgData> = async ({ request, props }) => {
-  let imageUrl = new URL(props.coverImage, request.url);
-
+export const GET: APIRoute<OgData> = async ({ props }) => {
   const response = await generateOgImage(
     props.title,
-    imageUrl.toString(),
+    props.coverImage,
     props.date,
   );
   return new Response(response, {

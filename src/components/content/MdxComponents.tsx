@@ -97,16 +97,16 @@ export const MdxComponents = {
     src,
     ...props
   }: React.ImgHTMLAttributes<HTMLImageElement>) => {
-    console.log(props)
     var source
     // @ts-ignore
     if (typeof src === "object") { source = src.src }
     if (typeof src === "string") { source = src }
 
     return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img className={cn("rounded-md border", className)} src={source} alt={alt} {...props} />
-  )},
+      // eslint-disable-next-line @next/next/no-img-element
+      <img className={cn("rounded-md border", className)} src={source} alt={alt} {...props} />
+    )
+  },
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
     <div className="overflow-y-auto my-6 w-full">
