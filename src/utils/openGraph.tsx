@@ -12,8 +12,8 @@ const generateOgImage = async (
   date: Date = new Date()
 ): Promise<Buffer> => {
   const options: SatoriOptions = {
-    width: 600,
-    height: 315,
+    width: 1200,
+    height: 630,
     embedFont: true,
     fonts: [
       {
@@ -84,21 +84,21 @@ const Template = (props: OgData) => (
   <div tw="flex text-white bg-[#040a1a] w-full h-full justify-center items-stretch" style={{
     fontFamily: "Inter",
   }}>
-    <img tw="absolute left-0 top-0 w-[100%] h-[100%]" src={props.coverImage} height={315} width={600} style={{ filter: "blur(7px)" }} />
-    <div tw="h-full w-full flex font-sans p-4" style={{
+    <img tw="absolute left-0 top-0 w-[100%] h-[100%]" src={props.coverImage} height={630} width={1200} style={{ filter: "blur(8px)" }} />
+    <div tw="h-full w-full flex font-sans p-8" style={{
       background: "linear-gradient(174deg, rgba(0, 0, 0, 0.90) 5.01%, rgba(0, 0, 0, 0.75) 57.2%, rgba(0, 0, 0, 0.65) 94.99%)"
     }}>
-      <div tw="flex flex-col justify-between border-2 rounded-md border-[#0A2F2F] shadow-xl w-full h-full p-4">
-        <div tw="text-5xl text-[#3AF0CF] font-bold leading-10 flex-1 flex" style={{
+      <div tw="flex flex-col justify-between border-4 rounded-xl border-[#0a434155] w-full h-full p-8">
+        <div tw="text-8xl text-[#3AF0CF] font-bold flex-1 flex" style={{
           fontFamily: "Archivo Narrow",
         }}>
           {props.title}
         </div>
-        <div tw="text-md font-bold flex justify-between items-center" style={{
+        <div tw="text-5xl font-bold flex justify-between items-center" style={{
           fontFamily: "Inter"
         }}>
           <div>{longDate(props.date)}</div>
-          <div tw="flex text-xl items-center">
+          <div tw="flex text-6xl items-center">
             <span tw="mr-4" style={{ fontFamily: "Rubik Mono One" }}>furd.dev</span>
           </div>
         </div>
