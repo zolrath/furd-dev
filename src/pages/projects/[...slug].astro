@@ -1,8 +1,8 @@
 ---
 import { getProjects } from '@/fetchers/projects';
-import ProjectLayout from '@layouts/ProjectLayout.astro';
+import ProjectLayout from '@/layouts/project-layout.astro';
 import { type CollectionEntry } from 'astro:content';
-import { MdxComponents } from '@components/content/MdxComponents';
+import { MdxComponents } from '@/components/content/mdx-components';
 
 export async function getStaticPaths() {
   const projects = await getProjects()

@@ -1,5 +1,5 @@
-import remarkFlatSectionize from "./remarkFlatSectionize.mjs";
-import remarkReadingTime from "./remarkReadingTime.mjs";
+import remarkFlatSectionize from "./remark-flat-sectionize.mjs";
+import remarkReadingTime from "./remark-reading-time.mjs";
 
 export {
   remarkFlatSectionize,

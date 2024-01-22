@@ -1,12 +1,12 @@
 ---
-import Footer from "@/components/layout/Footer.astro";
-import Header from "@/components/layout/Header.astro";
+import Footer from "@/components/layout/footer.astro";
+import Header from "@/components/layout/header.astro";
 import { cn } from "@/utils";
-import BaseLayout from "./BaseLayout.astro";
-import { SheetMobileNav } from "@/components/layout/SheetMobileNav";
+import BaseLayout from "./base-layout.astro";
+import { SheetMobileNav } from "@/components/layout/sheet-mobile-nav";
 import { navMenuConfig } from "@/config/nav-menu";
-import MainNav from "@components/layout/MainNav.astro";
-import { ThemeToggle } from "@components/ThemeToggle";
+import MainNav from "@/components/layout/main-nav.astro";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 type Props = {
   title: string;

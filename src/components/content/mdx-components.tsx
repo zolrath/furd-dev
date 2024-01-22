@@ -1,9 +1,9 @@
 import * as React from "react";
 
 // @ts-ignore
-import Callout from "@/components/content/Callout.astro";
+import Callout from "@/components/content/callout.astro";
 // @ts-ignore
-import MdxCard from "@/components/content/MdxCard.astro";
+import MdxCard from "@/components/content/mdx-card.astro";
 // @ts-ignore
 import { cn } from "@/utils";
 import { Image } from "astro:assets";

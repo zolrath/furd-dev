@@ -1,4 +1,4 @@
-import { ProjectDisplay } from "@mytypes/project";
+import { ProjectDisplay } from "@/types/project";
 import { getCollection } from "astro:content";
 
 export async function getProjects() {

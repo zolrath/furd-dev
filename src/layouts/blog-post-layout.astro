@@ -2,15 +2,15 @@
 import { cn, longDate } from "@/utils";
 import type { CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
-import MainLayout from "./MainLayout.astro";
+import MainLayout from "./main-layout.astro";
 import { slideInFromLeft } from "@/transitions";
-import { buttonVariants } from "@components/ui/Button";
+import { buttonVariants } from "@/components/ui/button";
 import { Icon } from "astro-icon/components";
-import { Badge } from "@components/ui/Badge";
-import TableOfContents from "@components/TableOfContents.astro";
-import DraftIndicator from "@components/ui/DraftIndicator.astro";
-import Bio from "@components/Bio.astro";
-import { getOgImagePath } from "@/utils/openGraph";
+import { Badge } from "@/components/ui/badge";
+import TableOfContents from "@/components/table-of-contents.astro";
+import DraftIndicator from "@/components/ui/draft-indicator.astro";
+import Bio from "@/components/bio.astro";
+import { getOgImagePath } from "@/utils/open-graph";
 
 type Props = CollectionEntry<"blog">;
 
@@ -144,3 +144,4 @@ if (!images[coverImage])
     </div>
   </main>
 </MainLayout>
+@/components/ui/button@/utils/open-graph

@@ -1,4 +1,4 @@
-import type { ProjectCategory, ProjectDisplay, ProjectStatus } from "@mytypes/project"
+import type { ProjectCategory, ProjectDisplay, ProjectStatus } from "@/types/project"
 import { defineCollection, reference, z } from "astro:content"
 
 const blog = defineCollection({

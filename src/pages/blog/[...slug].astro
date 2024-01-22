@@ -1,8 +1,8 @@
 ---
 import { getPosts } from '@/fetchers/posts';
-import BlogPostLayout from '@layouts/BlogPostLayout.astro';
+import BlogPostLayout from '@/layouts/blog-post-layout.astro';
 import { type CollectionEntry } from 'astro:content';
-import { MdxComponents } from '@components/content/MdxComponents';
+import { MdxComponents } from '@/components/content/mdx-components';
 
 export async function getStaticPaths() {
   const posts = await getPosts()

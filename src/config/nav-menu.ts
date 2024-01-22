@@ -1,4 +1,4 @@
-import type { NavConfig } from "@mytypes/nav";
+import type { NavConfig } from "@/types/nav";
 
 export const navMenuConfig: NavConfig = {
   mainNav: [

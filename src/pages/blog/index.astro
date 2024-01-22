@@ -1,9 +1,9 @@
 ---
-import BlogHeader from "@/components/BlogHeader.astro";
-import BlogCard from "@/components/cards/BlogCard.astro";
-import MainLayout from "@/layouts/MainLayout.astro";
+import BlogHeader from "@/components/blog-header.astro";
+import BlogCard from "@/components/cards/blog-card.astro";
+import MainLayout from "@/layouts/main-layout.astro";
 import { getPosts } from "@/fetchers/posts";
-import FeaturedBlogCard from "@components/cards/FeaturedBlogCard.astro";
+import FeaturedBlogCard from "@/components/cards/featured-blog-card.astro";
 
 const posts = await getPosts();
 ---

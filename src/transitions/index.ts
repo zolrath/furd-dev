@@ -1,3 +1,3 @@
-import slideInFromLeft from './slideInFromLeft';
+import slideInFromLeft from './slide-in-from-left';
 
 export { slideInFromLeft }

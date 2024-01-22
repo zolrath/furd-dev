@@ -1,13 +1,13 @@
 ---
 import { cn, longDate } from "@/utils";
 import type { CollectionEntry } from "astro:content";
-import MainLayout from "./MainLayout.astro";
-import { buttonVariants } from "@components/ui/Button";
+import MainLayout from "./main-layout.astro";
+import { buttonVariants } from "@/components/ui/button";
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
-import TableOfContents from "@components/TableOfContents.astro";
-import Bio from "@components/Bio.astro";
-import ProjectTechnologyList from "@components/ProjectTechnologyList.astro";
+import TableOfContents from "@/components/table-of-contents.astro";
+import Bio from "@/components/bio.astro";
+import ProjectTechnologyList from "@/components/project-technology-list.astro";
 
 type Props = CollectionEntry<"projects">;
 

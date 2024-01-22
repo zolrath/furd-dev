@@ -1,5 +1,5 @@
 import { getPosts } from "@/fetchers/posts";
-import generateOgImage, { type OgData } from "@/utils/openGraph";
+import generateOgImage, { type OgData } from "@/utils/open-graph";
 import type { APIRoute, GetStaticPaths, GetStaticPathsItem } from "astro";
 
 export const getStaticPaths: GetStaticPaths = async () => {
