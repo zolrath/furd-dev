@@ -7,21 +7,28 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const blogs = await getPosts();
 
-  blogs.forEach(blog =>
+  for (const blog of blogs) {
     result.push({
       params: { slug: `blog/${blog.slug}` },
       props: {
         title: blog.data.title,
+        coverImage: blog.data.coverImage,
         date: blog.data.publishDate,
       },
-    })
-  );
+    });
+  }
 
   return result;
 };
 
-export const GET: APIRoute<OgData> = async ({ props }) => {
-  const response = await generateOgImage(props.title, props.date);
+export const GET: APIRoute<OgData> = async ({ request, props }) => {
+  let imageUrl = new URL(props.coverImage, request.url);
+
+  const response = await generateOgImage(
+    props.title,
+    imageUrl.toString(),
+    props.date,
+  );
   return new Response(response, {
     status: 200,
     headers: {

@@ -1,10 +1,13 @@
+// @ts-nocheck
 import { Resvg } from '@resvg/resvg-js';
 import { readFile } from "node:fs/promises";
 import satori, { type SatoriOptions } from "satori";
 import { getIconCode, loadEmoji } from "./twemoji";
+import { longDate } from '.';
 
 const generateOgImage = async (
   text: string = "Default Title",
+  coverImage: string = "/og.png",
   date: Date = new Date()
 ): Promise<Buffer> => {
   const options: SatoriOptions = {
@@ -14,13 +17,19 @@ const generateOgImage = async (
     fonts: [
       {
         name: "Archivo Narrow",
-        data: await readFile("./src/assets/font/ArchivoNarrow-SemiBold.ttf"),
+        data: await readFile("./src/assets/font/ArchivoNarrow-Bold.ttf"),
         weight: 600,
         style: "normal",
       },
       {
         name: "Inter",
         data: await readFile("./src/assets/font/Inter-Regular.ttf"),
+        weight: 400,
+        style: "normal",
+      },
+      {
+        name: "Rubik Mono One",
+        data: await readFile("./src/assets/font/RubikMonoOne-Regular.ttf"),
         weight: 400,
         style: "normal",
       },
@@ -39,6 +48,7 @@ const generateOgImage = async (
   const svg = await satori(
     Template({
       title: text,
+      coverImage: coverImage,
       date: date,
     }),
     options
@@ -63,81 +73,33 @@ export const getOgImagePath = (filename: string = "Default Value") => {
 
 export interface OgData {
   title: string;
+  coverImage: string;
   date: Date;
 }
 
 const Template = (props: OgData) => (
-  <div
-    style={{
-      height: "100%",
-      width: "100%",
-      display: "flex",
-      backgroundColor: "white",
-      backgroundImage:
-        "radial-gradient(circle at 25px 25px, lightgray 2%, transparent 0%), radial-gradient(circle at 75px 75px, lightgray 2%, transparent 0%)",
-      backgroundSize: "100px 100px",
-      fontFamily: "Archivo Narrow",
-    }}
-  >
-    <div
-      style={{
-        padding: "20px",
-        display: "flex",
-        width: "100%",
-        height: "100%",
-        justifyContent: "center",
-        alignItems: "stretch",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          border: "1px solid #374151",
-          boxShadow: "5px 5px 0px #374151",
-          width: "100%",
-          height: "100%",
-          padding: "10px",
-        }}
-      >
-        <div
-          style={{
-            fontSize: "32px",
-            fontWeight: "900",
-            lineHeight: "3rem",
-            padding: "10px 0 50px 0",
-            color: "#374151",
-            flex: 1,
-            display: "flex",
-            fontFamily: "Inter",
-          }}
-        >
+  <div tw="flex text-white bg-black w-full h-full justify-center items-stretch" style={{
+    fontFamily: "Inter",
+  }}>
+    <img tw="absolute left-0 top-0 w-[100%] h-[100%]" src={props.coverImage} style={{ filter: "blur(7px)" }} />
+    <div tw="h-full w-full flex font-sans p-4" style={{
+      background: "linear-gradient(174deg, rgba(0, 0, 0, 0.95) 5.01%, rgba(0, 0, 0, 0.80) 57.2%, rgba(0, 0, 0, 0.70) 94.99%)"
+    }}>
+      <div tw="flex flex-col justify-between border-2 rounded-md border-[#0A2F2F] shadow-xl w-full h-full p-4">
+        <div tw="text-5xl text-[#3AF0CF] font-bold leading-10 flex-1 flex" style={{
+          fontFamily: "Archivo Narrow",
+        }}>
           {props.title}
         </div>
-        <div
-          style={{
-            fontSize: "16px",
-            fontWeight: "900",
-            color: "#374151",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <div>
-            {props.date.toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <span style={{ marginRight: "16px" }}>furd.dev</span>
+        <div tw="text-md font-bold flex justify-between items-center" style={{
+          fontFamily: "Inter"
+        }}>
+          <div>{longDate(props.date)}</div>
+          <div tw="flex text-xl items-center">
+            <span tw="mr-4" style={{ fontFamily: "Rubik Mono One" }}>furd.dev</span>
           </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  </div >
+)
