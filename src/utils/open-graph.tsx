@@ -88,7 +88,7 @@ const Template = (props: OgData) => (
     <div tw="h-full w-full flex font-sans p-8" style={{
       background: "linear-gradient(174deg, rgba(0, 0, 0, 0.90) 5.01%, rgba(0, 0, 0, 0.75) 57.2%, rgba(0, 0, 0, 0.65) 94.99%)"
     }}>
-      <div tw="flex flex-col justify-between border-4 rounded-xl border-[#0a434155] w-full h-full p-8">
+      <div tw="flex flex-col justify-between border-4 rounded-xl border-[#0a434199] w-full h-full p-8">
         <div tw="text-8xl text-[#3AF0CF] font-bold flex-1 flex" style={{
           fontFamily: "Archivo Narrow",
         }}>
