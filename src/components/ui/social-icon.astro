@@ -1,0 +1,17 @@
+---
+import { Icon } from 'astro-icon/components'
+import { cn } from '@/utils'
+
+type Props = {
+  icon: string,
+  link: string,
+  title: string,
+  class?: string,
+}
+
+const { icon, link, title } = Astro.props;
+const className = Astro.props.class;
+---
+<a href={link} class="no-underline" title={title} rel="me" target="_blank">
+  <Icon class={cn("w-8 h-8 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400", className)} name={icon} />
+</a>

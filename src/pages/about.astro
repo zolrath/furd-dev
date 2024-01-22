@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 
 import profileImage from '@/assets/profile-pic.jpg';
 import MainLayout from "@/layouts/main-layout.astro";
+import SocialIcon from "@/components/ui/social-icon.astro";
 
 const title = "About me";
 const description = "Matt Furden does stuff.";
@@ -24,13 +25,21 @@ const description = "Matt Furden does stuff.";
         </ul>
       </div>
 
-      <div class="order-last lg:order-last lg:basis-1/3">
-        <figure>
-          <Image class="rounded-xl" src={profileImage} alt="Headshot of Matt Furden" width="330" />
-          <figcaption class="pt-2 italic text-left text-md">
+      <div class="order-last items-center lg:order-last lg:mt-28 lg:basis-1/3">
+        <figure class="flex flex-col items-center">
+          <Image class="rounded-xl" src={profileImage} alt="Headshot of Matt Furden" width="200" />
+          <figcaption class="pt-2 text-sm italic text-left">
             A wild Matt Furden in his natural habitat.
           </figcaption>
         </figure>
+        <div class="flex gap-2 justify-center mt-2">
+          <SocialIcon icon="lucide:mail" title="email" link="mailto:matt@furd.dev" />
+          <SocialIcon icon="ri:github-fill" title="GitHub" link="https://www.github.com/zolrath" />
+          <SocialIcon icon="ri:instagram-fill" title="Instagram" link="https://www.instagram.com/furd" />
+          <SocialIcon icon="ri:discord-fill" title="Discord" link="https://discordapp.com/users/54376664171294720" />
+          <!-- <SocialIcon icon="ri:twitter-fill" title="Twitter" link="https://twitter.com/zolrath" /> -->
+          <!-- <SocialIcon icon="ri:bluesky-fill" title="Bluesky" link="https://bsky.app/profile/furd.dev" /> -->
+        </div>
       </div>
     </div>
   </section>

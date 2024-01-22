@@ -188,7 +188,7 @@ a.underlined {
   @apply underline-offset-[7px] underline decoration-4 decoration-zinc-400 dark:decoration-zinc-200 decoration-solid hover:before:scale-x-100 hover:before:origin-left relative before:w-full before:h-2 before:origin-right before:transition-transform before:duration-300 before:scale-x-0 before:bg-blue-500 before:absolute before:left-0 before:-bottom-2
 }
 
-.underlined a {
+.underlined a:not(.no-underline) {
   @apply font-bold dark:text-white text-zinc-800;
   @apply underline-offset-[7px] underline decoration-4 decoration-zinc-400 dark:decoration-zinc-200 decoration-solid hover:before:scale-x-100 hover:before:origin-left relative before:w-full before:h-2 before:origin-right before:transition-transform before:duration-300 before:scale-x-0 before:bg-blue-500 before:absolute before:left-0 before:-bottom-2
 }
