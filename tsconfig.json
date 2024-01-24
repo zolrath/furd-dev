@@ -8,18 +8,6 @@
     "noEmit": true,
     "baseUrl": "./src",
     "paths": {
-      "@components/*": [
-        "components/*"
-      ],
-      "@assets/*": [
-        "assets/*"
-      ],
-      "@layouts/*": [
-        "layouts/*"
-      ],
-      "@mytypes/*": [
-        "types/*"
-      ],
       "@/*": [
         "*"
       ]
