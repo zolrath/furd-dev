@@ -13,7 +13,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       props: {
         title: blog.data.title,
         coverImage: blog.data.coverImage,
-        date: blog.data.publishDate,
+        date: blog.data.updatedDate ? blog.data.updatedDate : blog.data.publishDate,
       },
     });
   }
