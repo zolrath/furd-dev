@@ -45,6 +45,10 @@ const title = `${Astro.props.title} - ${siteConfig.name}`;
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
+<!-- Webmention.io -->
+<link rel="webmention" href="https://webmention.io/furd.dev/webmention" />
+<link rel="pingback" href="https://webmention.io/furd.dev/xmlrpc" />
+
 <!-- Dark mode with prevent flickering flash between navigations -->
 <script is:inline>
   const setDarkMode = () => {
