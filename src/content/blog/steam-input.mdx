@@ -296,7 +296,7 @@ func is_action_just_pressed(device: int, action: StringName, exact_match: bool =
 	if device >= 0:
 		if not got_handles: return false
 		var current_frame = Engine.get_process_frames()
-		var currently_held = Steam.getDigitalActionData(device, actions[action])
+		var currently_held = Steam.getDigitalActionData(device, actions[action]).state
 		var action_state = set_action_state(device, action, currently_held, current_frame)
 		return currently_held and action_state.press_frame == current_frame
 	# If keyboard, use normal Godot input system.
