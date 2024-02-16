@@ -51,6 +51,15 @@ resource "aws_route53_record" "bluesky" {
   records = [var.bluesky_verification]
 }
 
+resource "aws_route53_record" "bluesky_redirect" {
+  zone_id = aws_route53_zone.furd_dev_zone.zone_id
+  name    = "bsky.${var.domain_name}"
+  type    = "CNAME"
+  ttl     = 1800
+
+  records = ["redirect.bsky.app"]
+}
+
 # Set up DNS validation for the certificate
 resource "aws_route53_record" "furd_dev_certificate_dns" {
   allow_overwrite = true
